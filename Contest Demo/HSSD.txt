@@ -1,0 +1,20 @@
+- Người tạo cuộc thi sẽ upload lê hệ thống các file sau:
+    + Đề thi là file Contest1.pdf
+    + Dữ liệu train cho phép người tham gia thi sử dụng là file data_train.txt
+    + Dữ liệu test dùng để chấm bài thi là fle data_test.txt
+    + File chấm bài thi là file tester.py
+    => Hệ thống sẽ lưu lại tất cả vào bộ nhớ máy chủ dưới 1 thư mục với tên là IDContest
+- Người tham gia thi sẽ viết 1 chương trình model_maker.py để có thể tạo model dựa trên bộ dữ liệu train
+    => Model sau khi tạo sẽ được nộp vào lưu vào cùng thư mục trên với tên IDStatus.pkl
+- Khi hệ thống chấm bài (demo bằng file check_page.py) sẽ tạo ra 1 luồng riêng nhận IDcontest 
+để biết thư mục chứa các file cần, IDStatus để biết model chần chấm và thực hiện.
+    => Kết quả trả về sẽ được cập nhật lên CSDL
+
+Cách demo khi hệ thống chưa hoàn thành: :v
+    - Cài chỉ số gamma trong file model_maker.py tùy ý để có model với tỉ lệ nhận dạng khác nhau
+    - Chạy file model_maker.py, nhập IDStatus bất kì để lưu lại model với tên đó 
+    (trong thư mục đã có sẵn 2 model là 123.pkl và 234.pkl)
+    - Chạy file check_page.py để mô phỏng hoạt động của luồng lúc chấm bài
+    - Nhập IDContest (ví dụ ở đâu là nhập tester)
+    - Nhập IDStatus (chính là tên model đã tạo)
+    => Kết quả nhận được sau này dùng để lưu cơ sở dữ liệu :v
