@@ -11,7 +11,7 @@ AI Contest
 Cách cài trên Window, Ubuntu tự kiếm nha:
 <li>Tại thư mục dự án</li>
 <li>pip install virtualenv </li>
-<li>Tao môi trường: " vvirtualenv -p python . " //hình như vậy</li>
+<li>Tao môi trường: " virtualenv -p python . " //hình như vậy</li>
 <li>Chạy env: source scripts/activate (Ubuntu source bin/activate)</li>
 <li>Cài các file cần thiết: 'pip install -r requirements.txt'</li>
 <li>Ghi ra các file mới đã cài: 'pip freeze > requirements.txt'</li>
