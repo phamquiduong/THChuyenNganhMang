@@ -16,4 +16,5 @@ Cách cài trên Window, Ubuntu tự kiếm nha:
 <li>Cài các file cần thiết: 'pip install -r requirements.txt'</li>
 <li>Ghi ra các file mới đã cài: 'pip freeze > requirements.txt'</li>
 <li>Tắt môi trường: deactivate</li>
+<li>Run server: ' python ContestAi/manage.py runserver ' </li>
 </ul>
