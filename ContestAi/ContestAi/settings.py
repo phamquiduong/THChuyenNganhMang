@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
 
     'devs',
+    'Auth',
 ]
 
 MIDDLEWARE = [

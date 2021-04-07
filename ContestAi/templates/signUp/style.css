@@ -43,8 +43,7 @@
   box-sizing: border-box;
 }
 
-.form-signin #inputEmail,
-.form-signin #inputPassword {
+.form-signin input {
   direction: ltr;
   height: 44px;
   font-size: 16px;
@@ -91,7 +90,11 @@
 .btn-signin:hover,
 .btn-signin:active,
 .btn-signin:focus {
-  background-color: rgb(12, 97, 33);
+  background-color: rgb(37, 155, 66);
+}
+
+.btn-signin:disabled {
+  background-color: gray;
 }
 
 .forgot-password {
