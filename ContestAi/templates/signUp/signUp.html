@@ -1,6 +1,10 @@
-{% extends 'base.html' %} {% block script %} {% include './javaScript.js' %} {% endblock %} 
-{% block css %} {% include './style.css' %} {% endblock %} 
-{% block title %}Sign Up{% endblock%} {% block body %}
+{% extends 'base.html' %} {% block script %} {% include './javaScript.js' %}
+<!--<div></div>-->
+{% endblock %} {% block css %} {% include './style.css' %} {% endblock %}
+<!--<div></div>-->
+{% block title %}Sign Up{% endblock%}
+<!--<div></div>-->
+{% block body %}
 <div class="container" style="min-height: 80vh">
   <h1 class="text-center mt-5">Sign Up Pages</h1>
   <div class="card card-container">
@@ -42,7 +46,7 @@
           placeholder="Confirm Password*"
           required
         />
-        <button class="btn btn-primary btn-signin" id = "btnSignUp" type="submit">
+        <button class="btn btn-primary btn-signin" id="btnSignUp" type="submit">
           Sign Up
         </button>
       </form>

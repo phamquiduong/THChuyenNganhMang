@@ -1,6 +1,12 @@
-{% extends 'base.html' %} {% block script %} {% include './javaScript.js' %} {% endblock %} 
-{% block css %} {% include './style.css' %} {% endblock %} 
-{% block title %}Login{% endblock%} {% block body %}
+{% extends 'base.html' %}
+<!--<div></div>-->
+{% block script %} {% include './javaScript.js' %} {% endblock %}
+<!--<div></div>-->
+{% block css %} {% include './style.css' %} {% endblock %}
+<!--<div></div>-->
+{% block title %}Login{% endblock%}
+<!--<div></div>-->
+{% load static %} {% block body %}
 <div class="container" style="min-height: 80vh">
   <h1 class="text-center mt-5">Login Pages</h1>
   <div class="card card-container">
@@ -8,7 +14,7 @@
       <img
         id="profile-img"
         class="profile-img-card"
-        src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+        src="{% static 'images/cat.jpg' %}"
       />
       <p id="profile-name" class="profile-name-card"></p>
       <form class="form-signin">
