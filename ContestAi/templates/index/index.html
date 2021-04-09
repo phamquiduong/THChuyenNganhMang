@@ -7,7 +7,20 @@
     <li>{{ lang }}</li>
     {% endfor %}
   </ul>
-
+  <form class="form-signin" action="" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+    <input 
+      type="file" 
+      name="file1"
+    />
+    <input 
+      type="file" 
+      name="file2"
+    />
+    <button class="btn btn-primary btn-signin" type="submit">
+      Sign in
+    </button>
+  </form>
+  <!-- /form -->
   {% if condition %}
   <h1>Condition is True</h1>
   {% else %}

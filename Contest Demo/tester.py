@@ -5,14 +5,14 @@ def check(s):
     model = pickle.load(open(os.path.join(s+".pkl"), 'rb'))
     data = []
     label = []
-    for line in open('data_train.txt', 'r'):
+    for line in open('data_train.txt', 'rb'):
         words = line.strip().split()
         label.append(float(words[0]))
         text = []
         for i in range(1,len(words)):
             text.append(float(words[i]))
         data.append(text)
-    for line in open('data_test.txt', 'r'):
+    for line in open('data_test.txt', 'rb'):
         words = line.strip().split()
         label.append(float(words[0]))
         text = []
