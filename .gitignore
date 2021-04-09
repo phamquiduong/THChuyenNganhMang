@@ -2,3 +2,4 @@ env
 Lib/
 Scripts/
 pyvenv.cfg
+ContestAi/static/demo/

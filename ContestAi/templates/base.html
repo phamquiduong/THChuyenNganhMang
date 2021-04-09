@@ -6,27 +6,10 @@
     <meta charset="utf-8" />
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href=" {% static 'cssJs/base.css' %}" />
-    <link
-      rel="stylesheet"
-      href=" {% static 'cssJs/bootstrap.min.css' %}"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
-    <script
-      src="{% static 'cssJs/jquery3.2.1.slim.min.js' %}"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="{% static 'cssJs/popper.min.js' %}"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="{% static 'cssJs/bootstrap.min.js' %}"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script>
+    <link rel="stylesheet" href=" {% static 'cssJs/bootstrap.min.css' %}" />
+    <script src="{% static 'cssJs/jquery3.2.1.slim.min.js' %}"></script>
+    <script src="{% static 'cssJs/popper.min.js' %}"></script>
+    <script src="{% static 'cssJs/bootstrap.min.js' %}"></script>
     <script type="text/javascript">
       {% block script %}{% endblock  %}
     </script>
@@ -56,9 +39,7 @@
         <div class="collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="{% url 'index' %}"
-                >DEV <span class="sr-only">(current)</span></a
-              >
+              <a class="nav-link" href="{% url 'index' %}">DEV</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'login' %}">LOGIN</a>
@@ -114,5 +95,6 @@
       ></div>
       <!-- Copyright -->
     </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   </body>
 </html>

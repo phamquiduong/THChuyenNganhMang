@@ -15,7 +15,8 @@
         src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
       />
       <p id="profile-name" class="profile-name-card"></p>
-      <form class="form-signin">
+      <form class="form-signin" method="POST" action="">
+        {% csrf_token %}
         <span id="reauth-email" class="reauth-email"></span>
         <input
           type="text"
@@ -23,6 +24,7 @@
           class="form-control"
           placeholder="Your Full Name"
           autofocus
+          name="name"
         />
         <input
           type="text"
@@ -31,6 +33,7 @@
           placeholder="UserName or Email*"
           required
           autofocus
+          name="userName"
         />
         <input
           type="password"
@@ -38,6 +41,7 @@
           class="form-control"
           placeholder="Password*"
           required
+          name="password"
         />
         <input
           type="password"
@@ -52,6 +56,7 @@
       </form>
       <!-- /form -->
       <a href="{% url 'login' %}" class="forgot-password"> Login </a>
+      <p class="text-danger mt-3 font-weight-bold">{{ mess }}</p>
     </div>
   </div>
   <!-- /card-container -->
