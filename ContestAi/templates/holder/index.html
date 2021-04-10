@@ -1,0 +1,53 @@
+{% extends 'base.html' %} {% block script %} {% include './javaScript.js' %}
+<!--<div></div>-->
+{% endblock %} {% block css %} {% include './style.css' %} {% endblock %}
+<!--<div></div>-->
+{% block title %}Sign Up{% endblock%}
+<!--<div></div>-->
+{% load static %} {% block body %}
+<div class="container" style="min-height: 80vh">
+  <h1 class="text-center mt-5 mb-5">Contest Holder Pages</h1>
+  <!-- /card-container -->
+  <div class="row">
+    <div class="col-lg-9 col-sm-12">
+      {% for data in dataContests %}
+
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5 class="card-title">{{ data.title }}</h5>
+          <h6 class="card-subtitle text-muted">Holder: {{ name }}</h6>
+        </div>
+        <div class="card-body">
+          <div>{{ data.description }}</div>
+          <div class="mt-4">
+            <h6 class="card-subtitle text-muted">Time schedule:</h6>
+            <ul class="list-group mt-2">
+              <li class="list-group-item">
+                Time Register: {{ data.timeRegister }}
+              </li>
+              <li class="list-group-item">Time Start: {{ data.timeStart }}</li>
+              <li class="list-group-item">Time End: {{ data.timeEnd }}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-success float-right">See Detail</button>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="col-lg-3 col-sm-12 pb-4">
+      <div class="card card-sidebar">
+        <div class="card-body text-center">
+          <img
+            id="profile-img"
+            class="profile-img-card"
+            src="{% static 'images/cat.jpg' %}"
+          />
+          <button class="btn btn-primary">Create A New Contest</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
