@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
 
+    'django_rq',
     'devs',
     'Auth',
 ]
@@ -125,3 +126,13 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static')
 ]
+
+RQ_QUEUES = {
+    'default': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        "DB": 0, 
+        "DEFAULT_TIMEOUT": 360,
+    },
+}
+

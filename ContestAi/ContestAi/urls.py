@@ -6,3 +6,7 @@ urlpatterns = [
     path('', include('devs.urls')),
     path('', include('Auth.urls')),
 ]
+
+urlpatterns += [
+    path('django-rq/', include('django_rq.urls'))
+]

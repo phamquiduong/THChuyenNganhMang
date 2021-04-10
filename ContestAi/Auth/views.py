@@ -27,7 +27,7 @@ class SignUp(View):
             context = {
                 'mess':'Sign Up Success',
             }
-            return render(request, templateLogin, context);
+            return render(request, templateLogin, context)
         except Exception as e:
             context = {
                 'mess':'Sign Up Fail',
