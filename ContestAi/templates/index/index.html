@@ -8,6 +8,8 @@
     {% endfor %}
   </ul>
   <form class="form-signin" action="" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+    <embed src="../static/contest/contest1/Contest1.pdf" width="800px" height="500px"/>
+  </br>
     File Model cần nộp (định dạng *.pkl)
     <input 
       type="file" 
@@ -15,7 +17,7 @@
       accept=".pkl"
     />
     <button class="btn btn-primary btn-signin" type="submit">
-      Sign in
+      Nộp model
     </button>
   </form>
   <!-- /form -->
