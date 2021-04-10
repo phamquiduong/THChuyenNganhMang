@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views import View
 from django import template
 from . import models
@@ -55,8 +55,8 @@ class Index(View):
         obj = models.Dev.objects.get(id=3)
         obj.userDescription='Pending'
         obj.save()
-        run_tester.delay('tester')
-        return Index.get(self,request)
+        run_tester.delay('test')
+        return redirect('/')
 
 # class Login(View):
 #     template = 'login/login.html'

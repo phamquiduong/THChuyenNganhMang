@@ -1,7 +1,7 @@
 import pickle
 import os
 
-dir_path = os.path.dirname(os.path.realpath(__file__))+"\\"
+dir_path = os.path.dirname(os.path.realpath(__file__))+"/"
 
 def check(s):
     model = pickle.load(open(dir_path+s+'.pkl', 'rb'))
