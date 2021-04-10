@@ -2,20 +2,17 @@
 <!--<div></div>-->
 {% endblock %} {% block css %} {% include './style.css' %} {% endblock %}
 <!--<div></div>-->
-{% block title %}Contest Holder Pages{% endblock%}
+{% block title %}Contest Details Pages{% endblock%}
 <!--<div></div>-->
 {% load static %} {% block body %}
 <div class="container" style="min-height: 80vh">
-  <h1 class="text-center mt-5 mb-5 fade-in">Contest Holder Pages</h1>
+  <h1 class="text-center mt-5 mb-5 fade-in">Contest Details Pages</h1>
   <!-- /card-container -->
   <div class="row">
     <div class="col-lg-9 col-sm-12">
       {% for data in dataContests %}
 
-      <div
-        class="card mb-4 fade-in-left"
-        style="animation-delay: calc({{ forloop.counter0}} * 0.3s);"
-      >
+      <div class="card mb-4 fade-in-left">
         <div class="card-header">
           <h5 class="card-title">{{ data.title }}</h5>
           <h6 class="card-subtitle text-muted">Holder: {{ name }}</h6>
@@ -34,8 +31,10 @@
           </div>
         </div>
         <div class="card-footer">
-          <a href="{% url 'detail' id=data.idContest %}"
-            ><button class="btn btn-success float-right">See Detail</button></a
+          <a href="{% url 'holder' %}"
+            ><button class="btn btn-success float-right">
+              Back To See All
+            </button></a
           >
         </div>
       </div>

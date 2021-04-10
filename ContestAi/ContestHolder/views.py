@@ -1,8 +1,8 @@
 from django.shortcuts import render,redirect
 from django.views import View
 from django import template
+from service import path,session
 
-templateHolder =  'holder/index.html'
 
 mockData = [{
   "idContest": "5664c5c9-a3ff-4093-b734-d66c234e46ff",
@@ -47,16 +47,37 @@ mockData = [{
 }]
 
 class HolderView(View):
-
     def get(self, request):
-        userName = str()
-        try:
-            userName = request.session.get('user')['name']
-        except:
-            userName = ''
-        context = {
-            'name': userName,
-            'dataContests': mockData,
+        if session.isAuthenticated(request):
+            userName = str()
+            try:
+                userName = request.session.get('user')['name']
+            except:
+                userName = ''
+            context = {
+                'name': userName,
+                'dataContests': mockData,
+            }
+            return render(request, path.templateHolder , context)
+        else:
+            request.session['messAuth'] = 'Please Log In'
+            return redirect('../login')
+class ContestDetail(View):
+    def get(self, request,id):
+        if session.isAuthenticated(request):
+            userName = str()
+            try:
+                userName = request.session.get('user')['name']
+            except:
+                userName = ''
+            detailData = filter(lambda x: id == x['idContest'], mockData)
+            context = {
+                'name': userName,
+                'dataContests': detailData,
+            }
+            return render(request, path.templateDetail, context)
+        else:
+            request.session['messAuth'] = 'Please Log In'
+            return redirect('../login')
 
-        }
-        return render(request, templateHolder, context)
+      

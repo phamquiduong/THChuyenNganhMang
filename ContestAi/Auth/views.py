@@ -2,27 +2,26 @@ from django.shortcuts import render,redirect
 from django.views import View
 from django import template
 from . import models
+from service import path,session
 
 
-
-templateLogin = 'login/login.html'
-templateSignUp = 'signUp/signUp.html'
-templateHolder =  'holder/index.html'
 
 class Login(View):
 
     def get(self, request):
-        messAuth = str()
-        try:
-            messAuth = request.session.get('messAuth')
-            del request.session['messAuth']
-        except:
-            messAuth = ''
-        context = {
-            'mess': messAuth,
-        }
-        return render(request, templateLogin, context)
-    
+        if not session.isAuthenticated(request):
+            messAuth = str()
+            try:
+                messAuth = request.session.get('messAuth')
+                del request.session['messAuth']
+            except:
+                messAuth = ''
+            context = {
+                'mess': messAuth,
+            }
+            return render(request, path.templateLogin, context)
+        else:
+            return redirect('/holder')
     def post(seft, request):
         userName = request.POST.get("userName")
         password = request.POST.get("password")
@@ -38,21 +37,25 @@ class Login(View):
 class SignUp(View):
 
     def get(self, request):
-        messAuth = str()
-        try:
-            messAuth = request.session.get('messAuth')
-            del request.session['messAuth']
-        except:
-            messAuth = ''
-        context = {
-            'mess': messAuth,
-        }
-        return render(request, templateSignUp, context)
+        if not session.isAuthenticated(request):
+            messAuth = str()
+            try:
+                messAuth = request.session.get('messAuth')
+                del request.session['messAuth']
+            except:
+                messAuth = ''
+            context = {
+                'mess': messAuth,
+            }
+            return render(request, path.templateSignUp, context)
+        else:
+            return redirect('../holder')
 
     def post(seft, request):
         name = request.POST.get("name")
         userName = request.POST.get("userName")
         password = request.POST.get("password")
+        roleId = request.POST.get("role")
         try:
             p = models.Auth.objects.create(userName=userName, userDescription= name, password=password)
             p.save()
@@ -64,7 +67,6 @@ class SignUp(View):
 
 class LogOut(View):
     def post(self, request):
-        print("catch logout")
         try:
             request.session['messAuth'] = 'Log Out Success'
             del request.session['user']

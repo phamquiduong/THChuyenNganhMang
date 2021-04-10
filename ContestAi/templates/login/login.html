@@ -9,11 +9,11 @@
 {% load static %} {% block body %}
 <div class="container" style="min-height: 80vh">
   <h1 class="text-center mt-5">Login Pages</h1>
-  <div class="card card-container">
+  <div class="card card-container fade-in-left">
     <div class="card-body">
       <img
         id="profile-img"
-        class="profile-img-card"
+        class="profile-img-card fade-in"
         src="{% static 'images/cat.jpg' %}"
       />
       <p id="profile-name" class="profile-name-card"></p>
@@ -43,7 +43,7 @@
       </form>
       <!-- /form -->
       <a href="{% url 'signUp' %}" class="forgot-password"> Sign Up </a>
-      <p class="text-success mt-3 font-weight-bold">{{ mess }}</p>
+      <p class="text-warning mt-3 font-weight-bold">{{ mess }}</p>
     </div>
   </div>
   <!-- /card-container -->

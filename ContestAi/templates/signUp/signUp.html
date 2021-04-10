@@ -7,7 +7,7 @@
 {% block body %}
 <div class="container" style="min-height: 80vh">
   <h1 class="text-center mt-5">Sign Up Pages</h1>
-  <div class="card card-container">
+  <div class="card card-container fade-in-left">
     <div class="card-body">
       <img
         id="profile-img"
@@ -26,6 +26,19 @@
           autofocus
           name="name"
         />
+        <div class="input-group select">
+          <select
+            class="form-control"
+            id="inputGroupSelect02"
+            name="role"
+            style="height: 44px"
+            required
+          >
+            <option value="1">Participant</option>
+            <option value="2">Holder</option>
+          </select>
+          <label class="input-group-text" for="inputGroupSelect02">Roles</label>
+        </div>
         <input
           type="text"
           id="inputEmail"
