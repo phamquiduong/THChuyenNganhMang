@@ -70,7 +70,7 @@ class ContestDetail(View):
                 userName = request.session.get('user')['name']
             except:
                 userName = ''
-            detailData = filter(lambda x: id == x['idContest'], mockData)
+            detailData = list(filter(lambda x: id == x['idContest'], mockData))
             context = {
                 'name': userName,
                 'dataContests': detailData,
