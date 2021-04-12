@@ -8,9 +8,9 @@
 <div class="container" style="min-height: 80vh">
   <h1 class="text-center mt-5 mb-5 fade-in">Create Contest Pages</h1>
   <!-- /card-container -->
-  <div class="row">
-    <div class="col-lg-9 col-sm-12">
-      <form method="POST" action="">
+  <form method="POST" action="" id="create">
+    <div class="row">
+      <div class="col-lg-9 col-sm-12">
         <div class="card mb-4 fade-in-left">
           <div class="card-header">
             <h5 class="card-title">Create A New Contest</h5>
@@ -229,32 +229,29 @@
               </div>
             </div>
           </div>
-          <div class="card-footer">
-            <button type="submit" class="btn btn-success float-right ml-3">
-              Save <i class="bi bi-pencil-square ml-1"></i>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-12 pb-4">
+        <div class="card card-sidebar fade-in-right">
+          <div class="card-body text-center">
+            <img
+              id="profile-img"
+              class="profile-img-card"
+              src="{% static 'images/cat.jpg' %}"
+            />
+            <h6 class="card-subtitle text-muted mt-3">{{ name }}</h6>
+            <button type="submit" class="btn btn-success mt-3" for="create">
+              Save <i class="bi bi-save2"></i>
             </button>
             <a href="{% url 'holder' %}"
-              ><button class="btn btn-warning float-right">
-                Back To See All
-              </button></a
+              ><button class="btn btn-warning mt-3">Back To See All</button></a
             >
           </div>
         </div>
-        {% csrf_token %}
-      </form>
-    </div>
-    <div class="col-lg-3 col-sm-12 pb-4">
-      <div class="card card-sidebar fade-in-right">
-        <div class="card-body text-center">
-          <img
-            id="profile-img"
-            class="profile-img-card"
-            src="{% static 'images/cat.jpg' %}"
-          />
-        </div>
       </div>
     </div>
-  </div>
+    {% csrf_token %}
+  </form>
 </div>
 
 {% comment %} Modal {% endcomment %} {% endblock %}

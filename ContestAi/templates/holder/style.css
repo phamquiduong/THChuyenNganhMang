@@ -1,5 +1,17 @@
+:root {
+  --space: 2rem;
+  --space-xs: calc(var(--space) / 3);
+  --space-sm: calc(var(--space) / 2);
+  --space-md: calc(var(--space) * 2);
+}
 .card-sidebar {
-  height: 100%;
+  --offset: var(--space);
+  flex-grow: 1;
+  flex-basis: 300px;
+  min-height: 300px;
+  align-self: start;
+  position: sticky;
+  top: var(--offset);
 }
 .card {
   -webkit-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.5);
