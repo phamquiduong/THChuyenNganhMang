@@ -17,3 +17,18 @@
   border-radius: 50%;
   object-fit: cover;
 }
+.embed-content {
+  width: 100%;
+  min-height: 500px;
+  margin-top: 14px;
+}
+.embed-data {
+  width: 100%;
+  min-height: 300px;
+  margin-top: 14px;
+}
+.content-item {
+  border: 1px solid gray;
+  border-radius: 6px;
+  padding: 15px;
+}

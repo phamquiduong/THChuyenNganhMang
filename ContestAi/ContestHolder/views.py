@@ -74,6 +74,11 @@ class ContestDetail(View):
             context = {
                 'name': userName,
                 'dataContests': detailData,
+                'linkContest': 'demo/Contest1.pdf',
+                'linkDataTrain': 'demo/test1.txt',
+                'inRegis': 80,
+                'inTodo': 53,
+                'inResult':69
             }
             return render(request, path.templateDetail, context)
         else:

@@ -18,9 +18,36 @@
           <h6 class="card-subtitle text-muted">Holder: {{ name }}</h6>
         </div>
         <div class="card-body">
-          <div>{{ data.description }}</div>
-          <div class="mt-4">
-            <h6 class="card-subtitle text-muted">Time schedule:</h6>
+          <div class="content-item">
+            <h6 class="card-subtitle text-muted mb-2">Contest Description</h6>
+            {{ data.description }}
+          </div>
+          <div class="mt-4 content-item">
+            <h6 class="card-subtitle text-muted">Contest Content</h6>
+            <embed
+              src="{% static '' %}{{ linkContest }}"
+              class="embed-content"
+            />
+          </div>
+          <div class="mt-4 content-item">
+            <h6 class="card-subtitle text-muted">Data For Train</h6>
+            <embed
+              src="{% static '' %}{{ linkDataTrain }}"
+              class="embed-data"
+            />
+            <a
+              href="{% static '' %}{{ linkDataTrain }}"
+              download="{{ linkDataTrain }}"
+              ><button class="btn btn-info mt-2">
+                Download Data For Train
+              </button></a
+            >
+          </div>
+          <div class="mt-4 content-item">
+            <div id="chartContainer" style="height: 300px; width: 100%"></div>
+          </div>
+          <div class="mt-4 content-item">
+            <h6 class="card-subtitle text-muted">Time schedule</h6>
             <ul class="list-group mt-2">
               <li class="list-group-item">
                 Time Register: {{ data.timeRegister }}
@@ -31,8 +58,15 @@
           </div>
         </div>
         <div class="card-footer">
+          <button
+            class="btn btn-success float-right ml-3"
+            data-toggle="modal"
+            data-target="#editModal"
+          >
+            Edit <i class="bi bi-pencil-square ml-1"></i>
+          </button>
           <a href="{% url 'holder' %}"
-            ><button class="btn btn-success float-right">
+            ><button class="btn btn-warning float-right">
               Back To See All
             </button></a
           >
@@ -54,4 +88,41 @@
     </div>
   </div>
 </div>
+
+{% comment %} Modal {% endcomment %}
+
+<div
+  class="modal fade"
+  id="editModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">...</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
 {% endblock %}
