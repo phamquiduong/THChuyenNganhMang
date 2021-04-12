@@ -11,6 +11,7 @@ mockData = [{
   "timeRegister": "12/25/2020",
   "timeStart": "10/4/2020",
   "timeEnd": "4/7/2021",
+  "timeOut": "1234",
   "language": "Malayalam"
 }, {
   "idContest": "1616b720-61fb-4265-a693-2d2c87b5d661",
@@ -61,7 +62,7 @@ class HolderView(View):
             return render(request, path.templateHolder , context)
         else:
             request.session['messAuth'] = 'Please Log In'
-            return redirect('../login')
+            return redirect('login')
 class ContestDetail(View):
     def get(self, request,id):
         if session.isAuthenticated(request):
@@ -84,5 +85,33 @@ class ContestDetail(View):
         else:
             request.session['messAuth'] = 'Please Log In'
             return redirect('../login')
+    def post(self, request,id):
+        title = request.POST.get("title")
+        description = request.POST.get("description")
+        dateStart = request.POST.get("dateStart")
+        timeStart = request.POST.get("timeStart")
+        return redirect('holder')
+
+class CreateContest(View):
+    def get(self, request):
+        if session.isAuthenticated(request):
+            userName = str()
+            try:
+                userName = request.session.get('user')['name']
+            except:
+                userName = ''
+            context = {
+                'name': userName,
+            }
+            return render(request, path.templateCreate, context)
+        else:
+            request.session['messAuth'] = 'Please Log In'
+            return redirect('login')
+    def post(self, request):
+        title = request.POST.get("title")
+        description = request.POST.get("description")
+        dateStart = request.POST.get("dateStart")
+        timeStart = request.POST.get("timeStart")
+        return redirect('holder')
 
       

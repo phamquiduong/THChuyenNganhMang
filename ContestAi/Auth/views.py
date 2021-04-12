@@ -21,7 +21,7 @@ class Login(View):
             }
             return render(request, path.templateLogin, context)
         else:
-            return redirect('/holder')
+            return redirect('holder')
     def post(seft, request):
         userName = request.POST.get("userName")
         password = request.POST.get("password")
@@ -30,7 +30,7 @@ class Login(View):
         }
         #do sth 
         #case success login
-        return redirect('../holder')
+        return redirect('holder')
 
 
 
@@ -49,7 +49,7 @@ class SignUp(View):
             }
             return render(request, path.templateSignUp, context)
         else:
-            return redirect('../holder')
+            return redirect('holder')
 
     def post(seft, request):
         name = request.POST.get("name")
@@ -72,5 +72,5 @@ class LogOut(View):
             del request.session['user']
         except:
             request.session['messAuth'] = 'Log Out Fail'
-            return redirect('../login')
-        return redirect('../login')
+            return redirect('login')
+        return redirect('login')

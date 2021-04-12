@@ -49,7 +49,9 @@
             class="profile-img-card"
             src="{% static 'images/cat.jpg' %}"
           />
-          <button class="btn btn-primary">Create A New Contest</button>
+          <a href="{% url 'create' %}"
+            ><button class="btn btn-primary">Create A New Contest</button></a
+          >
         </div>
       </div>
     </div>
