@@ -234,14 +234,26 @@
         </div>
 
         <div class="form-group row">
-          <label for="regis" class="col-sm-2 col-form-label"
+          <label for="dateregis" class="col-sm-2 col-form-label"
+            >Date Register</label
+          >
+          <div class="col-sm-4">
+            <input
+              type="date"
+              class="form-control"
+              id="dateregis"
+              name="dateRegister"
+              value="{{ data.timeRegister }}"
+            />
+          </div>
+          <label for="timeregis" class="col-sm-2 col-form-label"
             >Time Register</label
           >
-          <div class="col-sm-12 col-lg-10">
+          <div class="col-sm-4">
             <input
-              type="datetime-local"
+              type="time"
               class="form-control"
-              id="regis"
+              id="timeregis"
               name="timeRegister"
               value="{{ data.timeRegister }}"
             />
@@ -249,10 +261,22 @@
         </div>
 
         <div class="form-group row">
-          <label for="start" class="col-sm-2 col-form-label">Time Start</label>
-          <div class="col-sm-12 col-lg-10">
+          <label for="datestart" class="col-sm-2 col-form-label"
+            >Date Start</label
+          >
+          <div class="col-sm-4">
             <input
-              type="datetime-local"
+              type="date"
+              class="form-control"
+              id="datestart"
+              name="dateStart"
+              value="{{ data.timeStart }}"
+            />
+          </div>
+          <label for="start" class="col-sm-2 col-form-label">Time Start</label>
+          <div class="col-sm-4">
+            <input
+              type="time"
               class="form-control"
               id="start"
               name="timeStart"
@@ -262,10 +286,20 @@
         </div>
 
         <div class="form-group row">
-          <label for="end" class="col-sm-2 col-form-label">Time End</label>
-          <div class="col-sm-12 col-lg-10">
+          <label for="dateend" class="col-sm-2 col-form-label">Date End</label>
+          <div class="col-sm-4">
             <input
-              type="datetime-local"
+              type="date"
+              class="form-control"
+              id="dateend"
+              name="dateEnd"
+              value="{{ data.timeEnd }}"
+            />
+          </div>
+          <label for="end" class="col-sm-2 col-form-label">Time End</label>
+          <div class="col-sm-4">
+            <input
+              type="time"
               class="form-control"
               id="end"
               name="timeEnd"
