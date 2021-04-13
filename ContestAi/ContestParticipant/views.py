@@ -9,6 +9,7 @@ import sqlite3
 # Create your views here.
 
 def index(request):
+    id = '1'
         #update Profile
     if request.method == 'POST':
         print("Update Profile comming soon")
@@ -20,7 +21,7 @@ def index(request):
     try:
         conn = sqlite3.connect('./db.sqlite3')
 
-        cmd = 'SELECT * FROM ContestAdmin_account'
+        cmd = 'SELECT * FROM ContestAdmin_status JOIN ContestAdmin_contest ON ContestAdmin_status.IDcontest = ContestAdmin_contest.id JOIN ContestAdmin_language ON ContestAdmin_language.id = ContestAdmin_contest.IDLanguage WHERE ContestAdmin_status.IDUser = ' + id
         contestSubmited = conn.execute(cmd)
         
         cmd = 'SELECT * FROM ContestAdmin_account'
