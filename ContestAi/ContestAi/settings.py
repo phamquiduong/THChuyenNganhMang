@@ -43,7 +43,8 @@ INSTALLED_APPS = [
 
     # 'devs',
     'Auth',
-    'ContestAdmin'
+    'ContestAdmin',
+    'ContestParticipant.apps.ContestparticipantConfig'
 ]
 
 MIDDLEWARE = [
