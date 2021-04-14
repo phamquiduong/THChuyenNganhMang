@@ -7,25 +7,27 @@
     <title>Document</title>
 </head>
 <body>
+    <h2> ID User: {{id}} </h2>
+
     {%  if haveError == True %}
-        <script type="text/javascript">
-            window.location.href = "ContestParticipant/error.html"
-        </script>
+        <h2> Đã có lỗi xảy ra </h2>
+    {% else %}
+
+        <h2>Contest đã hoành thành</h2>
+        {% for item in contestSubmited%}
+           {{item}} <br>
+        {% endfor %}
+
+        <h2>Contest đã đăng ký</h2>
+        {% for item in contestRegisted%}
+           {{item}} <br>
+        {% endfor %}
+
+        <h2>Contest chưa đăng ký</h2>
+        {% for item in contestAll%}
+            {{item}} <br>
+        {% endfor %}
+
     {% endif %}
-
-    <h2>Contest đã hoành thành</h2>
-    {% for item in contestSubmited%}
-        {{item}} <br>
-    {% endfor %}
-
-    <h2>Contest đã đăng ký</h2>
-    {% for item in contestRegisted%}
-        {{item}} <br>
-    {% endfor %}
-
-    <h2>Contest</h2>
-    {% for item in contestAll%}
-        {{item}} <br>
-    {% endfor %}
 </body>
 </html>
