@@ -17,6 +17,7 @@ class Contest(models.Model):
     TimeRegister = models.DateTimeField()
     TimeStart = models.DateTimeField()
     TimeEnd = models.DateTimeField()
+    TimeOut = models.IntegerField()
     IDLanguage = models.CharField(max_length=100)
 
 class Status(models.Model):
