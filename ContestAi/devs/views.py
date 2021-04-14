@@ -2,9 +2,9 @@ from django.shortcuts import render,redirect
 from django.views import View
 from django import template
 from . import models
-from django_rq import job
+import django_rq
+import rq 
 
-@job
 def run_tester(s):
     import importlib
     import sys
@@ -14,16 +14,21 @@ def run_tester(s):
     spec.loader.exec_module(module)
     #contest = importlib.import_module('./static/contest/contest1/tester', package=None)
     obj = models.Dev.objects.get(id=3)
-    obj.userDescription=module.check(s)
+    try:
+        obj.userDescription=module.check(s)
+    except rq.timeouts.JobTimeoutException:
+        obj.userDescription="TLE"
+    except:
+        obj.userDescription="Compile Error"
     obj.save()
 
 class Index(View):
     template = 'index/index.html'
     obj = models.Dev.objects.get(id=3)
     context = {
-        "name": "Tue Anh Truong",
+        "name": "Truong Quang Hung",
         "language": ["Python", "JS", "C#", "C++", "Java"],
-        "condition": False,
+        "condition": True,
         "data": obj,
     }
 
@@ -48,14 +53,19 @@ class Index(View):
     def post(self, request):
         # temp=models.Dev.objects.last()
         # print(temp.id)
-        f = request.FILES["file"]
-        with open('./static/contest/contest1/test.pkl', 'wb+') as destination:
-            for chunk in f.chunks():
-                destination.write(chunk)
-        obj = models.Dev.objects.get(id=3)
-        obj.userDescription='Pending'
-        obj.save()
-        run_tester.delay('test')
+        try:
+            f = request.FILES["file"]
+            with open('./static/contest/contest1/test.pkl', 'wb+') as destination:
+                for chunk in f.chunks():
+                    destination.write(chunk)
+            obj = models.Dev.objects.get(id=3)
+            obj.userDescription='Pending'
+            obj.save()
+            c=2
+            queue = django_rq.get_queue('default',default_timeout=c)
+            queue.enqueue(run_tester,'test',result_ttl=0)   
+        except:
+            print("No File select")  
         return redirect('/')
 
 # class Login(View):
