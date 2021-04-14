@@ -5,30 +5,43 @@ from . import models
 from service import path,session
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+import re
 
 class Login(View):
 
     def get(self, request):
         if request.user.is_authenticated == True:
-            logout(request)
-        return render(request, path.templateLogin)
+            return HttpResponse('Ban can dang xuat')
+        else:
+            return render(request, path.templateLogin)
     def post(self, request):
         us = request.POST.get("UserName")
-        pw = request.POST.get("PassWord")
-        my_user = authenticate(request, username = User.objects.get(email = us).username, password = pw)
-        if my_user is None:
+        us = us.lower()
+        regex = re.compile('[_!#$%^&*()<>?/\|}{~:] ')
+        if(regex.search(us) == None):
             contest = {
-                'mess': 'Tai khoan khong hop le'
+                'mess': 'Ten dang nhap khong hop le'
             }
             return render(request, path.templateLogin, contest)
         else:
-            login(request,my_user)
-            if request.user.is_superuser == True:
-                return HttpResponse('Welcome'+request.user.username)
-            elif request.user.is_staff == True:
-                return HttpResponse('Hello'+request.user.username)
-            elif request.user.is_active == True:
-                return HttpResponse('Hi'+request.user.username) 
+            pw = request.POST.get("PassWord")
+            try:
+                my_user = authenticate(request, username = User.objects.get(email = us).username, password = pw)
+            except:
+                my_user = authenticate(request, username = us, password = pw)
+            if my_user is None:
+                contest = {
+                    'mess': 'Tai khoan dang nhap khong hop le'
+                }
+                return render(request, path.templateLogin, contest)
+            else:
+                login(request,my_user)
+                if request.user.is_superuser == True:
+                    return HttpResponse('Welcome'+request.user.username)
+                elif request.user.is_staff == True:
+                    return HttpResponse('Hello'+request.user.username)
+                elif request.user.is_active == True:
+                    return HttpResponse('Hi'+request.user.username) 
 
 
 class SignUp(View):
