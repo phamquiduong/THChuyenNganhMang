@@ -46,6 +46,22 @@
           </div>
           <div class="mt-4 content-item">
             <div id="chartContainer" style="height: 300px; width: 100%"></div>
+            <div id="myDropdown" class="dropdown_content">
+            <h6 class="card-subtitle text-muted mb-2 mt-3">List of Participant</h6>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search.." 
+              id="myInput" 
+              onkeyup="filterFunction()"
+            />
+
+            <div class="options_container"> 
+            {% for participant in listParticipants %}
+            <li class="list-group-item">{{ participant.namePaticipant }}</li>
+            {% endfor %}
+            </div>
+            </div>
           </div>
           <div class="mt-4 content-item">
             <h6 class="card-subtitle text-muted">Time schedule</h6>
@@ -67,8 +83,18 @@
             Edit <i class="bi bi-pencil-square ml-1"></i>
           </button>
           <a href="{% url 'holder' %}"
-            ><button class="btn btn-warning float-right">
+            ><button class="btn btn-warning float-left">
               Back To See All
+            </button></a
+          >
+          <a href="{% url 'delete' id=data.idContest%}"
+            ><button class="btn btn-danger float-right ml-3">
+              Delete This Contest
+            </button></a
+          >
+          <a href="{% url 'status' id=data.idContest%}"
+            ><button class="btn btn-info float-right ml-3">
+              See Status
             </button></a
           >
         </div>

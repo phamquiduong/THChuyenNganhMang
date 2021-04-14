@@ -22,7 +22,7 @@ class Login(View):
             return render(request, path.templateLogin, context)
         else:
             return redirect('holder')
-    def post(seft, request):
+    def post(self, request):
         userName = request.POST.get("userName")
         password = request.POST.get("password")
         request.session['user'] = {
@@ -51,7 +51,7 @@ class SignUp(View):
         else:
             return redirect('holder')
 
-    def post(seft, request):
+    def post(self, request):
         name = request.POST.get("name")
         userName = request.POST.get("userName")
         password = request.POST.get("password")
@@ -60,7 +60,7 @@ class SignUp(View):
             p = models.Auth.objects.create(userName=userName, userDescription= name, password=password)
             p.save()
             request.session['messAuth'] = 'Sign Up Success'
-            return redirect('../login')
+            return redirect('login')
         except Exception as e:
             request.session['messAuth'] = 'Sign Up Fail'
             return redirect('./')
