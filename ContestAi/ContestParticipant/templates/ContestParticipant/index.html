@@ -5,9 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script>
+        function checkPass(){
+            var x = document.forms['form1']['firstPass'].value
+            var y = document.forms['form1']['newPass'].value
+            if (x===y) document.getElementById('passMatch').style.display = 'inline';
+            else document.getElementById('passMatch').style.display = 'none';
+        }
+    </script>
+    <style>
+        .post{
+            cursor: pointer;
+        }
+        .post:hover{
+            border: 1px solid rgb(138, 138, 138);
+        }
+    </style>
 </head>
 <body>
-    <h2> ID User: {{id}} </h2>
+    <h2> ID User: {{id}} , Hello {{infoUser.1}} {{infoUser.2}}</h2>
 
     {%  if haveError == True %}
         <h2> Đã có lỗi xảy ra </h2>
@@ -15,12 +31,30 @@
 
         <h2>Contest đã hoành thành</h2>
         {% for item in contestSubmited%}
-           {{item}} <br>
+            <div class = 'post' onclick="alert('Xem chi tiết contest với ID = {{item.2}}')">
+                <b>.....Contest.....</b><br>
+                Title: {{item.8}} <br>
+                Description: {{item.9}} <br>
+                Time register: {{item.13}} <br>
+                Time start: {{item.14}} <br>
+                Time end: {{item.15}} <br>
+                Language: {{item.18}} <br>
+                <b>.....Personal.....</b><br>
+                Status: {{item.3}} <br>
+                Submit time: {{item.4}} <br> <br>
+            </div>
         {% endfor %}
-
+            
         <h2>Contest đã đăng ký</h2>
         {% for item in contestRegisted%}
-           {{item}} <br>
+            <div class = 'post' onclick="alert('Xem chi tiết contest với ID = {{item.2}}')">
+                Title: {{item.5}} <br>
+                Description: {{item.6}} <br>
+                Time register: {{item.10}} <br>
+                Time start: {{item.11}} <br>
+                Time end: {{item.12}} <br>
+                Language: {{item.15}} <br> <br>
+           </div>
         {% endfor %}
 
         <h2>Contest chưa đăng ký</h2>
@@ -29,5 +63,17 @@
         {% endfor %}
 
     {% endif %}
+
+    <form method="post" name='form1'>
+        {% csrf_token %}
+        <h2> Update Profile </h2>
+        Username: <input type = 'text' name='userName' value='{{infoUser.0}}'> <br>
+        Last name: <input type = 'text' name='lastName' value='{{infoUser.1}}'> <br>
+        First name: <input type = 'text' name='firstName' value='{{infoUser.2}}'> <br>
+        Password: <input type = 'password' name='firstPass'><br>
+        Retype password: <input type = 'password' name='newPass' onkeyup="checkPass()">
+        <label id = 'passMatch' style='display: none;'>✔</label> <br>
+        <button type="submit">Cập nhật</button>
+    </form>
 </body>
 </html>

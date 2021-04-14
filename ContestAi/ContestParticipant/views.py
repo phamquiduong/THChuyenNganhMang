@@ -13,8 +13,6 @@ def index(request):
         #update Profile
     if request.method == 'POST':
         print("Update Profile comming soon")
-        return
-        
 
     haveError = False
         #Select Database
@@ -29,12 +27,15 @@ def index(request):
         
         cmd = 'SELECT * FROM ContestAdmin_contest JOIN ContestAdmin_language ON ContestAdmin_contest.IDLanguage = ContestAdmin_language.id WHERE ContestAdmin_contest.id NOT IN (SELECT (IDcontest) FROM ContestAdmin_registercontest WHERE ContestAdmin_registercontest.IDUser = ' + id + ')'
         contestAll = conn.execute(cmd)
+
+        cmd = 'SELECT username, last_name, first_name FROM auth_user WHERE id=' + id
+        for row in conn.execute(cmd):
+            infoUser = row
+
     except EOFError as e:
         print(e)
         haveError = True
 
-
-    # haveError = True
         #Render Site
-    dic = {'id': id, 'haveError': haveError, 'contestSubmited': contestSubmited, 'contestRegisted': contestRegisted, 'contestAll': contestAll}
+    dic = {'id': id, 'infoUser': infoUser, 'haveError': haveError, 'contestSubmited': contestSubmited, 'contestRegisted': contestRegisted, 'contestAll': contestAll}
     return render(request, 'ContestParticipant/index.html', dic)
