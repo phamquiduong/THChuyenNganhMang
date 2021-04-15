@@ -11,14 +11,15 @@ class Login(View):
 
     def get(self, request):
         if request.user.is_authenticated == True:
-            return HttpResponse('Ban can dang xuat')
+            return redirect('../')
         else:
             return render(request, path.templateLogin)
     def post(self, request):
         us = request.POST.get("UserName")
         us = us.lower()
-        regex = re.compile('[_!#$%^&*()<>?/\|}{~:] ')
-        if(regex.search(us) == None):
+        regex = re.compile('[_!#$%^&*()<>?/|}{~:\s\'\"\[\]]')
+        regex1 = re.compile('^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$')
+        if(regex.search(us) and not(regex1.search(us))):
             contest = {
                 'mess': 'Ten dang nhap khong hop le'
             }
@@ -47,32 +48,54 @@ class Login(View):
 class SignUp(View):
 
     def get(self, request):
-        if not session.isAuthenticated(request):
-            messAuth = str()
-            try:
-                messAuth = request.session.get('messAuth')
-                del request.session['messAuth']
-            except:
-                messAuth = ''
-            context = {
-                'mess': messAuth,
-            }
-            return render(request, path.templateSignUp, context)
+        if request.user.is_authenticated == True:
+            return redirect('../')
         else:
-            return redirect('holder')
+            return render(request, path.templateSignUp)
 
     def post(self, request):
-        name = request.POST.get("name")
-        userName = request.POST.get("userName")
+        #name = request.POST.get("name")
+        #userName = request.POST.get("userName")
+        userName = request.POST.get("name")
+        userName = userName.lower()
+        regex = re.compile('[_!@#$%^&*()<>?/|}{~:\s\'\"\[\]]')
+        regex1 = re.compile('^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$')
+        email = request.POST.get("email")
         password = request.POST.get("password")
-        roleId = request.POST.get("role")
-        try:
-            
-            request.session['messAuth'] = 'Sign Up Success'
+        if (regex.search(userName)):
+            contest = {
+                'mess': 'Ten dang ki khong hop le'
+            }
+            return render(request, path.templateSignUp, contest)
+        elif (User.objects.filter(username=userName)):
+            contest = {
+                'mess': 'Ten dang ki da ton tai'
+            }
+            return render(request, path.templateSignUp, contest)
+        elif (not regex1.search(email)):
+            contest = {
+                'mess': 'Email dang ki khong hop le'
+            }
+            return render(request, path.templateSignUp, contest)
+        elif (User.objects.filter(email=email)):
+            contest = {
+                'mess': 'Email dang ki da ton tai'
+            }
+            return render(request, path.templateSignUp, contest)
+        else:
+            user = User.objects.create_user(username=userName, email=email, password=password)
+            user.is_active = True
+            user.is_staff = False
+            user.is_superuser = False
+            user.save()
             return redirect('../login')
-        except Exception as e:
-            request.session['messAuth'] = 'Sign Up Fail'
-            return redirect('./')
+        #roleId = request.POST.get("role")
+        #try:
+            #request.session['messAuth'] = 'Sign Up Success'
+            #return redirect('../login')
+        #except Exception as e:
+            #request.session['messAuth'] = 'Sign Up Fail'
+            #return redirect('./')
 
 class LogOut(View):
     def post(self, request):
