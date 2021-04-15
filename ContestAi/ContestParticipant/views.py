@@ -2,11 +2,14 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import sqlite3
 
-# import random
-# from django.core.files.storage import FileSystemStorage
-
-
 # Create your views here.
+
+def clean(x):
+    uni = ('à','á','ả','ã','ạ','â','ầ','ấ','ẩ','ẫ','ậ','ă','ằ','ắ','ẳ','ẵ','ặ','è','é','ẻ','ẽ','ẹ','ê','ề','ế','ể','ễ','ệ','đ','ì','í','ỉ','ĩ','ị','ò','ó','ỏ','õ','ọ','ô','ồ','ố','ổ','ỗ','ộ','ơ','ờ','ớ','ở','ỡ','ợ','ù','ú','ủ','ũ','ụ','ư','ừ','ứ','ử','ữ','ự','ỳ','ý','ỷ','ỹ')
+    t = ''
+    for c in x:
+        if ('a'<=c and c<='z') or ('A'<=c and c<='Z') or ('0'<=c and c<='9') or (c=='@') or (c in uni): t+=c
+    return t
 
 def index(request):
         #Bằng 1 cách thần kỳ nào đó lấy trong cái gì đó.. Có được ID
@@ -16,10 +19,11 @@ def index(request):
 
         #Proc
     if request.method == 'POST':
+
         if request.POST.get('feature')=='2':
                 #Remove Registed
-            iDcontest = request.POST.get('idContest')
-            idUser = request.POST.get('idUser')
+            iDcontest = clean(request.POST.get('idContest'))
+            idUser = clean(request.POST.get('idUser'))
             try:
                 conn = sqlite3.connect('./db.sqlite3')
                 cmd = "DELETE FROM ContestAdmin_registercontest WHERE IDcontest='{}' AND IDUser='{}'".format(iDcontest,idUser)
@@ -32,8 +36,8 @@ def index(request):
     
         if request.POST.get('feature')=='3':
                 #Remove Registed
-            iDcontest = request.POST.get('idContest')
-            idUser = request.POST.get('idUser')
+            iDcontest = clean(request.POST.get('idContest'))
+            idUser = clean(request.POST.get('idUser'))
             try:
                 conn = sqlite3.connect('./db.sqlite3')
                 cmd = "INSERT INTO ContestAdmin_registercontest(IDcontest,IDUser) VALUES ('{}','{}')".format(iDcontest,idUser)
@@ -44,12 +48,12 @@ def index(request):
                 haveError = True
 
         if request.POST.get('feature')=='4':
-            userName = request.POST.get('userName')
-            lastName = request.POST.get('lastName')
-            firstName = request.POST.get('firstName')
-            email = request.POST.get('email')
-            newPass = request.POST.get('newPass')
-            idUser = request.POST.get('idUser')
+            userName = clean(request.POST.get('userName'))
+            lastName = clean(request.POST.get('lastName'))
+            firstName = clean(request.POST.get('firstName'))
+            email = clean(request.POST.get('email'))
+            newPass = clean(request.POST.get('newPass'))
+            idUser = clean(request.POST.get('idUser'))
 
             if (userName!='' and lastName!='' and firstName!='' and email!=''):
                 try:
