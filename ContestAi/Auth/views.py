@@ -27,6 +27,7 @@ class Login(View):
         password = request.POST.get("password")
         request.session['user'] = {
             'name' : userName,
+            'id' : 1,
         }
         #do sth 
         #case success login

@@ -3,7 +3,7 @@ from django.views import View
 from django import template
 from service import path,session
 from .data import mockData, mockUser, mockStatus
-
+from . import models
 
 class HolderView(View):
     def get(self, request):
@@ -21,6 +21,7 @@ class HolderView(View):
         else:
             request.session['messAuth'] = 'Please Log In'
             return redirect('login')
+
 class ContestDetail(View):
     def get(self, request,id):
         if session.isAuthenticated(request):
@@ -55,6 +56,7 @@ class ContestDelete(View):
     def get(self, request,id):
         print(id)
         return redirect('holder')
+        
 class CreateContest(View):
     def get(self, request):
         if session.isAuthenticated(request):
@@ -71,10 +73,13 @@ class CreateContest(View):
             request.session['messAuth'] = 'Please Log In'
             return redirect('login')
     def post(self, request):
-        title = request.POST.get("title")
-        description = request.POST.get("description")
-        dateStart = request.POST.get("dateStart")
-        timeStart = request.POST.get("timeStart")
+        # title = request.POST.get('title')
+        # dec = request.POST.get('description')
+        # content = request.FILES['content']
+        # train = request.FILES['train']
+        # # test = request.FILES['test']
+        # # tester = request.FILES['tester']
+        print("h1")
         return redirect('holder')
 
 #############################PUBLIC###################
