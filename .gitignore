@@ -10,3 +10,4 @@ ContestAi/static/demo/
 # backend/*/migrations/
 ContestAi/*/migrations/
 ContestAi/*/__pycache__/
+
