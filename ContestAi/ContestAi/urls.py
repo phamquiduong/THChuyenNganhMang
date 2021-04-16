@@ -6,4 +6,5 @@ urlpatterns = [
     path('', include('devs.urls')),
     path('', include('Auth.urls')),
     path('', include('ContestHolder.urls')),
+    path('', include('ContestParticipant.urls')),
 ]
