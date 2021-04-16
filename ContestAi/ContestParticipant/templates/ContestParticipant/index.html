@@ -9,8 +9,16 @@
         function checkPass(){
             var x = document.forms['form1']['firstPass'].value
             var y = document.forms['form1']['newPass'].value
-            if (x===y) document.getElementById('passMatch').style.display = 'inline';
-            else document.getElementById('passMatch').style.display = 'none';
+            if (x===y) document.getElementById('passMatch').style.display = 'inline'
+            else document.getElementById('passMatch').style.display = 'none'
+            if (x!='' && x!=y) document.getElementById('subProfile').disabled = true
+            else document.getElementById('subProfile').disabled = false
+        }
+        function hideButton(){
+            var x = document.forms['form1']['firstPass'].value
+            var y = document.forms['form1']['newPass'].value
+            if (x!='' && x!=y) document.getElementById('subProfile').disabled = true
+            else document.getElementById('subProfile').disabled = false
         }
     </script>
     <style>
@@ -23,10 +31,10 @@
     </style>
 </head>
 <body>
-    <h2> ID User: {{id}} , Hello {{infoUser.1}} {{infoUser.2}}</h2>
+    <h2> ID User: {{id}} , Hello {{infoUser.2}} {{infoUser.1}}</h2>
 
     {%  if haveError == True %}
-        <h2> Đã có lỗi xảy ra </h2>
+        <h2> Đã có lỗi xảy ra .. Chuyển cái trang nào tùy bạn</h2>
     {% else %}
 
         <h2>Contest đã hoành thành</h2>
@@ -47,19 +55,36 @@
             
         <h2>Contest đã đăng ký</h2>
         {% for item in contestRegisted%}
-            <div class = 'post' onclick="alert('Xem chi tiết contest với ID = {{item.2}}')">
+            <form class = 'post' method='POST')">
+                {% csrf_token %}
                 Title: {{item.5}} <br>
                 Description: {{item.6}} <br>
                 Time register: {{item.10}} <br>
                 Time start: {{item.11}} <br>
                 Time end: {{item.12}} <br>
-                Language: {{item.15}} <br> <br>
-           </div>
+                Language: {{item.15}} <br>
+                <input type="hidden" name='feature' value="2">
+                <input type="hidden" name='idContest' value="{{item.1}}">
+                <input type='hidden' name="idUser" value="{{id}}">
+                <button type="submit"> Hủy đăng ký </button> <br> <br>
+           </form>
         {% endfor %}
 
         <h2>Contest chưa đăng ký</h2>
         {% for item in contestAll%}
-            {{item}} <br>
+            <form method='post' class='post'">
+                {% csrf_token %}
+                Title: {{item.2}} <br>
+                Description: {{item.3}} <br>
+                Time register: {{item.7}} <br>
+                Time start: {{item.8}} <br>
+                Time end: {{item.9}} <br>
+                Language: {{item.12}} <br>
+                <input type="hidden" name='feature' value="3">
+                <input type="hidden" name='idContest' value="{{item.0}}">
+                <input type='hidden' name="idUser" value="{{id}}">
+                <button type="submit"> Đăng ký </button> <br> <br>
+            </form>
         {% endfor %}
 
     {% endif %}
@@ -68,12 +93,15 @@
         {% csrf_token %}
         <h2> Update Profile </h2>
         Username: <input type = 'text' name='userName' value='{{infoUser.0}}'> <br>
-        Last name: <input type = 'text' name='lastName' value='{{infoUser.1}}'> <br>
         First name: <input type = 'text' name='firstName' value='{{infoUser.2}}'> <br>
-        Password: <input type = 'password' name='firstPass'><br>
+        Last name: <input type = 'text' name='lastName' value='{{infoUser.1}}'> <br>
+        Email: <input type = 'email' name='email' value='{{infoUser.3}}'> <br>
+        Password: <input type = 'password' name='firstPass' onkeyup="hideButton()"><br>
         Retype password: <input type = 'password' name='newPass' onkeyup="checkPass()">
         <label id = 'passMatch' style='display: none;'>✔</label> <br>
-        <button type="submit">Cập nhật</button>
+        <input type="hidden" name='feature' value="4">
+        <input type='hidden' name="idUser" value="{{id}}">
+        <button id = 'subProfile' type="submit">Cập nhật</button>
     </form>
 </body>
 </html>
