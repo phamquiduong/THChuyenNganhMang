@@ -16,7 +16,6 @@ class Index(View):
     }
 
     def get(self, request):
-        print(self.test.get("id"))
         if self.test.get("id") == 3:
             self.test.update({"id": 1})
         else:

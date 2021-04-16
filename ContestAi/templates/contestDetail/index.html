@@ -1,0 +1,355 @@
+{% extends 'base.html' %} {% block script %} {% include './javaScript.js' %}
+<!--<div></div>-->
+{% endblock %} {% block css %} {% include './style.css' %} {% endblock %}
+<!--<div></div>-->
+{% block title %}Contest Details Pages{% endblock%}
+<!--<div></div>-->
+{% load static %} {% block body %}
+<div class="container" style="min-height: 80vh">
+  <h1 class="text-center mt-5 mb-5 fade-in">Contest Details Pages</h1>
+  <!-- /card-container -->
+  <div class="row">
+    <div class="col-lg-9 col-sm-12">
+      {% for data in dataContests %}
+      <div class="card mb-4 fade-in-left">
+        <div class="card-header">
+          <h5 class="card-title">{{ data.title }}</h5>
+          <h6 class="card-subtitle text-muted">Holder: {{ name }}</h6>
+        </div>
+        <div class="card-body">
+          <div class="content-item">
+            <h6 class="card-subtitle text-muted mb-2">Contest Description</h6>
+            {{ data.description }}
+          </div>
+          <div class="mt-4 content-item">
+            <h6 class="card-subtitle text-muted">Contest Content</h6>
+            <embed
+              src="{% static '' %}{{ linkContest }}"
+              class="embed-content"
+            />
+            <h6 class="card-subtitle text-muted mb-2 mt-3">Time Out</h6>
+            <h5>{{ data.timeOut }}(s)</h5>
+          </div>
+          <div class="mt-4 content-item">
+            <h6 class="card-subtitle text-muted">Data For Train</h6>
+            <embed
+              src="{% static '' %}{{ linkDataTrain }}"
+              class="embed-data"
+            />
+            <a
+              href="{% static '' %}{{ linkDataTrain }}"
+              download="{{ linkDataTrain }}"
+              ><button class="btn btn-info mt-2">
+                Download Data For Train
+              </button></a
+            >
+          </div>
+          <div class="mt-4 content-item">
+            <div id="chartContainer" style="height: 300px; width: 100%"></div>
+            <div id="myDropdown" class="dropdown_content">
+            <h6 class="card-subtitle text-muted mb-2 mt-3">List of Participant</h6>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search.." 
+              id="myInput" 
+              onkeyup="filterFunction()"
+            />
+
+            <div class="options_container"> 
+            {% for participant in listParticipants %}
+            <li class="list-group-item">{{ participant.namePaticipant }}</li>
+            {% endfor %}
+            </div>
+            </div>
+          </div>
+          <div class="mt-4 content-item">
+            <h6 class="card-subtitle text-muted">Time schedule</h6>
+            <ul class="list-group mt-2">
+              <li class="list-group-item">
+                Time Register: {{ data.timeRegister }}
+              </li>
+              <li class="list-group-item">Time Start: {{ data.timeStart }}</li>
+              <li class="list-group-item">Time End: {{ data.timeEnd }}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button
+            class="btn btn-success float-right ml-3"
+            data-toggle="modal"
+            data-target="#editModal"
+          >
+            Edit <i class="bi bi-pencil-square ml-1"></i>
+          </button>
+          <a href="{% url 'holder' %}"
+            ><button class="btn btn-warning float-left">
+              Back To See All
+            </button></a
+          >
+          <a href="{% url 'delete' id=data.idContest%}"
+            ><button class="btn btn-danger float-right ml-3">
+              Delete This Contest
+            </button></a
+          >
+          <a href="{% url 'status' id=data.idContest%}"
+            ><button class="btn btn-info float-right ml-3">
+              See Status
+            </button></a
+          >
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="col-lg-3 col-sm-12 pb-4">
+      <div class="card card-sidebar fade-in-right">
+        <div class="card-body text-center">
+          <img
+            id="profile-img"
+            class="profile-img-card"
+            src="{% static 'images/cat.jpg' %}"
+          />
+          <div class="text-center">
+            <h6 class="card-subtitle text-muted mt-3">{{ name }}</h6>
+            <a href="{% url 'create' %}"
+              ><button class="btn btn-primary mt-3">
+                Create A New Contest
+              </button></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% comment %} Modal {% endcomment %}
+
+<div
+  class="modal fade"
+  id="editModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Contest</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action=""> 
+      {% csrf_token %}
+      <div class="modal-body">
+        {% for data in dataContests %}
+        <div class="form-group row">
+          <label for="title" class="col-sm-2 col-form-label">Title</label>
+          <div class="col-sm-12 col-lg-10">
+            <input
+              type="text"
+              class="form-control"
+              id="title"
+              name="title"
+              value="{{ data.title }}"
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="descript" class="col-sm-2 col-form-label"
+            >Description</label
+          >
+          <div class="col-sm-12 col-lg-10">
+            <textarea
+              class="form-control"
+              id="descript"
+              rows="5"
+              name="description"
+            >
+{{ data.description }}</textarea
+            >
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="start" class="col-sm-2 col-form-label">Content</label>
+          <div class="col-sm-12 col-lg-10">
+            <div class="input-group">
+              <div class="custom-file">
+                <input
+                  type="file"
+                  class="form-control"
+                  id="content"
+                  name="content"
+                  aria-describedby="inputGroupFileAddon01"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="start" class="col-sm-2 col-form-label">Data Train</label>
+          <div class="col-sm-12 col-lg-10">
+            <div class="input-group">
+              <div class="custom-file">
+                <input
+                  type="file"
+                  class="form-control"
+                  id="train"
+                  name="train"
+                  aria-describedby="inputGroupFileAddon01"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="start" class="col-sm-2 col-form-label">Data Test</label>
+          <div class="col-sm-12 col-lg-10">
+            <div class="input-group">
+              <div class="custom-file">
+                <input
+                  type="file"
+                  class="form-control"
+                  id="test"
+                  name="test"
+                  aria-describedby="inputGroupFileAddon01"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="start" class="col-sm-2 col-form-label">Tester</label>
+          <div class="col-sm-12 col-lg-10">
+            <div class="input-group">
+              <div class="custom-file">
+                <input
+                  type="file"
+                  class="form-control"
+                  id="tester"
+                  name="tester"
+                  aria-describedby="inputGroupFileAddon01"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="timeOut" class="col-sm-2 col-form-label"
+            >Time Out(s)</label
+          >
+          <div class="col-sm-12 col-lg-10">
+            <input
+              type="text"
+              class="form-control"
+              id="timeOut"
+              name="timeOut"
+              value="{{ data.timeOut }}"
+            />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="dateregis" class="col-sm-2 col-form-label"
+            >Date Register</label
+          >
+          <div class="col-sm-4">
+            <input
+              type="date"
+              class="form-control"
+              id="dateregis"
+              name="dateRegister"
+              value="{{ data.timeRegister }}"
+            />
+          </div>
+          <label for="timeregis" class="col-sm-2 col-form-label"
+            >Time Register</label
+          >
+          <div class="col-sm-4">
+            <input
+              type="time"
+              class="form-control"
+              id="timeregis"
+              name="timeRegister"
+              value="{{ data.timeRegister }}"
+            />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="datestart" class="col-sm-2 col-form-label"
+            >Date Start</label
+          >
+          <div class="col-sm-4">
+            <input
+              type="date"
+              class="form-control"
+              id="datestart"
+              name="dateStart"
+              value="{{ data.timeStart }}"
+            />
+          </div>
+          <label for="start" class="col-sm-2 col-form-label">Time Start</label>
+          <div class="col-sm-4">
+            <input
+              type="time"
+              class="form-control"
+              id="start"
+              name="timeStart"
+              value="{{ data.timeStart }}"
+            />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="dateend" class="col-sm-2 col-form-label">Date End</label>
+          <div class="col-sm-4">
+            <input
+              type="date"
+              class="form-control"
+              id="dateend"
+              name="dateEnd"
+              value="{{ data.timeEnd }}"
+            />
+          </div>
+          <label for="end" class="col-sm-2 col-form-label">Time End</label>
+          <div class="col-sm-4">
+            <input
+              type="time"
+              class="form-control"
+              id="end"
+              name="timeEnd"
+              value="{{ data.timeEnd }}"
+            />
+          </div>
+        </div>
+
+        {% endfor %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+      </from>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  {% include './date.js' %}
+</script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+{% endblock %}
