@@ -3,6 +3,7 @@ Lib/
 Scripts/
 pyvenv.cfg
 ContestAi/static/demo/
+ContestAi/static/contest/*/
 # ContestAi/static 
 # ContestAi/media 
 # backend/accounts/migrations/ 

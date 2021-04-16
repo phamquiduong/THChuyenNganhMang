@@ -17,27 +17,27 @@
         style="animation-delay: calc({{ forloop.counter0}} * 0.3s);"
       >
         <div class="card-header">
-          <h5 class="card-title">{{ data.title }}</h5>
+          <h5 class="card-title">{{ data.Title }}</h5>
           <h6 class="card-subtitle text-muted">Holder: {{ name }}</h6>
         </div>
         <div class="card-body">
-          <div>{{ data.description }}</div>
+          <div>{{ data.Description }}</div>
           <div class="mt-4">
             <h6 class="card-subtitle text-muted">Time schedule:</h6>
             <ul class="list-group mt-2">
               <li class="list-group-item">
-                Time Register: {{ data.timeRegister }}
+                Time Register: {{ data.TimeRegister }}
               </li>
-              <li class="list-group-item">Time Start: {{ data.timeStart }}</li>
-              <li class="list-group-item">Time End: {{ data.timeEnd }}</li>
+              <li class="list-group-item">Time Start: {{ data.TimeStart }}</li>
+              <li class="list-group-item">Time End: {{ data.TimeEnd }}</li>
             </ul>
           </div>
         </div>
         <div class="card-footer">
-          <a href="{% url 'detail' id=data.idContest %}"
+          <a href="{% url 'detail' id=data.id %}"
             ><button class="btn btn-success float-right">See Detail</button></a
           >
-          <a href="{% url 'status' id=data.idContest%}"
+          <a href="{% url 'status' id=data.id%}"
             ><button class="btn btn-info float-right mr-3">
               See Status
             </button></a
