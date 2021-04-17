@@ -6,7 +6,7 @@ from . import models
 
 class Index(View):
     template = 'index/index.html'
-    obj = models.Dev.objects.get(id=1)
+    obj = 'models.Dev.objects.get(id=1)'
     test = {"id": 1}
     context = {
         "name": "Tue Anh Truong",
@@ -20,11 +20,11 @@ class Index(View):
             self.test.update({"id": 1})
         else:
             self.test.update({"id": 3})
-        if self.context.get('data') == models.Dev.objects.get(id=1):
-            obj_new = models.Dev.objects.get(id=3)
+        if self.context.get('data') == 'models.Dev.objects.get(id=1)':
+            obj_new = 'models.Dev.objects.get(id=3)'
             self.context.update({"data": obj_new})
         else:
-            obj_new = models.Dev.objects.get(id=1)
+            obj_new = 'models.Dev.objects.get(id=1)'
             self.context.update({"data": obj_new})
         return render(request, self.template, self.context)
 

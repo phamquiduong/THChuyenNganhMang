@@ -1,0 +1,38 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<!-- 'username',
+    'password',
+    'email',
+    'is_superuser',
+    'is_staff',
+    'is_active' -->
+<h4 class="text-center">Detail User</h4>
+
+        <div class="form-group">
+            <label for="pk" >id:{{isuser.pk}}</label>
+            
+        </div>
+        <div class="form-group">
+            <label for="IDcontest" >username:{{isuser.username}}</label>
+            
+        </div>
+        <div class="form-group">
+            <label for="IDUser">password:{{isuser.password}}</label>
+            
+        </div>
+        <div class="form-group">
+            <label for="Status">email:{{isuser.email}}</label>
+            
+        </div>
+        <div class="form-group">
+            <label for="TimeSubmit">is_superuser:{{isuser.is_superuser}}</label>
+            
+        </div>
+        <div class="form-group">
+            <label for="LinkSubmit">is_staff:{{isuser.is_staff}}</label> 
+        </div>
+        <div class="form-group">
+            <label for="LinkSubmit">is_active:{{isuser.is_active}}</label> 
+        </div>
+
+{% endblock content %}

@@ -1,0 +1,76 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<h4 class="text-center">List Status</h4>
+
+<!-- IDcontest = models.CharField(max_length=100)
+    IDUser = models.CharField(max_length=100)
+    Status = models.CharField(max_length=100)
+    TimeSubmit = models.DateTimeField()
+    LinkSubmit = models.CharField(max_length=100) -->
+    <a href="{% url 'addStatus' %}">Add Status</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">IDcontest</th>
+            <th scope="col">IDUser</th>
+            <th scope="col">Status</th>
+            <th scope="col">TimeSubmit</th>
+            <th scope="col">LinkSubmit</th>
+            <th scope="col">Detail</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Update</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for s in lstatus %}
+        <tr>
+            <td>{{s.pk}}</td>
+            <td>{{s.IDcontest}}</td>
+            <td>{{s.IDUser}}</td>
+            <td>{{s.Status}}</td>
+            <td>{{s.TimeSubmit}}</td>
+            <td>{{s.LinkSubmit}}</td>
+            <td><a href="{% url 'detailStatus' pk=s.pk %}" type="button" class="btn btn-success"
+                    id="{{s.pk}}">Detail</a></td>
+            <td><a href="{% url 'deleteStatus' pk=s.pk %}" type="button" class="btn btn-danger" id="{{s.pk}}" onclick="return confirm('Are you sure you want to delete?');">Delete</a>
+            </td>
+            <td><a href="{% url 'updateStatus' pk=s.pk %}" type="button" class="btn btn-primary"
+                    id="{{s.pk}}">Update</a></td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+
+<div class="modal" tabindex="-1" role="dialog" id="exampleModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button"  id="btn_delete" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // $('#btn_delete').click(function() {
+    //     $.post()
+    // });
+    $('#btn_delete').click(function(){
+    return confirm("Are you sure you want to delete?");
+})
+</script>
+
+{% endblock content %}

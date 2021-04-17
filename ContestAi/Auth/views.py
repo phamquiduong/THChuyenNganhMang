@@ -5,6 +5,7 @@ from . import models
 from service import path,session
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from ContestAdmin.views import index
 
 class Login(View):
 
@@ -24,7 +25,8 @@ class Login(View):
         else:
             login(request,my_user)
             if request.user.is_superuser == True:
-                return HttpResponse('Welcome'+request.user.username)
+                # return HttpResponse('Welcome'+request.user.username)
+                return index(request) # return ContestAdmin/index(), import above
             elif request.user.is_staff == True:
                 return HttpResponse('Hello'+request.user.username)
             elif request.user.is_active == True:
