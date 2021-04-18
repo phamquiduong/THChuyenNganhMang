@@ -15,6 +15,10 @@ class HolderView(View):
             except:
                 userName = ''
             obj = models.Contest.objects.filter(IDUser=request.session.get('user')['id'])
+            # import datetime
+            # now = datetime.datetime.now(obj[1].TimeStart.tzinfo)
+            # if obj[1].TimeStart > now:
+            #     print("YES")
             context = {
                 'name': userName,
                 'dataContests': obj,
@@ -43,10 +47,51 @@ class ContestDetail(View):
             request.session['messAuth'] = 'Please Log In'
             return redirect('login')
     def post(self, request,id):
-        title = request.POST.get("title")
-        description = request.POST.get("description")
-        dateStart = request.POST.get("dateStart")
-        timeStart = request.POST.get("timeStart")
+        try:
+            content = request.FILES['content']
+            kt_content = True
+        except:
+            kt_content = False
+        try:
+            train = request.FILES['train']
+            print("OK")
+            kt_train = True
+        except:
+            kt_train = False
+        try:
+            test = request.FILES['test']
+            kt_test = True
+        except:
+            kt_test = False
+        try:
+            tester = request.FILES['tester']
+            kt_tester = True
+        except:
+            kt_tester = False
+        obj = models.Contest.objects.get(id=id)
+        obj.Title = request.POST.get('title')
+        obj.Description = request.POST.get('description')
+        obj.TimeRegister = request.POST.get('dateRegister')+' '+request.POST.get('timeRegister')
+        obj.TimeStart = request.POST.get('dateStart')+' '+request.POST.get('timeStart')
+        obj.TimeEnd = request.POST.get('dateEnd')+' '+request.POST.get('timeEnd')
+        obj.TimeOut = request.POST.get('timeOut')
+        obj.save()
+        if kt_content == True:
+            with open(obj.LinkContest, 'wb+') as destination:
+                for chunk in content.chunks():
+                    destination.write(chunk)
+        if kt_train == True:
+            with open(obj.LinkDataTrain, 'wb+') as destination:
+                for chunk in train.chunks():
+                    destination.write(chunk)
+        if kt_test == True:           
+            with open(obj.LinkDataTest, 'wb+') as destination:
+                for chunk in test.chunks():
+                    destination.write(chunk)
+        if kt_tester == True:  
+            with open(obj.LinkTester, 'wb+') as destination:
+                for chunk in tester.chunks():
+                    destination.write(chunk)
         return redirect('holder')
 
 class ContestDelete(View):

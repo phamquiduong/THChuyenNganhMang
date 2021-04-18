@@ -144,7 +144,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="POST" action=""> 
+      <form method="POST" action="" enctype="multipart/form-data"> 
       {% csrf_token %}
       <div class="modal-body">
         {% for data in dataContests %}
@@ -269,7 +269,7 @@
               class="form-control"
               id="dateregis"
               name="dateRegister"
-              value="{{ data.TimeRegister }}"
+              value="{{ data.TimeRegister|date:'Y-m-d' }}"
             />
           </div>
           <label for="timeregis" class="col-sm-2 col-form-label"
@@ -281,7 +281,7 @@
               class="form-control"
               id="timeregis"
               name="timeRegister"
-              value="{{ data.TimeRegister }}"
+              value="{{ data.TimeRegister|time:'H:i' }}"
             />
           </div>
         </div>
@@ -296,7 +296,7 @@
               class="form-control"
               id="datestart"
               name="dateStart"
-              value="{{ data.TimeStart }}"
+              value="{{ data.TimeStart|date:'Y-m-d' }}"
             />
           </div>
           <label for="start" class="col-sm-2 col-form-label">Time Start</label>
@@ -306,7 +306,7 @@
               class="form-control"
               id="start"
               name="timeStart"
-              value="{{ data.TimeStart }}"
+              value="{{ data.TimeStart|time:'H:i' }}"
             />
           </div>
         </div>
@@ -319,7 +319,7 @@
               class="form-control"
               id="dateend"
               name="dateEnd"
-              value="{{ data.TimeEnd }}"
+              value="{{ data.TimeEnd|date:'Y-m-d' }}"
             />
           </div>
           <label for="end" class="col-sm-2 col-form-label">Time End</label>
@@ -329,7 +329,7 @@
               class="form-control"
               id="end"
               name="timeEnd"
-              value="{{ data.TimeEnd }}"
+              value="{{ data.TimeEnd|time:'H:i' }}"
             />
           </div>
         </div>
