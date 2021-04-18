@@ -1,0 +1,52 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- #     IDUser = models.CharField(max_length=100)
+#     Title = models.TextField()
+#     Description = models.TextField()
+#     LinkContest = models.CharField(max_length=100)
+#     LinkDataTrain = models.CharField(max_length=100)
+#     LinkDataTest = models.CharField(max_length=100)
+#     TimeRegister = models.DateTimeField()
+#     TimeStart = models.DateTimeField()
+#     TimeEnd = models.DateTimeField()
+#     TimeOut = models.IntegerField()
+#     IDLanguage = models.CharField(max_length=100) -->
+<h4 class="text-center">Detail Contest</h4>
+        <div class="form-group">
+            <label for="pk" >IDUser:{{icontest.pk}}</label>
+        </div>
+        <div class="form-group">
+            <label for="Title" >Title:{{icontest.Title}}</label>
+        </div>
+        <div class="form-group">
+            <label for="Description" >Description:{{icontest.Description}}</label>
+        </div>
+        <td><a href={{icontest.url}} class="" target="_blank">file</a></td>
+        <div class="form-group">
+            <label for="LinkContest" >LinkContest:{{icontest.LinkContest}}</label>
+        </div>
+        <div class="form-group">
+            <label for="LinkDataTrain" >LinkDataTrain:{{icontest.LinkDataTrain}}</label>
+        </div>
+        <div class="form-group">
+            <label for="LinkDataTest" >LinkDataTest:{{icontest.LinkDataTest}}</label>
+        </div>
+        <div class="form-group">
+            <label for="TimeRegister" >TimeRegister:{{icontest.TimeRegister}}</label>
+        </div>
+        <div class="form-group">
+            <label for="TimeStart" >TimeStart:{{icontest.TimeStart}}</label>
+        </div>
+        <div class="form-group">
+            <label for="TimeEnd" >TimeEnd:{{icontest.TimeEnd}}</label>
+        </div>
+        <div class="form-group">
+            <label for="TimeOut" >TimeOut:{{icontest.TimeOut}}</label>
+        </div>
+        <div class="form-group">
+            <label for="IDLanguage" >IDLanguage:{{icontest.IDLanguage}}</label>
+        </div>
+
+{% endblock content %}

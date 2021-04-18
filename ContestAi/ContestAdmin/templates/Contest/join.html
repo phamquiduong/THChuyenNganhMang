@@ -1,48 +1,28 @@
 {% extends 'base/base.html' %}
 {% block content %}
-<h4 class="text-center">List User</h4>
-
-<!-- 'username',
-    'password',
-    'email',
-    'is_superuser',
-    'is_staff',
-    'is_active' -->
-<style>
-    .table td, .table th{
-        padding: 0.25rem;
-    }
-</style>
-
-<a href="{% url 'addAccount' %}">Add User</a>
-<table class="table table-bordered">
+<h4 class="text-center">List Register</h4>
+<table class="table">
     <thead>
         <tr>
             <th scope="col">id</th>
+            <th scope="col">IDContest</th>
+            <th scope="col">Title</th>
+            <th scope="col">IDUser</th>
             <th scope="col">username</th>
-            <th style="column-width: 30px;" scope="col">password</th>
-            <th scope="col">email</th>
-            <th scope="col">is_superuser</th>
-            <th scope="col">is_staff</th>
-            <th scope="col">is_active</th>
             <th scope="col">Detail</th>
             <th scope="col">Delete</th>
-            <th scope="col">Update</th>
         </tr>
     </thead>
     <tbody>
-        {% for s in luser %}
+        {% for s in lstatus %}
         <tr>
             <td>{{s.pk}}</td>
+            <td>{{s.IDContest}}</td>
+            <td>{{s.title}}</td>
+            <td>{{s.IDUser}}</td>
             <td>{{s.username}}</td>
-            <td style="column-width: 100px; overflow: auto;">{{s.password}}</td>
-            <td>{{s.email}}</td>
-            <td>{{s.is_superuser}}</td>
-            <td>{{s.is_staff}}</td>
-            <td>{{s.is_active}}</td>
             <td><a href="{% url 'detailAccount' pk=s.pk %}" class="" id="{{s.pk}}">Detail</a></td>
-            <td><a href="{% url 'deleteAccount' pk=s.pk %}" class="" id="{{s.pk}}" onclick="return confirm('Are you sure you want to delete?');">Delete</a></td>
-            <td><a href="{% url 'updateAccount' pk=s.pk %}" class="" id="{{s.pk}}">Update</a></td>
+            <td><a href="{% url 'deletejoinContest' pk=s.pk %}" class="" id="{{s.pk}}" onclick="return confirm('Are you sure you want to delete?');">Delete</a></td>
         </tr>
         {% endfor %}
 

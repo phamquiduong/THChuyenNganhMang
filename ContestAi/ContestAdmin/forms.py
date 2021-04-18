@@ -9,6 +9,83 @@ from .models import *
 from django.contrib.auth.models import User
 import hashlib
 
+#     IDUser = models.CharField(max_length=100)
+#     Title = models.TextField()
+#     Description = models.TextField()
+#     LinkContest = models.CharField(max_length=100)
+#     LinkDataTrain = models.CharField(max_length=100)
+#     LinkDataTest = models.CharField(max_length=100)
+#     TimeRegister = models.DateTimeField()
+#     TimeStart = models.DateTimeField()
+#     TimeEnd = models.DateTimeField()
+#     TimeOut = models.IntegerField()
+#     IDLanguage = models.CharField(max_length=100)
+
+# Language = models.CharField(max_length=100)
+class LanguageForm(forms.ModelForm):
+    class Meta:
+        model = Language
+        fields = [
+            'Language',
+        ]
+        widgets = {
+            'Language': forms.TextInput(attrs={'required': True, 'class': 'form-control'}),
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super(LanguageForm, self).__init__(*args, **kwargs)
+        
+        if self.instance and self.instance.pk:
+            self.fields['Language'].initial = self.instance.Language
+            
+            
+
+class ContestForm(forms.ModelForm):
+    class Meta:
+        model = Contest
+        fields = [
+            'IDUser',
+            'Title',
+            'Description',
+            'LinkContest',
+            'LinkDataTrain',
+            'LinkDataTest',
+            'TimeRegister',
+            'TimeStart',
+            'TimeEnd',
+            'TimeOut',
+            'IDLanguage',
+        ]
+        widgets = {
+            'IDUser': forms.TextInput(attrs={'required': True, 'class': 'form-control'}),
+            'Title': forms.TextInput(attrs={'required': True, 'class': 'form-control'}),
+            'Description': forms.TextInput(attrs={'required': True, 'class': 'form-control'}),
+            'LinkContest': forms.TextInput(attrs={'required': True, 'class': 'form-control'}),
+            'LinkDataTrain': forms.TextInput(attrs={'required': True, 'class': 'form-control'}),
+            'LinkDataTest': forms.TextInput(attrs={'required': True, 'class': 'form-control'}),
+            'TimeRegister': forms.TextInput(attrs={'required': True, 'class': 'form-control'}),
+            'TimeStart': forms.TextInput(attrs={'required': True, 'class': 'form-control'}),
+            'TimeEnd': forms.TextInput(attrs={'required': True, 'class': 'form-control'}),
+            'TimeOut': forms.TextInput(attrs={'required': True, 'class': 'form-control'}),
+            'IDLanguage': forms.TextInput(attrs={'required': True, 'class': 'form-control'}), 
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super(ContestForm, self).__init__(*args, **kwargs)
+        
+        if self.instance and self.instance.pk:
+            self.fields['IDUser'].initial = self.instance.IDUser
+            self.fields['Title'].initial = self.instance.Title
+            self.fields['Description'].initial = self.instance.Description
+            self.fields['LinkDataTrain'].initial = self.instance.LinkDataTrain
+            self.fields['LinkDataTest'].initial = self.instance.LinkDataTest
+            self.fields['TimeRegister'].initial = self.instance.TimeRegister
+            self.fields['TimeStart'].initial = self.instance.TimeStart
+            self.fields['TimeEnd'].initial = self.instance.TimeEnd
+            self.fields['TimeOut'].initial = self.instance.TimeOut
+            self.fields['IDLanguage'].initial = self.instance.IDLanguage
+            self.fields['LinkContest'].initial = self.instance.LinkContest
+            
 class StatusForm(forms.ModelForm):
     class Meta:
         model = Status
@@ -73,10 +150,3 @@ class UserForm(forms.ModelForm):
             self.fields['is_staff'].initial = self.instance.is_staff
             self.fields['is_active'].initial = self.instance.is_active
     
-    # def clean(self):
-    #     password = self.cleaned_data['password']
-    #     password = hashlib.sha256(password).hexdigest()
-    #     # product = self.cleaned_data['product']
-    #     # available = product.get_balance_stock()
-    #     # if self.cleaned_data['quantity'] > available:
-    #     #     raise forms.ValidationError("You can't take out more stock of {} than is available ({})".format(product, available)

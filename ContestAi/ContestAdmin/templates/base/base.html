@@ -13,17 +13,31 @@
     <script src="{% static 'cssJs/popper.min.js' %}"></script>
     <script src="{% static 'cssJs/bootstrap.min.js' %}"></script>
     </head>
-
 <body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'index' %}">Admin</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+          <ul class="navbar-nav mr-auto">
+          </ul>
+          <span class="navbar-text">
+            Navbar text with an inline element
+          </span>
+        </div>
+    </nav>
+
+    <br>
+    
     <div class="container-fluid">
         <div class="row align-items-md-top">
             <div class="col-sm-3">
                 <ul class="list-group">
-                    <li class="list-group-item"><a href="{% url 'listStatus' %}">Status</a></li>
                     <li class="list-group-item"><a href="{% url 'listAccount' %}">Account</a></li>
-                    <li class="list-group-item"><a href="">Contest</a></li>
-                    <li class="list-group-item"><a href="">RegisterContest</a></li>
-                    <li class="list-group-item"><a href="">Language</a></li>
+                    <li class="list-group-item"><a href="{% url 'listContest' %}">Contest</a></li>
+                    <li class="list-group-item"><a href="{% url 'listLanguage' %}">Language</a></li>
                 </ul>
             </div>
             <div class="col-sm-9 ">
