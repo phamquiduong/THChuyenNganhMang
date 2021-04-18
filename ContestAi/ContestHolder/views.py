@@ -54,7 +54,6 @@ class ContestDetail(View):
             kt_content = False
         try:
             train = request.FILES['train']
-            print("OK")
             kt_train = True
         except:
             kt_train = False
