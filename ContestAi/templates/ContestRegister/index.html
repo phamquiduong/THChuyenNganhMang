@@ -1,0 +1,57 @@
+{% extends 'base.html' %} {% block script %} {% include './javaScript.js' %}
+<!--<div></div>-->
+{% endblock %} {% block css %} {% include './style.css' %} {% endblock %}
+<!--<div></div>-->
+{% block title %}Contest Register Page{% endblock%}
+<!--<div></div>-->
+{% load static %} {% block body %}
+<div class="container" style="min-height: 80vh">
+  <h1 class="text-center mt-5 mb-5 fade-in">Contest Register Pages</h1>
+  <!-- /card-container -->
+  <div class="row">
+    <div class="col-lg-9 col-sm-12">
+      <div class="card mb-4 fade-in-left">
+        <div class="card-body status-body">
+          <i class="bi bi-clock-history text-warning icon-status mr-5"></i>
+          <h3>Not Time For Register</h3>
+        </div>
+      </div>
+      <div class="card mb-4 fade-in-left">
+        <div class="card-body status-body">
+          <i
+            class="bi bi-exclamation-octagon-fill text-danger icon-status mr-5"
+          ></i>
+          <h3>Register Fail</h3>
+        </div>
+      </div>
+      <div class="card mb-4 fade-in-left">
+        <div class="card-body status-body">
+          <i class="bi bi-check-circle-fill text-success icon-status mr-5"></i>
+          <h3>Register Success</h3>
+        </div>
+        <div class="card-footer text-center">
+          <a href=""><button class="btn btn-success">Jump into it</button></a>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-sm-12 pb-4">
+      <div class="card card-sidebar fade-in-right">
+        <div class="card-body text-center">
+          <img
+            id="profile-img"
+            class="profile-img-card"
+            src="{% static 'images/cat.jpg' %}"
+          />
+          {% if name %}
+          <h6 class="card-subtitle text-muted mt-3">{{ name }}</h6>
+          <a href="{% url 'participant' %}" class="btn btn-info mt-3"
+            >Back To See All</a
+          >
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% comment %} Modal {% endcomment %} {% endblock %}

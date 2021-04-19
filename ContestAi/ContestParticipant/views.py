@@ -3,6 +3,7 @@ from django.views import View
 from django import template
 from service import path,session
 from django.http import HttpResponse
+from .data import mockContest
 import sqlite3
 
 # import random
@@ -59,7 +60,7 @@ class ParticipantView(View):
                 userName = ''
             context = {
                 'name': userName,
-                'listContext':[],
+                'dataContests':mockContest,
             }
             return render(request, path.templateParticipant , context)
         else:
@@ -68,3 +69,20 @@ class ParticipantView(View):
     def post(self, request):
         #do sth
         return redirect('./')
+class Register(View):
+    def get(self, request, id):
+        print(id)
+        if session.isAuthenticated(request):
+            userName = str()
+            try:
+                userName = request.session.get('user')['name']
+            except:
+                userName = ''
+            context = {
+                'name': userName,
+                'registerStatus': 'Pending'
+            }
+            return render(request, path.templateRegister , context)
+        else:
+            request.session['messAuth'] = 'Please Log In'
+            return redirect('login')
