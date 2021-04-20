@@ -60,7 +60,9 @@ class ParticipantView(View):
                 userName = ''
             context = {
                 'name': userName,
-                'dataContests':mockContest,
+                'unRegisContests':mockContest,
+                'regisContests': mockContest,
+                'historyContests': mockContest,
             }
             return render(request, path.templateParticipant , context)
         else:
@@ -80,9 +82,33 @@ class Register(View):
                 userName = ''
             context = {
                 'name': userName,
-                'registerStatus': 'Pending'
+                'registerStatus': 'Pending',
+                'contest': mockContest[0]
             }
             return render(request, path.templateRegister , context)
         else:
             request.session['messAuth'] = 'Please Log In'
             return redirect('login')
+
+class Starting(View):
+    def get(self, request, id):
+        print(id)
+        if session.isAuthenticated(request):
+            userName = str()
+            try:
+                userName = request.session.get('user')['name']
+            except:
+                userName = ''
+            context = {
+                'name': userName,
+                'registerStatus': 'Pending',
+                'contest': mockContest[0], # selected by id
+                'timeremaining': '70:00'
+            }
+            return render(request, path.templateStart , context)
+        else:
+            request.session['messAuth'] = 'Please Log In'
+            return redirect('login')
+    def post(self, request,id):
+        return redirect('/contest/status/'+id)
+

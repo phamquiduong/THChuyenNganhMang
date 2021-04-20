@@ -8,6 +8,6 @@ urlpatterns = [
     path('', include('Auth.urls')),
     path('', include('ContestHolder.urls')),
     path('ContestAdmin/', include('ContestAdmin.urls')),
-    path('ContestParticipant', include('ContestParticipant.urls')),
+    path('ContestParticipant/', include('ContestParticipant.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
