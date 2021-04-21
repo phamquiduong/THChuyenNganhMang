@@ -25,6 +25,7 @@ window.onload = function () {
     if (distance < 0) {
       clearInterval(x);
       document.getElementById("timer").innerHTML = "EXPIRED";
+      document.getElementById("hourglass").classList.remove("hourglass");
     }
   }, 1000);
 };

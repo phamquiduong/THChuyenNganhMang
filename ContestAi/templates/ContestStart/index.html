@@ -19,7 +19,6 @@
       <div class="card mb-4 fade-in-left">
         <div class="card-header">
           <h5 class="card-title">{{ contest.title }}</h5>
-          <h6 class="card-subtitle text-muted">Holder: {{ name }}</h6>
         </div>
         <div class="card-body">
           <div class="content-item">
@@ -115,15 +114,10 @@
             >Out of Contest</a
           >
           {% endif %}
-          <div class="hand">
-            <span class="finger thumb"></span>
-            <span class="finger"></span>
-            <span class="finger"></span>
-            <span class="finger"></span>
-            <span class="finger"></span>
-            <span class="palm"></span>
+          <div class="hourglass-container">
+            <div class="hourglass" id="hourglass"></div>
           </div>
-          <h6 class="card-subtitle text-muted mb-2">Time Remaining</h6>
+          <h6 class="card-subtitle text-muted mb-2 mt-3">Time Remaining</h6>
           <div class="timer" id="timer"></div>
         </div>
       </div>
