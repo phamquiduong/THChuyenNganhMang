@@ -2,102 +2,108 @@ from django.shortcuts import render,redirect
 from django.views import View
 from django import template
 from service import path,session
-
-
-mockData = [{
-  "idContest": "5664c5c9-a3ff-4093-b734-d66c234e46ff",
-  "title": "Revolt of the Zombies",
-  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget accumsan risus. Morbi congue consectetur vulputate. Cras sed est sagittis, gravida risus ut, dictum leo. Quisque tristique risus elit, ac blandit magna faucibus sit amet. Ut sed ligula a tortor sagittis aliquam. Aenean nec tellus in mi fermentum aliquam eu ut turpis. ",
-  "timeRegister": "12/25/2020",
-  "timeStart": "10/4/2020",
-  "timeEnd": "4/7/2021",
-  "timeOut": "1234",
-  "language": "Malayalam"
-}, {
-  "idContest": "1616b720-61fb-4265-a693-2d2c87b5d661",
-  "title": "Bill Burr: I'm Sorry You Feel That Way",
-  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget accumsan risus. Morbi congue consectetur vulputate. Cras sed est sagittis, gravida risus ut, dictum leo. Quisque tristique risus elit, ac blandit magna faucibus sit amet. Ut sed ligula a tortor sagittis aliquam. Aenean nec tellus in mi fermentum aliquam eu ut turpis. ",
-  "timeRegister": "4/8/2020",
-  "timeStart": "1/2/2021",
-  "timeEnd": "8/15/2020",
-  "language": "Romanian"
-}, {
-  "idContest": "cc60495e-51fd-4497-97c9-27f732f225f7",
-  "title": "The Flower in His Mouth",
-  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget accumsan risus. Morbi congue consectetur vulputate. Cras sed est sagittis, gravida risus ut, dictum leo. Quisque tristique risus elit, ac blandit magna faucibus sit amet. Ut sed ligula a tortor sagittis aliquam. Aenean nec tellus in mi fermentum aliquam eu ut turpis. ",
-  "timeRegister": "5/10/2020",
-  "timeStart": "2/26/2021",
-  "timeEnd": "5/24/2020",
-  "language": "Estonian"
-}, {
-  "idContest": "e79da123-32b6-48f6-b9f2-aa41d260262b",
-  "title": "More Than Honey",
-  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget accumsan risus. Morbi congue consectetur vulputate. Cras sed est sagittis, gravida risus ut, dictum leo. Quisque tristique risus elit, ac blandit magna faucibus sit amet. Ut sed ligula a tortor sagittis aliquam. Aenean nec tellus in mi fermentum aliquam eu ut turpis. ",
-  "timeRegister": "12/29/2020",
-  "timeStart": "8/18/2020",
-  "timeEnd": "11/19/2020",
-  "language": "Kannada"
-}, {
-  "idContest": "667589e8-6937-45d9-8d78-9c1914595aec",
-  "title": "Heart of a Lion",
-  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eget accumsan risus. Morbi congue consectetur vulputate. Cras sed est sagittis, gravida risus ut, dictum leo. Quisque tristique risus elit, ac blandit magna faucibus sit amet. Ut sed ligula a tortor sagittis aliquam. Aenean nec tellus in mi fermentum aliquam eu ut turpis. ",
-  "timeRegister": "12/17/2020",
-  "timeStart": "3/4/2021",
-  "timeEnd": "9/9/2020",
-  "language": "Bosnian"
-}]
+from .data import mockData, mockUser, mockStatus
+from ContestAdmin import models
+from django.contrib.auth.models import User
+import os
 
 class HolderView(View):
     def get(self, request):
-        if session.isAuthenticated(request):
-            userName = str()
+        if request.user.is_staff:
             try:
-                userName = request.session.get('user')['name']
+                userName = request.user.username
             except:
                 userName = ''
+            obj = models.Contest.objects.filter(IDUser=request.user.id)
+            # import datetime
+            # now = datetime.datetime.now(obj[1].TimeStart.tzinfo)
+            # if obj[1].TimeStart > now:
+            #     print("YES")
             context = {
                 'name': userName,
-                'dataContests': mockData,
+                'dataContests': obj,
             }
             return render(request, path.templateHolder , context)
         else:
-            request.session['messAuth'] = 'Please Log In'
             return redirect('login')
+
 class ContestDetail(View):
     def get(self, request,id):
-        if session.isAuthenticated(request):
+        if request.user.is_staff:
             userName = str()
             try:
-                userName = request.session.get('user')['name']
+                userName = request.user.username
             except:
                 userName = ''
-            detailData = list(filter(lambda x: id == x['idContest'], mockData))
+            detailData = models.Contest.objects.filter(id=id)
             context = {
                 'name': userName,
                 'dataContests': detailData,
-                'linkContest': 'demo/Contest1.pdf',
-                'linkDataTrain': 'demo/test1.txt',
-                'inRegis': 80,
-                'inTodo': 53,
-                'inResult':69
+                'listParticipants': mockUser
             }
             return render(request, path.templateDetail, context)
         else:
-            request.session['messAuth'] = 'Please Log In'
-            return redirect('../login')
+            return redirect('login')
     def post(self, request,id):
-        title = request.POST.get("title")
-        description = request.POST.get("description")
-        dateStart = request.POST.get("dateStart")
-        timeStart = request.POST.get("timeStart")
+        try:
+            content = request.FILES['content']
+            kt_content = True
+        except:
+            kt_content = False
+        try:
+            train = request.FILES['train']
+            kt_train = True
+        except:
+            kt_train = False
+        try:
+            test = request.FILES['test']
+            kt_test = True
+        except:
+            kt_test = False
+        try:
+            tester = request.FILES['tester']
+            kt_tester = True
+        except:
+            kt_tester = False
+        obj = models.Contest.objects.get(id=id)
+        obj.Title = request.POST.get('title')
+        obj.Description = request.POST.get('description')
+        obj.TimeRegister = request.POST.get('dateRegister')+' '+request.POST.get('timeRegister')
+        obj.TimeStart = request.POST.get('dateStart')+' '+request.POST.get('timeStart')
+        obj.TimeEnd = request.POST.get('dateEnd')+' '+request.POST.get('timeEnd')
+        obj.TimeOut = request.POST.get('timeOut')
+        obj.save()
+        if kt_content == True:
+            with open(obj.LinkContest, 'wb+') as destination:
+                for chunk in content.chunks():
+                    destination.write(chunk)
+        if kt_train == True:
+            with open(obj.LinkDataTrain, 'wb+') as destination:
+                for chunk in train.chunks():
+                    destination.write(chunk)
+        if kt_test == True:           
+            with open(obj.LinkDataTest, 'wb+') as destination:
+                for chunk in test.chunks():
+                    destination.write(chunk)
+        if kt_tester == True:  
+            with open(obj.LinkTester, 'wb+') as destination:
+                for chunk in tester.chunks():
+                    destination.write(chunk)
         return redirect('holder')
 
+class ContestDelete(View):
+    def get(self, request,id):
+        print(id)
+        obj = models.Contest.objects.get(id=id)
+        obj.delete()
+        return redirect('holder')
+        
 class CreateContest(View):
     def get(self, request):
-        if session.isAuthenticated(request):
+        if request.user.is_staff:
             userName = str()
             try:
-                userName = request.session.get('user')['name']
+                userName = request.user.username
             except:
                 userName = ''
             context = {
@@ -105,13 +111,66 @@ class CreateContest(View):
             }
             return render(request, path.templateCreate, context)
         else:
-            request.session['messAuth'] = 'Please Log In'
             return redirect('login')
     def post(self, request):
-        title = request.POST.get("title")
-        description = request.POST.get("description")
-        dateStart = request.POST.get("dateStart")
-        timeStart = request.POST.get("timeStart")
+        try:
+            content = request.FILES['content']
+            train = request.FILES['train']
+            test = request.FILES['test']
+            tester = request.FILES['tester']
+        except:
+            return redirect('create')
+        timeout = request.POST.get('timeOut')
+        try:
+            obj = models.Contest()
+            obj.IDUser = request.user.id
+            obj.Title = request.POST.get('title')
+            obj.Description = request.POST.get('description')
+            obj.TimeRegister = request.POST.get('dateRegister')+' '+request.POST.get('timeRegister')
+            obj.TimeStart = request.POST.get('dateStart')+' '+request.POST.get('timeStart')
+            obj.TimeEnd = request.POST.get('dateEnd')+' '+request.POST.get('timeEnd')
+            obj.TimeOut = request.POST.get('timeOut')
+            obj.save()
+            id = str(obj.id)
+        except:
+            return redirect('create')
+        path = './static/contest/contest'+id
+        if not os.path.exists(path):
+            os.makedirs(path)
+        obj.LinkContest = path+'/content.pdf'
+        obj.LinkDataTest = path+'/data_test.txt'
+        obj.LinkDataTrain = path+'/data_train.txt'
+        obj.LinkTester = path+'/tester.py'
+        obj.save()
+        with open(obj.LinkContest, 'wb+') as destination:
+            for chunk in content.chunks():
+                destination.write(chunk)
+        with open(obj.LinkDataTrain, 'wb+') as destination:
+            for chunk in train.chunks():
+                destination.write(chunk)
+        with open(obj.LinkDataTest, 'wb+') as destination:
+            for chunk in test.chunks():
+                destination.write(chunk)
+        with open(obj.LinkTester, 'wb+') as destination:
+            for chunk in tester.chunks():
+                destination.write(chunk)
         return redirect('holder')
 
-      
+#############################PUBLIC###################
+class ContestStatus(View):
+    def get(self, request,id):
+        selectedContest = list(filter(lambda x: id == x['idContest'], mockData))
+        context = {
+            'dataContests': selectedContest,
+            'dataStatus': mockStatus
+        }
+
+        if request.user.is_staff:
+            userName = str()
+            try:
+                userName = request.user.username
+            except:
+                userName = ''
+            context['name'] = userName
+        
+        return render(request,path.templateStatus,context)

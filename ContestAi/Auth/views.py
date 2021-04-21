@@ -7,29 +7,30 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 import re
 
+
 class Login(View):
 
     def get(self, request):
-        if request.user.is_authenticated == True:
-            return redirect('../')
+        if request.user.is_staff:
+            return redirect('../holder/')
         else:
             return render(request, path.templateLogin)
+        #return render(request, path.templateLogin)
     def post(self, request):
-        us = request.POST.get("UserName")
-        us = us.lower()
+        userName = request.POST.get("userName").lower()
         regex = re.compile('[_!#$%^&*()<>?/|}{~:\s\'\"\[\]]')
         regex1 = re.compile('^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$')
-        if(regex.search(us) and not(regex1.search(us))):
+        if (regex.search(userName) and not(regex1.search(userName))):
             contest = {
                 'mess': 'Ten dang nhap khong hop le'
             }
             return render(request, path.templateLogin, contest)
         else:
-            pw = request.POST.get("PassWord")
+            password = request.POST.get("password")
             try:
-                my_user = authenticate(request, username = User.objects.get(email = us).username, password = pw)
+                my_user = authenticate(request, username = User.objects.get(email = userName).username, password = password)
             except:
-                my_user = authenticate(request, username = us, password = pw)
+                my_user = authenticate(request, username = userName, password = password)
             if my_user is None:
                 contest = {
                     'mess': 'Tai khoan dang nhap khong hop le'
@@ -38,15 +39,15 @@ class Login(View):
             else:
                 login(request,my_user)
                 if request.user.is_superuser == True:
-                    return HttpResponse('Welcome'+request.user.username)
+                    return HttpResponse("B")
                 elif request.user.is_staff == True:
-                    return HttpResponse('Hello'+request.user.username)
+                    return redirect('holder/')
                 elif request.user.is_active == True:
-                    return HttpResponse('Hi'+request.user.username) 
+                    return HttpResponse('C')
 
 
 class SignUp(View):
-
+    
     def get(self, request):
         if request.user.is_authenticated == True:
             return redirect('../')
@@ -54,13 +55,10 @@ class SignUp(View):
             return render(request, path.templateSignUp)
 
     def post(self, request):
-        #name = request.POST.get("name")
-        #userName = request.POST.get("userName")
-        userName = request.POST.get("name")
-        userName = userName.lower()
+        userName = request.POST.get("name").lower()
         regex = re.compile('[_!@#$%^&*()<>?/|}{~:\s\'\"\[\]]')
         regex1 = re.compile('^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$')
-        email = request.POST.get("email")
+        email = request.POST.get("email").lower()
         password = request.POST.get("password")
         if (regex.search(userName)):
             contest = {
@@ -89,14 +87,6 @@ class SignUp(View):
             user.is_superuser = False
             user.save()
             return redirect('../login')
-        #roleId = request.POST.get("role")
-        #try:
-            #request.session['messAuth'] = 'Sign Up Success'
-            #return redirect('../login')
-        #except Exception as e:
-            #request.session['messAuth'] = 'Sign Up Fail'
-            #return redirect('./')
-
 class LogOut(View):
     def post(self, request):
         logout(request)

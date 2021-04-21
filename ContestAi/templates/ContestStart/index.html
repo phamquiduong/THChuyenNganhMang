@@ -1,0 +1,127 @@
+{% extends 'base.html' %} {% block script %} {% include './javaScript.js' %}
+<!--<div></div>-->
+{% endblock %} {% block css %} {% include './style.css' %} {% endblock %}
+<!--<div></div>-->
+{% block title %}Contest Start Page{% endblock%}
+<!--<div></div>-->
+{% load static %} {% block body %}
+<div class="container" style="min-height: 80vh">
+  <h1 class="text-center mt-5 mb-5 fade-in">Contest Start Pages</h1>
+  <!-- /card-container -->
+  <div class="row">
+    <div class="col-lg-9 col-sm-12">
+      <div class="card mb-4 fade-in-left">
+        <div class="card-body status-body">
+          <i class="bi bi-clock-history text-warning icon-status mr-5"></i>
+          <h3>Not Time For Testing</h3>
+        </div>
+      </div>
+      <div class="card mb-4 fade-in-left">
+        <div class="card-header">
+          <h5 class="card-title">{{ contest.title }}</h5>
+        </div>
+        <div class="card-body">
+          <div class="content-item">
+            <h6 class="card-subtitle text-muted mb-2">Contest Description</h6>
+            {{ contest.description }}
+          </div>
+          <div class="mt-4 content-item">
+            <h6 class="card-subtitle text-muted">Contest Content</h6>
+            <embed
+              src="{% static '..' %}{{ linkContest }}"
+              class="embed-content"
+            />
+            <h6 class="card-subtitle text-muted mb-2 mt-3">Time Out</h6>
+            <h5>{{ data.TimeOut }}(s)</h5>
+          </div>
+          <div class="mt-4 content-item">
+            <h6 class="card-subtitle text-muted">Data For Train</h6>
+            <embed
+              src="{% static '..' %}{{ linkDataTrain }}"
+              class="embed-data"
+            />
+            <a
+              href="{% static '..' %}{{ linkDataTrain }}"
+              download="data_train.txt"
+              ><button class="btn btn-info mt-2">
+                Download Data For Train
+              </button></a
+            >
+          </div>
+          <div class="mt-4 content-item">
+            <h6 class="card-subtitle text-muted mb-3">Submit result here</h6>
+            <form method="POST" action="" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="input-group select mb-3">
+                <label
+                  class="input-group-text"
+                  for="language"
+                  style="width: 100px"
+                  >Language</label
+                >
+                <select
+                  class="form-control"
+                  id="language"
+                  name="language"
+                  style="height: 44px"
+                  required
+                >
+                  <option value="Python">Python</option>
+                  <option value="Java">Java</option>
+                  <option value="C++">C++</option>
+                </select>
+              </div>
+              <div class="input-group mb-3">
+                <label
+                  class="input-group-text"
+                  for="result"
+                  style="width: 100px"
+                  >Result</label
+                >
+                <input
+                  type="file"
+                  class="form-control"
+                  id="result"
+                  name="result"
+                  aria-describedby="inputGroupFileAddon01"
+                  required
+                />
+              </div>
+              <div class="input-group">
+                <button type="submit" class="btn btn-primary">SUBMIT</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        {% comment %}
+        <div class="card-footer text-center">
+          <a href=""><button class="btn btn-success">Jump into it</button></a>
+        </div>
+        {% endcomment %}
+      </div>
+    </div>
+    <div class="col-lg-3 col-sm-12 pb-4">
+      <div class="card card-sidebar fade-in-right">
+        <div class="card-body text-center">
+          <img
+            id="profile-img"
+            class="profile-img-card"
+            src="{% static 'images/cat.jpg' %}"
+          />
+          {% if name %}
+          <h6 class="card-subtitle text-muted mt-3">{{ name }}</h6>
+          <a href="{% url 'participant' %}" class="btn btn-danger mt-3"
+            >Out of Contest</a
+          >
+          {% endif %}
+          <div class="hourglass-container">
+            <div class="hourglass" id="hourglass"></div>
+          </div>
+          <h6 class="card-subtitle text-muted mb-2 mt-3">Time Remaining</h6>
+          <div class="timer" id="timer"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% comment %} Modal {% endcomment %} {% endblock %}
