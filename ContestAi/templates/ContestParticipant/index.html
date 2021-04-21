@@ -2,32 +2,134 @@
 <!--<div></div>-->
 {% endblock %} {% block css %} {% include './style.css' %} {% endblock %}
 <!--<div></div>-->
-{% block title %}Contest Status Page{% endblock%}
+{% block title %}Contest Partiaipant Page{% endblock%}
 <!--<div></div>-->
 {% load static %} {% block body %}
 <div class="container" style="min-height: 80vh">
-  <h1 class="text-center mt-5 mb-5 fade-in">Contest Status Pages</h1>
+  <h1 id="headerPage" class="text-center mt-5 mb-5 fade-in">
+    Contest for Register
+  </h1>
   <!-- /card-container -->
   <div class="row">
-    <div class="col-lg-9 col-sm-12"></div>
-    <div class="col-lg-3 col-sm-12 pb-4">
-      <div class="card card-sidebar fade-in-right">
-        <div class="card-body text-center">
-          <img
-            id="profile-img"
-            class="profile-img-card"
-            src="{% static 'images/cat.jpg' %}"
-          />
-          {% if name %}
-          <h6 class="card-subtitle text-muted mt-3">{{ name }}</h6>
-          <a href="{% url 'holder' %}" class="btn btn-info mt-3"
-            >Back To See All</a
-          >
-          {% endif %}
+    <div class="col-lg-12 col-sm-12">
+      <div id="carouselExampleIndicators" class="carousel slide">
+        <ol class="carousel-indicators custom-indicators">
+          <li class="active item1"></li>
+          <li class="item2"></li>
+          <li class="item3"></li>
+        </ol>
+        <div class="carousel-inner">
+          <div class="carousel-item active custom-carousel">
+            {% for data in unRegisContests %}
+            <div class="card mb-4">
+              <div class="card-header">
+                <h5 class="card-title">{{ data.title }}</h5>
+              </div>
+              <div class="card-body">
+                <div>{{ data.description }}</div>
+                <div class="mt-4">
+                  <h6 class="card-subtitle text-muted">Time schedule:</h6>
+                  <ul class="list-group mt-2">
+                    <li class="list-group-item">
+                      Time Register: {{ data.timeRegister }}
+                    </li>
+                    <li class="list-group-item">
+                      Time Start: {{ data.timeStart }}
+                    </li>
+                    <li class="list-group-item">
+                      Time End: {{ data.timeEnd }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="card-footer">
+                <a href="{% url 'register' id=data.idContest%}"
+                  ><button class="btn btn-info float-right">Register</button></a
+                >
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <div class="carousel-item custom-carousel">
+            {% for data in regisContests %}
+            <div class="card mb-4">
+              <div class="card-header">
+                <h5 class="card-title">{{ data.title }}</h5>
+              </div>
+              <div class="card-body">
+                <div>{{ data.description }}</div>
+                <div class="mt-4">
+                  <h6 class="card-subtitle text-muted">Time schedule:</h6>
+                  <ul class="list-group mt-2">
+                    <li class="list-group-item">
+                      Time Register: {{ data.timeRegister }}
+                    </li>
+                    <li class="list-group-item">
+                      Time Start: {{ data.timeStart }}
+                    </li>
+                    <li class="list-group-item">
+                      Time End: {{ data.timeEnd }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="card-footer">
+                <a href="{% url 'start' id=data.idContest%}"
+                  ><button class="btn btn-success float-right">
+                    Start Contest
+                  </button></a
+                >
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <div class="carousel-item custom-carousel">
+            {% for data in historyContests %}
+            <div class="card mb-4">
+              <div class="card-header">
+                <h5 class="card-title">{{ data.title }}</h5>
+              </div>
+              <div class="card-body">
+                <div>{{ data.description }}</div>
+                <div class="mt-4">
+                  <h6 class="card-subtitle text-muted">Time schedule:</h6>
+                  <ul class="list-group mt-2">
+                    <li class="list-group-item">
+                      Time End: {{ data.timeEnd }}
+                    </li>
+                  </ul>
+                </div>
+                <div class="mt-4">
+                  <h5 class="card-subtitle text-muted">
+                    Result: <span>{{ data.result }}</span>
+                  </h5>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
         </div>
+        <a
+          class="carousel-control-prev custom-control-prev"
+          href="#carouselExampleIndicators"
+          role="button"
+          data-slide="prev"
+        >
+          <span><i class="bi bi-caret-left-fill"></i></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a
+          class="carousel-control-next custom-control-next"
+          href="#carouselExampleIndicators"
+          role="button"
+          data-slide="next"
+        >
+          <span><i class="bi bi-caret-right-fill"></i></span>
+          <span class="sr-only">Next</span>
+        </a>
       </div>
     </div>
   </div>
 </div>
 
-{% comment %} Modal {% endcomment %} {% endblock %}
+{% endblock %}

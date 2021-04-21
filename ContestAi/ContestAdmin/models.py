@@ -14,9 +14,11 @@ class Contest(models.Model):
     LinkContest = models.CharField(max_length=100)
     LinkDataTrain = models.CharField(max_length=100)
     LinkDataTest = models.CharField(max_length=100)
+    LinkTester = models.CharField(max_length=100)
     TimeRegister = models.DateTimeField()
     TimeStart = models.DateTimeField()
     TimeEnd = models.DateTimeField()
+    TimeOut = models.IntegerField()
     IDLanguage = models.CharField(max_length=100)
 
 class Status(models.Model):

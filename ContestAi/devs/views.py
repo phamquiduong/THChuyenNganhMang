@@ -6,26 +6,26 @@ from . import models
 
 class Index(View):
     template = 'index/index.html'
-    # obj = models.Dev.objects.get(id=1)
+    obj = models.Dev.objects.get(id=1)
     test = {"id": 1}
     context = {
         "name": "Tue Anh Truong",
         "language": ["Python", "JS", "C#", "C++", "Java"],
         "condition": False,
-        # "data": obj,
+        "data": obj,
     }
 
     def get(self, request):
-        # if self.test.get("id") == 3:
-        #     self.test.update({"id": 1})
-        # else:
-        #     self.test.update({"id": 3})
-        # if self.context.get('data') == models.Dev.objects.get(id=1):
-        #     obj_new = models.Dev.objects.get(id=3)
-        #     self.context.update({"data": obj_new})
-        # else:
-        #     obj_new = models.Dev.objects.get(id=1)
-        #     self.context.update({"data": obj_new})
+        if self.test.get("id") == 3:
+            self.test.update({"id": 1})
+        else:
+            self.test.update({"id": 3})
+        if self.context.get('data') == models.Dev.objects.get(id=1):
+            obj_new = models.Dev.objects.get(id=3)
+            self.context.update({"data": obj_new})
+        else:
+            obj_new = models.Dev.objects.get(id=1)
+            self.context.update({"data": obj_new})
         return render(request, self.template, self.context)
 
     def post(self, request):

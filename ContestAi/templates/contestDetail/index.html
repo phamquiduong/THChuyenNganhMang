@@ -13,39 +13,38 @@
       {% for data in dataContests %}
       <div class="card mb-4 fade-in-left">
         <div class="card-header">
-          <h5 class="card-title">{{ data.title }}</h5>
+          <h5 class="card-title">{{ data.Title }}</h5>
           <h6 class="card-subtitle text-muted">Holder: {{ name }}</h6>
         </div>
         <div class="card-body">
           <div class="content-item">
             <h6 class="card-subtitle text-muted mb-2">Contest Description</h6>
-            {{ data.description }}
+            {{ data.Description }}
           </div>
           <div class="mt-4 content-item">
             <h6 class="card-subtitle text-muted">Contest Content</h6>
             <embed
-              src="{% static '' %}{{ linkContest }}"
+              src="{% static '..' %}{{ data.LinkContest }}"
               class="embed-content"
             />
             <h6 class="card-subtitle text-muted mb-2 mt-3">Time Out</h6>
-            <h5>{{ data.timeOut }}(s)</h5>
+            <h5>{{ data.TimeOut }}(s)</h5>
           </div>
           <div class="mt-4 content-item">
             <h6 class="card-subtitle text-muted">Data For Train</h6>
             <embed
-              src="{% static '' %}{{ linkDataTrain }}"
+              src="{% static '..' %}{{ data.LinkDataTrain }}"
               class="embed-data"
             />
             <a
-              href="{% static '' %}{{ linkDataTrain }}"
-              download="{{ linkDataTrain }}"
+              href="{% static '..' %}{{ data.LinkDataTrain }}"
+              download="data_train.txt"
               ><button class="btn btn-info mt-2">
                 Download Data For Train
               </button></a
             >
           </div>
           <div class="mt-4 content-item">
-            <div id="chartContainer" style="height: 300px; width: 100%"></div>
             <div id="myDropdown" class="dropdown_content">
             <h6 class="card-subtitle text-muted mb-2 mt-3">List of Participant</h6>
             <input
@@ -55,7 +54,6 @@
               id="myInput" 
               onkeyup="filterFunction()"
             />
-
             <div class="options_container"> 
             {% for participant in listParticipants %}
             <li class="list-group-item">{{ participant.namePaticipant }}</li>
@@ -67,10 +65,10 @@
             <h6 class="card-subtitle text-muted">Time schedule</h6>
             <ul class="list-group mt-2">
               <li class="list-group-item">
-                Time Register: {{ data.timeRegister }}
+                Time Register: {{ data.TimeRegister }}
               </li>
-              <li class="list-group-item">Time Start: {{ data.timeStart }}</li>
-              <li class="list-group-item">Time End: {{ data.timeEnd }}</li>
+              <li class="list-group-item">Time Start: {{ data.TimeStart }}</li>
+              <li class="list-group-item">Time End: {{ data.TimeEnd }}</li>
             </ul>
           </div>
         </div>
@@ -87,12 +85,12 @@
               Back To See All
             </button></a
           >
-          <a href="{% url 'delete' id=data.idContest%}"
+          <a href="{% url 'delete' id=data.id%}"
             ><button class="btn btn-danger float-right ml-3">
               Delete This Contest
             </button></a
           >
-          <a href="{% url 'status' id=data.idContest%}"
+          <a href="{% url 'status' id=data.id%}"
             ><button class="btn btn-info float-right ml-3">
               See Status
             </button></a
@@ -146,7 +144,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="POST" action=""> 
+      <form method="POST" action="" enctype="multipart/form-data"> 
       {% csrf_token %}
       <div class="modal-body">
         {% for data in dataContests %}
@@ -158,7 +156,7 @@
               class="form-control"
               id="title"
               name="title"
-              value="{{ data.title }}"
+              value="{{ data.Title }}"
             />
           </div>
         </div>
@@ -173,7 +171,7 @@
               rows="5"
               name="description"
             >
-{{ data.description }}</textarea
+{{ data.Description }}</textarea
             >
           </div>
         </div>
@@ -256,7 +254,7 @@
               class="form-control"
               id="timeOut"
               name="timeOut"
-              value="{{ data.timeOut }}"
+              value="{{ data.TimeOut }}"
             />
           </div>
         </div>
@@ -271,7 +269,7 @@
               class="form-control"
               id="dateregis"
               name="dateRegister"
-              value="{{ data.timeRegister }}"
+              value="{{ data.TimeRegister|date:'Y-m-d' }}"
             />
           </div>
           <label for="timeregis" class="col-sm-2 col-form-label"
@@ -283,7 +281,7 @@
               class="form-control"
               id="timeregis"
               name="timeRegister"
-              value="{{ data.timeRegister }}"
+              value="{{ data.TimeRegister|time:'H:i' }}"
             />
           </div>
         </div>
@@ -298,7 +296,7 @@
               class="form-control"
               id="datestart"
               name="dateStart"
-              value="{{ data.timeStart }}"
+              value="{{ data.TimeStart|date:'Y-m-d' }}"
             />
           </div>
           <label for="start" class="col-sm-2 col-form-label">Time Start</label>
@@ -308,7 +306,7 @@
               class="form-control"
               id="start"
               name="timeStart"
-              value="{{ data.timeStart }}"
+              value="{{ data.TimeStart|time:'H:i' }}"
             />
           </div>
         </div>
@@ -321,7 +319,7 @@
               class="form-control"
               id="dateend"
               name="dateEnd"
-              value="{{ data.timeEnd }}"
+              value="{{ data.TimeEnd|date:'Y-m-d' }}"
             />
           </div>
           <label for="end" class="col-sm-2 col-form-label">Time End</label>
@@ -331,7 +329,7 @@
               class="form-control"
               id="end"
               name="timeEnd"
-              value="{{ data.timeEnd }}"
+              value="{{ data.TimeEnd|time:'H:i' }}"
             />
           </div>
         </div>

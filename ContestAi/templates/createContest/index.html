@@ -8,7 +8,7 @@
 <div class="container" style="min-height: 80vh">
   <h1 class="text-center mt-5 mb-5 fade-in">Create Contest Pages</h1>
   <!-- /card-container -->
-  <form method="POST" action="" id="create">
+  <form method="POST" action="" id="create" enctype="multipart/form-data">
     <div class="row">
       <div class="col-lg-9 col-sm-12">
         <div class="card mb-4 fade-in-left">
@@ -53,6 +53,7 @@
                       id="content"
                       name="content"
                       aria-describedby="inputGroupFileAddon01"
+                      name="content"
                     />
                   </div>
                 </div>
@@ -72,6 +73,7 @@
                       id="train"
                       name="train"
                       aria-describedby="inputGroupFileAddon01"
+                      mane="train"
                     />
                   </div>
                 </div>
@@ -91,6 +93,7 @@
                       id="test"
                       name="test"
                       aria-describedby="inputGroupFileAddon01"
+                      name="test"
                     />
                   </div>
                 </div>
@@ -108,6 +111,7 @@
                       id="tester"
                       name="tester"
                       aria-describedby="inputGroupFileAddon01"
+                      name="tester"
                     />
                   </div>
                 </div>
@@ -215,9 +219,7 @@
             <button type="submit" class="btn btn-success mt-3" for="create">
               Save <i class="bi bi-save2"></i>
             </button>
-            <a href="{% url 'holder' %}"
-              ><button class="btn btn-warning mt-3">Back To See All</button></a
-            >
+            <a href="{% url 'holder' %}" class="btn btn-warning mt-3">Back To See All</a>
           </div>
         </div>
       </div>

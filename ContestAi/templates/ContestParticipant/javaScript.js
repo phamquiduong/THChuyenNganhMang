@@ -1,21 +1,24 @@
-window.onload = function () {
-  var chart = new CanvasJS.Chart("chartContainer", {
-    title: {
-      text: "Number Participant",
-    },
-    axisY: {
-      minimum: 0
-    },
-    data: [
-      {
-        type: "column",
-        dataPoints: [
-          { label: "Registed", y: {{inRegis}} },
-          { label: "Todo", y: {{inTodo}} },
-          { label: "Has result", y: {{inResult}} },
-        ],
-      },
-    ],
+$(document).ready(function () {
+  // Enable Carousel Indicators
+  $(".item1").click(function () {
+    $("#carouselExampleIndicators").carousel(0);
   });
-  chart.render();
-};
+  $(".item2").click(function () {
+    $("#carouselExampleIndicators").carousel(1);
+  });
+  $(".item3").click(function () {
+    $("#carouselExampleIndicators").carousel(2);
+  });
+
+  const header = $("#headerPage");
+  const templateHeader = {
+    0: "Contest for Register",
+    1: "Contest for Testing",
+    2: "History Contest",
+  };
+
+  $("#carouselExampleIndicators").on("slide.bs.carousel", function (event) {
+    const index = event.to;
+    header.text(templateHeader[index]);
+  });
+});

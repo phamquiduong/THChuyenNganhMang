@@ -5,103 +5,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script>
-        function checkPass(){
-            var x = document.forms['form1']['firstPass'].value
-            var y = document.forms['form1']['newPass'].value
-            if (x===y) document.getElementById('passMatch').style.display = 'inline'
-            else document.getElementById('passMatch').style.display = 'none'
-            if (x!='' && x!=y) document.getElementById('subProfile').disabled = true
-            else document.getElementById('subProfile').disabled = false
-        }
-        function hideButton(){
-            var x = document.forms['form1']['firstPass'].value
-            var y = document.forms['form1']['newPass'].value
-            if (x!='' && x!=y) document.getElementById('subProfile').disabled = true
-            else document.getElementById('subProfile').disabled = false
-        }
-    </script>
-    <style>
-        .post{
-            cursor: pointer;
-        }
-        .post:hover{
-            border: 1px solid rgb(138, 138, 138);
-        }
-    </style>
 </head>
 <body>
-    <h2> ID User: {{id}} , Hello {{infoUser.2}} {{infoUser.1}}</h2>
-
     {%  if haveError == True %}
-        <h2> Đã có lỗi xảy ra .. Chuyển cái trang nào tùy bạn</h2>
-    {% else %}
-
-        <h2>Contest đã hoành thành</h2>
-        {% for item in contestSubmited%}
-            <div class = 'post' onclick="alert('Xem chi tiết contest với ID = {{item.2}}')">
-                <b>.....Contest.....</b><br>
-                Title: {{item.8}} <br>
-                Description: {{item.9}} <br>
-                Time register: {{item.13}} <br>
-                Time start: {{item.14}} <br>
-                Time end: {{item.15}} <br>
-                Language: {{item.18}} <br>
-                <b>.....Personal.....</b><br>
-                Status: {{item.3}} <br>
-                Submit time: {{item.4}} <br> <br>
-            </div>
-        {% endfor %}
-            
-        <h2>Contest đã đăng ký</h2>
-        {% for item in contestRegisted%}
-            <form class = 'post' method='POST')">
-                {% csrf_token %}
-                Title: {{item.5}} <br>
-                Description: {{item.6}} <br>
-                Time register: {{item.10}} <br>
-                Time start: {{item.11}} <br>
-                Time end: {{item.12}} <br>
-                Language: {{item.15}} <br>
-                <input type="hidden" name='feature' value="2">
-                <input type="hidden" name='idContest' value="{{item.1}}">
-                <input type='hidden' name="idUser" value="{{id}}">
-                <button type="submit"> Hủy đăng ký </button> <br> <br>
-           </form>
-        {% endfor %}
-
-        <h2>Contest chưa đăng ký</h2>
-        {% for item in contestAll%}
-            <form method='post' class='post'">
-                {% csrf_token %}
-                Title: {{item.2}} <br>
-                Description: {{item.3}} <br>
-                Time register: {{item.7}} <br>
-                Time start: {{item.8}} <br>
-                Time end: {{item.9}} <br>
-                Language: {{item.12}} <br>
-                <input type="hidden" name='feature' value="3">
-                <input type="hidden" name='idContest' value="{{item.0}}">
-                <input type='hidden' name="idUser" value="{{id}}">
-                <button type="submit"> Đăng ký </button> <br> <br>
-            </form>
-        {% endfor %}
-
+        <script type="text/javascript">
+            window.location.href = "ContestParticipant/error.html"
+        </script>
     {% endif %}
 
-    <form method="post" name='form1'>
-        {% csrf_token %}
-        <h2> Update Profile </h2>
-        Username: <input type = 'text' name='userName' value='{{infoUser.0}}'> <br>
-        First name: <input type = 'text' name='firstName' value='{{infoUser.2}}'> <br>
-        Last name: <input type = 'text' name='lastName' value='{{infoUser.1}}'> <br>
-        Email: <input type = 'email' name='email' value='{{infoUser.3}}'> <br>
-        Password: <input type = 'password' name='firstPass' onkeyup="hideButton()"><br>
-        Retype password: <input type = 'password' name='newPass' onkeyup="checkPass()">
-        <label id = 'passMatch' style='display: none;'>✔</label> <br>
-        <input type="hidden" name='feature' value="4">
-        <input type='hidden' name="idUser" value="{{id}}">
-        <button id = 'subProfile' type="submit">Cập nhật</button>
-    </form>
+    <h2>Contest đã hoành thành</h2>
+    {% for item in contestSubmited%}
+        {{item}} <br>
+    {% endfor %}
+
+    <h2>Contest đã đăng ký</h2>
+    {% for item in contestRegisted%}
+        {{item}} <br>
+    {% endfor %}
+
+    <h2>Contest</h2>
+    {% for item in contestAll%}
+        {{item}} <br>
+    {% endfor %}
 </body>
 </html>
