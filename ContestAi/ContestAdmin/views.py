@@ -1,9 +1,13 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponse
 from .forms import *
+from django.contrib.auth.models import User
 # Create your views here.
 
 def index(request):
-    return render(request, 'index.html')
+    if request.user.is_staff:
+        return render(request, 'index.html')
+    else:
+        return redirect('login')
 
 def addStatus(request):
     if request.POST:
@@ -36,7 +40,10 @@ def listStatus(request):
     context = {
         'lstatus': lstatus
     }
-    return render(request, 'Status/list.html', context=context)
+    if request.user.is_superuser:
+        return render(request, 'Status/list.html', context=context)
+    else:
+        return redirect('login')
 
 def detailStatus(request, pk):
     istatus = Status.objects.get(pk=pk)

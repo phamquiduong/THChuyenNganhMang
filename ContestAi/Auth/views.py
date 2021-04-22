@@ -11,8 +11,10 @@ import re
 class Login(View):
 
     def get(self, request):
-        if request.user.is_staff:
-            return redirect('../holder/')
+        if request.user.is_superuser:
+            return redirect('/status')
+        elif request.user.is_staff:
+            return redirect('/holder/')
         else:
             return render(request, path.templateLogin)
         #return render(request, path.templateLogin)
@@ -39,9 +41,9 @@ class Login(View):
             else:
                 login(request,my_user)
                 if request.user.is_superuser == True:
-                    return HttpResponse("B")
+                    return redirect('../status/')
                 elif request.user.is_staff == True:
-                    return redirect('holder/')
+                    return redirect('../holder/')
                 elif request.user.is_active == True:
                     return HttpResponse('C')
 
@@ -49,8 +51,10 @@ class Login(View):
 class SignUp(View):
     
     def get(self, request):
-        if request.user.is_authenticated == True:
-            return redirect('../')
+        if request.user.is_superuser:
+            return redirect('../status')
+        elif request.user.is_staff:
+            return redirect('../holder/')
         else:
             return render(request, path.templateSignUp)
 
