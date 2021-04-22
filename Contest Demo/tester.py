@@ -29,9 +29,10 @@ def check_python():
     s=s+"-1\n"
     s=s.encode()
     result = subprocess.run(
-        ['python', os.path.join(sys.path[0], "model.py")], stdout=PIPE, stderr=PIPE, input=s
+        ['python3', os.path.join(sys.path[0], "model.py")], stdout=PIPE, stderr=PIPE, input=s
     )
     res = result.stdout.decode().split("\n")
+    print(res)
     for i in range(len(label)):
         if int(res[i])==int(label[i]):
             count+=1
@@ -84,7 +85,7 @@ def check_cpp():
 
 # x=input()
 print(check_python())
-print(check_cpp())
+# print(check_cpp())
 
 
 

@@ -12,14 +12,29 @@ def run_tester(s):
     module = importlib.util.module_from_spec(spec)
     sys.modules['tester'] = module
     spec.loader.exec_module(module)
-    #contest = importlib.import_module('./static/contest/contest1/tester', package=None)
     obj = models.Dev.objects.get(id=3)
     try:
-        obj.userDescription=module.check(s)
+        obj.userDescription=module.check_python(s)
     except rq.timeouts.JobTimeoutException:
         obj.userDescription="TLE"
-    except:
-        obj.userDescription="Compile Error"
+    # except:
+    #     obj.userDescription="Compile Error"
+    obj.save()
+
+def run_tester_cpp(s):
+    import importlib
+    import sys
+    spec = importlib.util.spec_from_file_location('tester', './static/contest/contest1/tester.py')
+    module = importlib.util.module_from_spec(spec)
+    sys.modules['tester'] = module
+    spec.loader.exec_module(module)
+    obj = models.Dev.objects.get(id=3)
+    try:
+        obj.userDescription=module.check_cpp(s)
+    except rq.timeouts.JobTimeoutException:
+        obj.userDescription="TLE"
+    # except:
+    #     obj.userDescription="Compile Error"
     obj.save()
 
 class Index(View):
@@ -51,19 +66,30 @@ class Index(View):
         return render(request, self.template, self.context)
 
     def post(self, request):
-        # temp=models.Dev.objects.last()
-        # print(temp.id)
         try:
             f = request.FILES["file"]
-            with open('./static/contest/contest1/test.pkl', 'wb+') as destination:
-                for chunk in f.chunks():
-                    destination.write(chunk)
-            obj = models.Dev.objects.get(id=3)
-            obj.userDescription='Pending'
-            obj.save()
-            c=2
-            queue = django_rq.get_queue('default',default_timeout=c)
-            queue.enqueue(run_tester,'test',result_ttl=0)   
+            name = str(f)
+            print(name)
+            if ".py" in name:
+                with open('./static/contest/contest1/test.py', 'wb+') as destination:
+                    for chunk in f.chunks():
+                        destination.write(chunk)
+                obj = models.Dev.objects.get(id=3)
+                obj.userDescription='Pending'
+                obj.save()
+                c=10
+                queue = django_rq.get_queue('default',default_timeout=c)
+                queue.enqueue(run_tester,'test',result_ttl=0)   
+            if ".cpp" in name:
+                with open('./static/contest/contest1/test.cpp', 'wb+') as destination:
+                    for chunk in f.chunks():
+                        destination.write(chunk)
+                obj = models.Dev.objects.get(id=3)
+                obj.userDescription='Pending'
+                obj.save()
+                c=10
+                queue = django_rq.get_queue('default',default_timeout=c)
+                queue.enqueue(run_tester_cpp,'test',result_ttl=0) 
         except:
             print("No File select")  
         return redirect('/')

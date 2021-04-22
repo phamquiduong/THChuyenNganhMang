@@ -13,11 +13,11 @@
     <a href="../static/contest/contest1/data_train.txt" download="data_train.txt"><button>Download Data</button></a>
   </br>
   <form class="form-signin" action="" method="POST" enctype="multipart/form-data"> {% csrf_token %}
-    File Model cần nộp (định dạng *.pkl)
+    File Model cần nộp 
     <input 
       type="file" 
       name="file"
-      accept=".pkl"
+      accept=".py, .cpp"
     />
     <button class="btn btn-primary btn-signin" type="submit">
       Nộp model

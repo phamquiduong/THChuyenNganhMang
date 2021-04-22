@@ -13,7 +13,7 @@ with open(os.path.join(sys.path[0], "data_train.txt"), "r") as f:
         data.append(text)
 
 # Build model
-svc = svm.SVC(C=1, kernel="rbf", gamma=0.5)
+svc = svm.SVC(C=1, kernel="rbf", gamma=0.1)
 svc.fit(data,label)
 
 # Run model
