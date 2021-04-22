@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {%  if haveError == True %}
+        <script type="text/javascript">
+            window.location.href = "ContestParticipant/error.html"
+        </script>
+    {% endif %}
+
+    <h2>Contest đã hoành thành</h2>
+    {% for item in contestSubmited%}
+        {{item}} <br>
+    {% endfor %}
+
+    <h2>Contest đã đăng ký</h2>
+    {% for item in contestRegisted%}
+        {{item}} <br>
+    {% endfor %}
+
+    <h2>Contest</h2>
+    {% for item in contestAll%}
+        {{item}} <br>
+    {% endfor %}
+</body>
+</html>

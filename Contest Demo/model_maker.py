@@ -17,4 +17,4 @@ svc.fit(data,label)
 
 # Save model
 s=input()
-pickle.dump(svc,open(os.path.join(s+".pkl"), 'wb'))
+pickle.dump(svc,open(os.path.join(s+".py"), 'wb'))

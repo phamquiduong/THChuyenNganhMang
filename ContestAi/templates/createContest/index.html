@@ -1,0 +1,231 @@
+{% extends 'base.html' %} {% block script %} {% include './javaScript.js' %}
+<!--<div></div>-->
+{% endblock %} {% block css %} {% include './style.css' %} {% endblock %}
+<!--<div></div>-->
+{% block title %}Create Contest Page{% endblock%}
+<!--<div></div>-->
+{% load static %} {% block body %}
+<div class="container" style="min-height: 80vh">
+  <h1 class="text-center mt-5 mb-5 fade-in">Create Contest Pages</h1>
+  <!-- /card-container -->
+  <form method="POST" action="" id="create" enctype="multipart/form-data">
+    <div class="row">
+      <div class="col-lg-9 col-sm-12">
+        <div class="card mb-4 fade-in-left">
+          <div class="card-header">
+            <h5 class="card-title">Create A New Contest</h5>
+            <h6 class="card-subtitle text-muted">Holder: {{ name }}</h6>
+          </div>
+          <div class="card-body">
+            <div class="form-group row">
+              <label for="title" class="col-sm-2 col-form-label">Title</label>
+              <div class="col-sm-12 col-lg-10">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="title"
+                  name="title"
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="descript" class="col-sm-2 col-form-label"
+                >Description</label
+              >
+              <div class="col-sm-12 col-lg-10">
+                <textarea
+                  class="form-control"
+                  id="descript"
+                  rows="5"
+                  name="description"
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="start" class="col-sm-2 col-form-label">Content</label>
+              <div class="col-sm-12 col-lg-10">
+                <div class="input-group">
+                  <div class="custom-file">
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="content"
+                      name="content"
+                      aria-describedby="inputGroupFileAddon01"
+                      name="content"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="start" class="col-sm-2 col-form-label"
+                >Data Train</label
+              >
+              <div class="col-sm-12 col-lg-10">
+                <div class="input-group">
+                  <div class="custom-file">
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="train"
+                      name="train"
+                      aria-describedby="inputGroupFileAddon01"
+                      mane="train"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="start" class="col-sm-2 col-form-label"
+                >Data Test</label
+              >
+              <div class="col-sm-12 col-lg-10">
+                <div class="input-group">
+                  <div class="custom-file">
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="test"
+                      name="test"
+                      aria-describedby="inputGroupFileAddon01"
+                      name="test"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="start" class="col-sm-2 col-form-label">Tester</label>
+              <div class="col-sm-12 col-lg-10">
+                <div class="input-group">
+                  <div class="custom-file">
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="tester"
+                      name="tester"
+                      aria-describedby="inputGroupFileAddon01"
+                      name="tester"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="timeOut" class="col-sm-2 col-form-label"
+                >Time Out(s)</label
+              >
+              <div class="col-sm-12 col-lg-10">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="timeOut"
+                  name="timeOut"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="dateregis" class="col-sm-2 col-form-label"
+                >Date Register</label
+              >
+              <div class="col-sm-4">
+                <input
+                  type="date"
+                  class="form-control"
+                  id="dateregis"
+                  name="dateRegister"
+                />
+              </div>
+              <label for="timeregis" class="col-sm-2 col-form-label"
+                >Time Register</label
+              >
+              <div class="col-sm-4">
+                <input
+                  type="time"
+                  class="form-control"
+                  id="timeregis"
+                  name="timeRegister"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="datestart" class="col-sm-2 col-form-label"
+                >Date Start</label
+              >
+              <div class="col-sm-4">
+                <input
+                  type="date"
+                  class="form-control"
+                  id="datestart"
+                  name="dateStart"
+                />
+              </div>
+              <label for="start" class="col-sm-2 col-form-label"
+                >Time Start</label
+              >
+              <div class="col-sm-4">
+                <input
+                  type="time"
+                  class="form-control"
+                  id="start"
+                  name="timeStart"
+                />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="dateend" class="col-sm-2 col-form-label"
+                >Date End</label
+              >
+              <div class="col-sm-4">
+                <input
+                  type="date"
+                  class="form-control"
+                  id="dateend"
+                  name="dateEnd"
+                />
+              </div>
+              <label for="end" class="col-sm-2 col-form-label">Time End</label>
+              <div class="col-sm-4">
+                <input
+                  type="time"
+                  class="form-control"
+                  id="end"
+                  name="timeEnd"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-12 pb-4">
+        <div class="card card-sidebar fade-in-right">
+          <div class="card-body text-center">
+            <img
+              id="profile-img"
+              class="profile-img-card"
+              src="{% static 'images/cat.jpg' %}"
+            />
+            <h6 class="card-subtitle text-muted mt-3">{{ name }}</h6>
+            <button type="submit" class="btn btn-success mt-3" for="create">
+              Save <i class="bi bi-save2"></i>
+            </button>
+            <a href="{% url 'holder' %}" class="btn btn-warning mt-3">Back To See All</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% csrf_token %}
+  </form>
+</div>
+
+{% comment %} Modal {% endcomment %} {% endblock %}
