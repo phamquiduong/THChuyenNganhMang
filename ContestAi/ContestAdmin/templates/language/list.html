@@ -2,39 +2,40 @@
 {% block content %}
 <h4 class="text-center">List Status</h4>
 
-<table class="table">
+<!-- 'username',
+    'password',
+    'email',
+    'is_superuser',
+    'is_staff',
+    'is_active' -->
+<style>
+    .table td, .table th{
+        padding: 0.25rem;
+    }
+</style>
+
+<a href="{% url 'addLanguage' %}">Add Account</a>
+<table class="table table-bordered">
     <thead>
         <tr>
             <th scope="col">id</th>
-            <th scope="col">IDcontest</th>
-            <th scope="col">IDUser</th>
-            <th scope="col">Username</th>
-            <th scope="col">Status</th>
-            <th scope="col">TimeSubmit</th>
-            <th scope="col">LinkSubmit</th>
-            <!-- <th scope="col">Detail</th>
+            <th scope="col">Language</th>
             <th scope="col">Delete</th>
-            <th scope="col">Update</th> -->
-
         </tr>
     </thead>
     <tbody>
-        {% for s in lstatus %}
+        {% for s in llanguage %}
         <tr>
             <td>{{s.pk}}</td>
-            <td>{{s.IDcontest}}</td>
-            <td>{{s.IDUser}}</td>
-            <td>{{s.username}}</td>
-            <td>{{s.Status}}</td>
-            <td>{{s.TimeSubmit}}</td>
-            <td>{{s.LinkSubmit}}</td>
+            <td>{{s.Language}}</td>
+            <td><a href="{% url 'deleteLanguage' pk=s.pk %}" class="" id="{{s.pk}}" onclick="return confirm('Are you sure you want to delete?');">Delete</a></td>
         </tr>
         {% endfor %}
 
     </tbody>
 </table>
 
-<!-- <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
+<div class="modal" tabindex="-1" role="dialog" id="exampleModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -61,6 +62,6 @@
     $('#btn_delete').click(function(){
     return confirm("Are you sure you want to delete?");
 })
-</script> -->
+</script>
 
 {% endblock content %}

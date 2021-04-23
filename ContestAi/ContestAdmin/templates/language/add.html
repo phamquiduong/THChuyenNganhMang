@@ -1,0 +1,16 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<h4 class="text-center">Add/Update Language</h4>
+<!-- Language -->
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="Language">Language</label>
+        {{formLanguage.Language}}
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <!-- <a type='button' href="{% url 'listAccount' %}">View List Account</a> -->
+</form>
+
+{% endblock content %}
