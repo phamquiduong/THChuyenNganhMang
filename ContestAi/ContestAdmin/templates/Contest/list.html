@@ -39,7 +39,7 @@
             <!-- <th scope="col">IDLanguage</th> -->
             <th scope="col">Details</th>
             <th scope="col">Delete</th>
-            <th scope="col">join</th>
+            <th scope="col">Member</th>
             
         </tr>
     </thead>
@@ -69,7 +69,7 @@
             <td><a href="{% url 'detailContest' pk=s.pk %}" type="button" class="btn btn-success"
                 id="{{s.pk}}">Detail</a></td>
             <td><a href="{% url 'deleteContest' pk=s.pk %}" type="button" class="btn btn-danger" id="{{s.pk}}" onclick="return confirm('Are you sure you want to delete?');">Delete</a></td>
-            <td><a href="{% url 'joinContest' pk=s.pk %}" type="button" class="btn btn-danger" id="{{s.pk}}">Join</a></td>
+            <td><a href="{% url 'joinContest' pk=s.pk %}" type="button" class="btn btn-danger" id="{{s.pk}}">Member</a></td>
         </tr>
 
         {% endfor %}
