@@ -17,8 +17,8 @@ def run_tester(s):
         obj.userDescription=module.check_python(s)
     except rq.timeouts.JobTimeoutException:
         obj.userDescription="TLE"
-    # except:
-    #     obj.userDescription="Compile Error"
+    except:
+        obj.userDescription="Compile Error"
     obj.save()
 
 def run_tester_cpp(s):
@@ -33,8 +33,8 @@ def run_tester_cpp(s):
         obj.userDescription=module.check_cpp(s)
     except rq.timeouts.JobTimeoutException:
         obj.userDescription="TLE"
-    # except:
-    #     obj.userDescription="Compile Error"
+    except:
+        obj.userDescription="Compile Error"
     obj.save()
 
 class Index(View):
@@ -87,7 +87,7 @@ class Index(View):
                 obj = models.Dev.objects.get(id=3)
                 obj.userDescription='Pending'
                 obj.save()
-                c=10
+                c=5
                 queue = django_rq.get_queue('default',default_timeout=c)
                 queue.enqueue(run_tester_cpp,'test',result_ttl=0) 
         except:
