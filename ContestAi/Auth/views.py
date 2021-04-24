@@ -12,7 +12,7 @@ class Login(View):
 
     def get(self, request):
         if request.user.is_superuser:
-            return redirect('/status/')
+            return redirect('/account/')
         elif request.user.is_staff:
             return redirect('/holder/')
         elif request.user.is_active:
@@ -42,7 +42,7 @@ class Login(View):
             else:
                 login(request,my_user)
                 if request.user.is_superuser == True:
-                    return redirect('../status/')
+                    return redirect('../account/')
                 elif request.user.is_staff == True:
                     return redirect('../holder/')
                 elif request.user.is_active == True:
@@ -53,7 +53,7 @@ class SignUp(View):
     
     def get(self, request):
         if request.user.is_superuser:
-            return redirect('../status')
+            return redirect('../account')
         elif request.user.is_staff:
             return redirect('../holder/')
         elif request.user.is_active:

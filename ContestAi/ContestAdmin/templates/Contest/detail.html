@@ -1,0 +1,82 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+
+<h4 class="text-center">Detail Contest</h4>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="pk" >IDUser:</label>
+            <div class="col-sm-10">
+            <input type="text" value= {{icontest.pk}} readonly>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="pk" >Title:</label>
+            <div class="col-sm-10">
+            <input type="text" value= {{icontest.Title}} readonly>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="pk" >Description:</label>
+            <div class="col-sm-10">
+                <textarea type="text" value= {{icontest.Description}} readonly >{{icontest.Description}}</textarea>
+            </div>
+        </div>
+    
+        <!-- <td><a href={{icontest.url}} class="" target="_blank">file</a></td> -->
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="pk" >LinkContest:</label>
+            <div class="col-sm-10">
+                <a href={{icontest.LinkContest}} class="" target="_blank">Link</a>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="pk" >LinkDataTrain:</label>
+            <div class="col-sm-10">
+                <a href={{icontest.LinkDataTrain}} class="" target="_blank">Link</a>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="pk" >LinkDataTest:</label>
+            <div class="col-sm-10">
+                <a href={{icontest.LinkDataTest}} class="" target="_blank">Link</a>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="pk" >LinkTester:</label>
+            <div class="col-sm-10">
+                <a href={{icontest.LinkTester}} class="" target="_blank">Link</a>
+            </div>
+        </div>
+       
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="pk" >TimeRegister:</label>
+            <div class="col-sm-10">
+            {{icontest.TimeRegister}}
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="pk" >TimeStart:</label>
+            <div class="col-sm-10">
+            {{icontest.TimeStart}}
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="pk" >TimeEnd:</label>
+            <div class="col-sm-10">
+            {{icontest.TimeEnd}}
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="pk" >TimeOut:</label>
+            <div class="col-sm-10">
+            {{icontest.TimeOut}}
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="pk" >IDLanguage:</label>
+            <div class="col-sm-10">
+            {{icontest.IDLanguage}}
+            </div>
+        </div>
+        
+{% endblock content %}

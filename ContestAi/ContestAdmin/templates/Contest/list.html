@@ -1,0 +1,109 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<h4 class="text-center">List Contest</h4>
+
+<!-- #     IDUser = models.CharField(max_length=100)
+#     Title = models.TextField()
+#     Description = models.TextField()
+#     LinkContest = models.CharField(max_length=100)
+#     LinkDataTrain = models.CharField(max_length=100)
+#     LinkDataTest = models.CharField(max_length=100)
+#     TimeRegister = models.DateTimeField()
+#     TimeStart = models.DateTimeField()
+#     TimeEnd = models.DateTimeField()
+#     TimeOut = models.IntegerField()
+#     IDLanguage = models.CharField(max_length=100) -->
+    <!-- <a href="{% url 'addStatus' %}">Add Status</a> -->
+    <style>
+        .table td, .table th{
+            padding: 0.25rem;
+        }
+    </style>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <!-- <th scope="col">Now</th> -->
+            <th scope="col">Status</th>
+            <!-- <th scope="col">id</th> -->
+            <!-- <th scope="col">IDUser</th> -->
+            <th scope="col">UserName</th>
+            <th scope="col">Title</th>
+            <!-- <th scope="col">Description</th> -->
+            <!-- <th scope="col">LinkContest</th> -->
+            <!-- <th scope="col">LinkDataTrain</th> -->
+            <!-- <th scope="col">LinkDataTest</th> -->
+            <th scope="col">TimeRegister</th>
+            <th scope="col">TimeStart</th>
+            <th scope="col">TimeEnd</th>
+            <!-- <th scope="col">TimeOut</th> -->
+            <!-- <th scope="col">IDLanguage</th> -->
+            <th scope="col">Details</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Member</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        {% for s in lcontest %}
+        <tr>
+            <!-- <td>{{s.time}}</td> -->
+            {% if s.status %}
+                <td ><span class="badge badge-danger"> <a style="color: aliceblue;" href="{% url 'listStatus' pk=s.pk %}">Live</a> </span></td>
+            {% else %}
+                <td ><span class="badge badge-secondary" > <a style="color: aliceblue;" href="{% url 'listStatus' pk=s.pk %}">None</a> </span></td>
+            {% endif %}
+            
+            <!-- <td>{{s.pk}}</td> -->
+            <!-- <td>{{s.IDUser}}</td>-->
+            <td>{{s.username}}</td> 
+            <td>{{s.Title}}</td>
+            <!-- <td>{{s.Description}}</td> -->
+            <!-- <td>{{s.LinkContest}}</td>
+            <td>{{s.LinkDataTrain}}</td>
+            <td>{{s.LinkDataTest}}</td>-->
+            <td>{{s.TimeRegister}}</td> 
+            <td>{{s.TimeStart}}</td>
+            <td>{{s.TimeEnd}}</td>
+            <!-- <td>{{s.TimeOut}}</td>
+            <td>{{s.IDLanguage}}</td> -->
+            <td><a href="{% url 'detailContest' pk=s.pk %}" type="button" class="btn btn-success"
+                id="{{s.pk}}">Detail</a></td>
+            <td><a href="{% url 'deleteContest' pk=s.pk %}" type="button" class="btn btn-danger" id="{{s.pk}}" onclick="return confirm('Are you sure you want to delete?');">Delete</a></td>
+            <td><a href="{% url 'joinContest' pk=s.pk %}" type="button" class="btn btn-danger" id="{{s.pk}}">Member</a></td>
+        </tr>
+
+        {% endfor %}
+        
+    </tbody>
+</table>
+
+<div class="modal" tabindex="-1" role="dialog" id="exampleModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button"  id="btn_delete" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // $('#btn_delete').click(function() {
+    //     $.post()
+    // });
+    $('#btn_delete').click(function(){
+    return confirm("Are you sure you want to delete?");
+})
+</script>
+
+{% endblock content %}
