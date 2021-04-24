@@ -183,7 +183,7 @@ class Register(View):
 
                 time_now = datetime.now()
 
-                if (time_reg>time_now):
+                if (time_reg=>time_now):
                     cmd = "INSERT INTO ContestAdmin_registercontest(IDcontest,IDUser) VALUES ('{0}','{1}')".format(id,id_user)
                     conn.execute(cmd)
                     conn.commit()
@@ -256,7 +256,7 @@ class Starting(View):
 
                 time_now = datetime.now()
 
-                if (time_start<time_now and time_now<time_end):
+                if (time_start<=time_now and time_now<=time_end):
                     status = 'OK'
                 else:
                     status = 'Not time to test'
