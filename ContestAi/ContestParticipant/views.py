@@ -5,6 +5,7 @@ from service import path,session
 from django.http import HttpResponse
 from .data import mockContest
 import sqlite3
+from datetime import datetime
 
 # import random
 # from django.core.files.storage import FileSystemStorage
@@ -76,7 +77,7 @@ class ParticipantView(View):
                 cmd = "SELECT ContestAdmin_contest.id,ContestAdmin_contest.Title,ContestAdmin_contest.Description,ContestAdmin_contest.TimeRegister,ContestAdmin_contest.TimeStart,ContestAdmin_contest.TimeEnd,ContestAdmin_language.Language FROM ContestAdmin_contest JOIN ContestAdmin_language ON ContestAdmin_contest.IDLanguage = ContestAdmin_language.id WHERE ContestAdmin_contest.id NOT IN (SELECT (IDcontest) FROM ContestAdmin_registercontest WHERE ContestAdmin_registercontest.IDUser = '{0}')".format(id)
                 unregisted = conn.execute(cmd)
 
-            except EOFError as e:
+            except Exception as e:
                 print(e)
 
             historyContests=[]
@@ -143,24 +144,83 @@ class ParticipantView(View):
     def post(self, request):
         #do sth
         return redirect('./')
+
+
+
+
+
+
+
+
 class Register(View):
     def get(self, request, id):
-        print(id)
+        # print(id)
         if session.isAuthenticated(request):
             userName = str()
             try:
                 userName = request.session.get('user')['name']
             except:
                 userName = ''
+            try:
+                conn = sqlite3.connect('./db.sqlite3')
+
+                cmd = "SELECT id FROM auth_user WHERE username='{}'".format(userName)
+                data = conn.execute(cmd)
+                for row in data:
+                    id_user = row[0]
+
+                # print('id nguoi dung: ' + str(id_user))
+                # print('id exam: ' + id)
+
+                cmd = "SELECT TimeRegister FROM ContestAdmin_contest WHERE id = '{}'".format(id)
+                data = conn.execute(cmd)
+                for row in data:
+                    time_reg_string = row[0]
+                
+                # print('time_reg: ' + time_reg_string)
+
+                time_reg = datetime.strptime(time_reg_string,'%Y-%m-%d %H:%M:%S')
+
+                time_now = datetime.now()
+
+                if (time_reg>time_now):
+                    cmd = "INSERT INTO ContestAdmin_registercontest(IDcontest,IDUser) VALUES ('{0}','{1}')".format(id,id_user)
+                    conn.execute(cmd)
+                    conn.commit()
+                    status = 'OK'
+                else:
+                    status = 'Not time reg'
+
+            except Exception as e:
+                print(e)
+
             context = {
                 'name': userName,
-                'registerStatus': 'Pending',
+                'registerStatus': status,
                 'contest': mockContest[0]
             }
+
+            print(status)
+
             return render(request, path.templateRegister , context)
         else:
             request.session['messAuth'] = 'Please Log In'
             return redirect('login')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class Starting(View):
     def get(self, request, id):
@@ -171,9 +231,40 @@ class Starting(View):
                 userName = request.session.get('user')['name']
             except:
                 userName = ''
+
+            try:
+                conn = sqlite3.connect('./db.sqlite3')
+
+                cmd = "SELECT id FROM auth_user WHERE username='{}'".format(userName)
+                data = conn.execute(cmd)
+                for row in data:
+                    id_user = row[0]
+
+                # print('id nguoi dung: ' + str(id_user))
+                # print('id exam: ' + id)
+
+                cmd = "SELECT TimeRegister FROM ContestAdmin_contest WHERE id = '{}'".format(id)
+                data = conn.execute(cmd)
+                for row in data:
+                    time_reg_string = row[0]
+                
+                # print('time_reg: ' + time_reg_string)
+
+                time_reg = datetime.strptime(time_reg_string,'%Y-%m-%d %H:%M:%S')
+
+                time_now = datetime.now()
+
+                if (time_reg>time_now):
+                    status = 'OK'
+                else:
+                    status = 'Not time to test'
+                    
+            except Exception as e:
+                print(e)
+
             context = {
                 'name': userName,
-                'registerStatus': 'Pending',
+                'registerStatus': status,
                 'contest': mockContest[0], # selected by id
                 'timeremaining': '70:00'
             }
