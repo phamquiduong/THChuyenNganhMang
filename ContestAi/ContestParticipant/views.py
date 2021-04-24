@@ -243,18 +243,20 @@ class Starting(View):
                 # print('id nguoi dung: ' + str(id_user))
                 # print('id exam: ' + id)
 
-                cmd = "SELECT TimeRegister FROM ContestAdmin_contest WHERE id = '{}'".format(id)
+                cmd = "SELECT TimeStart,TimeEnd FROM ContestAdmin_contest WHERE id = '{}'".format(id)
                 data = conn.execute(cmd)
                 for row in data:
-                    time_reg_string = row[0]
+                    time_start_string = row[0]
+                    time_end_string = row[1]
                 
                 # print('time_reg: ' + time_reg_string)
 
-                time_reg = datetime.strptime(time_reg_string,'%Y-%m-%d %H:%M:%S')
+                time_start = datetime.strptime(time_start_string,'%Y-%m-%d %H:%M:%S')
+                time_end = datetime.strptime(time_end_string,'%Y-%m-%d %H:%M:%S')
 
                 time_now = datetime.now()
 
-                if (time_reg>time_now):
+                if (time_start<time_now && time_now<time_end):
                     status = 'OK'
                 else:
                     status = 'Not time to test'
