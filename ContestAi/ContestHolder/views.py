@@ -4,17 +4,17 @@ from django import template
 from service import path,session
 from .data import mockData, mockUser, mockStatus
 from ContestAdmin import models
+from django.contrib.auth.models import User
 import os
 
 class HolderView(View):
     def get(self, request):
-        if session.isAuthenticated(request):
-            userName = str()
+        if request.user.is_staff:
             try:
-                userName = request.session.get('user')['name']
+                userName = request.user.username
             except:
                 userName = ''
-            obj = models.Contest.objects.filter(IDUser=request.session.get('user')['id'])
+            obj = models.Contest.objects.filter(IDUser=request.user.id)
             # import datetime
             # now = datetime.datetime.now(obj[1].TimeStart.tzinfo)
             # if obj[1].TimeStart > now:
@@ -25,15 +25,14 @@ class HolderView(View):
             }
             return render(request, path.templateHolder , context)
         else:
-            request.session['messAuth'] = 'Please Log In'
             return redirect('login')
 
 class ContestDetail(View):
     def get(self, request,id):
-        if session.isAuthenticated(request):
+        if request.user.is_staff:
             userName = str()
             try:
-                userName = request.session.get('user')['name']
+                userName = request.user.username
             except:
                 userName = ''
             detailData = models.Contest.objects.filter(id=id)
@@ -44,7 +43,6 @@ class ContestDetail(View):
             }
             return render(request, path.templateDetail, context)
         else:
-            request.session['messAuth'] = 'Please Log In'
             return redirect('login')
     def post(self, request,id):
         try:
@@ -102,10 +100,10 @@ class ContestDelete(View):
         
 class CreateContest(View):
     def get(self, request):
-        if session.isAuthenticated(request):
+        if request.user.is_staff:
             userName = str()
             try:
-                userName = request.session.get('user')['name']
+                userName = request.user.username
             except:
                 userName = ''
             context = {
@@ -113,7 +111,6 @@ class CreateContest(View):
             }
             return render(request, path.templateCreate, context)
         else:
-            request.session['messAuth'] = 'Please Log In'
             return redirect('login')
     def post(self, request):
         try:
@@ -126,7 +123,7 @@ class CreateContest(View):
         timeout = request.POST.get('timeOut')
         try:
             obj = models.Contest()
-            obj.IDUser = request.session.get('user')['id']
+            obj.IDUser = request.request.user.id
             obj.Title = request.POST.get('title')
             obj.Description = request.POST.get('description')
             obj.TimeRegister = request.POST.get('dateRegister')+' '+request.POST.get('timeRegister')
@@ -168,12 +165,11 @@ class ContestStatus(View):
             'dataStatus': mockStatus
         }
 
-        if session.isAuthenticated(request):
+        if request.user.is_staff:
             userName = str()
             try:
-                userName = request.session.get('user')['name']
+                userName = request.user.username
             except:
                 userName = ''
-            context['name'] = userName
         
         return render(request,path.templateStatus,context)

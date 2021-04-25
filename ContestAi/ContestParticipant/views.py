@@ -3,6 +3,7 @@ from django.views import View
 from django import template
 from service import path,session
 from django.http import HttpResponse
+from django.contrib.auth.models import User
 import sqlite3
 
 # import random
@@ -51,10 +52,10 @@ def error(request):
 
 class ParticipantView(View):
     def get(self, request):
-        if session.isAuthenticated(request):
+        if request.user.is_active:
             userName = str()
             try:
-                userName = request.session.get('user')['name']
+                userName = request.user.username
             except:
                 userName = ''
             context = {
@@ -63,7 +64,6 @@ class ParticipantView(View):
             }
             return render(request, path.templateParticipant , context)
         else:
-            request.session['messAuth'] = 'Please Log In'
             return redirect('login')
     def post(self, request):
         #do sth
