@@ -23,27 +23,27 @@
             {% for data in unRegisContests %}
             <div class="card mb-4">
               <div class="card-header">
-                <h5 class="card-title">{{ data.title }}</h5>
+                <h5 class="card-title">{{ data.Title }}</h5>
               </div>
               <div class="card-body">
-                <div>{{ data.description }}</div>
+                <div>{{ data.Description }}</div>
                 <div class="mt-4">
                   <h6 class="card-subtitle text-muted">Time schedule:</h6>
                   <ul class="list-group mt-2">
                     <li class="list-group-item">
-                      Time Register: {{ data.timeRegister }}
+                      Time Register: {{ data.TimeRegister }}
                     </li>
                     <li class="list-group-item">
-                      Time Start: {{ data.timeStart }}
+                      Time Start: {{ data.TimeStart }}
                     </li>
                     <li class="list-group-item">
-                      Time End: {{ data.timeEnd }}
+                      Time End: {{ data.TimeEnd }}
                     </li>
                   </ul>
                 </div>
               </div>
               <div class="card-footer">
-                <a href="{% url 'register' id=data.idContest%}"
+                <a href="{% url 'register' id=data.id%}"
                   ><button class="btn btn-info float-right">Register</button></a
                 >
               </div>
@@ -54,27 +54,27 @@
             {% for data in regisContests %}
             <div class="card mb-4">
               <div class="card-header">
-                <h5 class="card-title">{{ data.title }}</h5>
+                <h5 class="card-title">{{ data.Title }}</h5>
               </div>
               <div class="card-body">
-                <div>{{ data.description }}</div>
+                <div>{{ data.Description }}</div>
                 <div class="mt-4">
                   <h6 class="card-subtitle text-muted">Time schedule:</h6>
                   <ul class="list-group mt-2">
                     <li class="list-group-item">
-                      Time Register: {{ data.timeRegister }}
+                      Time Register: {{ data.TimeRegister }}
                     </li>
                     <li class="list-group-item">
-                      Time Start: {{ data.timeStart }}
+                      Time Start: {{ data.TimeStart }}
                     </li>
                     <li class="list-group-item">
-                      Time End: {{ data.timeEnd }}
+                      Time End: {{ data.TimeEnd }}
                     </li>
                   </ul>
                 </div>
               </div>
               <div class="card-footer">
-                <a href="{% url 'start' id=data.idContest%}"
+                <a href="{% url 'start' id=data.id%}"
                   ><button class="btn btn-success float-right">
                     Start Contest
                   </button></a
@@ -87,21 +87,21 @@
             {% for data in historyContests %}
             <div class="card mb-4">
               <div class="card-header">
-                <h5 class="card-title">{{ data.title }}</h5>
+                <h5 class="card-title">{{ data.Title }}</h5>
               </div>
               <div class="card-body">
-                <div>{{ data.description }}</div>
+                <div>{{ data.Description }}</div>
                 <div class="mt-4">
                   <h6 class="card-subtitle text-muted">Time schedule:</h6>
                   <ul class="list-group mt-2">
                     <li class="list-group-item">
-                      Time End: {{ data.timeEnd }}
+                      Time End: {{ data.TimeEnd }}
                     </li>
                   </ul>
                 </div>
                 <div class="mt-4">
                   <h5 class="card-subtitle text-muted">
-                    Result: <span>{{ data.result }}</span>
+                    Result: <span>{{ data.Result }}</span>
                   </h5>
                 </div>
               </div>

@@ -32,6 +32,10 @@
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto"></ul>
         <span class="navbar-text"> cqtrong@gmail.com </span>
+        <form method="POST" action="{% url 'logOut' %}" >
+          {% csrf_token %}
+          <button class="btn btn-danger ml-3">Log Out</button></span>
+        </form>
       </div>
     </nav>
 
