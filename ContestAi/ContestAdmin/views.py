@@ -83,6 +83,7 @@ def addAccount(request):
                 user.set_password(user.password)
                 user.save()
                 print("User:",user.password)
+                return redirect('/account/list-account')
 
         staticF = UserForm()
         context = {
@@ -150,7 +151,7 @@ def listContest(request):
                 s.status = True
             else:
                 s.status = False
-            print(s.IDUser)
+            #print(s.IDUser)
             try:
                 name = User.objects.filter(id = s.IDUser)
                 s.username = name[0].username
