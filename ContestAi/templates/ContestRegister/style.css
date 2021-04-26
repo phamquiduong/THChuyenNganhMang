@@ -1,0 +1,49 @@
+:root {
+  --space: 2rem;
+  --space-xs: calc(var(--space) / 3);
+  --space-sm: calc(var(--space) / 2);
+  --space-md: calc(var(--space) * 2);
+}
+.card-sidebar {
+  --offset: var(--space);
+  flex-grow: 1;
+  flex-basis: 300px;
+  min-height: 300px;
+  align-self: start;
+  position: sticky;
+  top: var(--offset);
+}
+.card {
+  -webkit-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.5);
+  border-radius: 14px;
+}
+.profile-img-card {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 10px;
+  display: block;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.content-item {
+  border: 1px solid gray;
+  border-radius: 6px;
+  padding: 15px;
+}
+.table_status_data {
+  font-weight: 500;
+}
+.icon-status {
+  font-size: 50px;
+}
+.status-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  word-wrap: normal;
+}
