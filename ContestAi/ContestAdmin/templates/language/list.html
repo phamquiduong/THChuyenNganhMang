@@ -1,5 +1,4 @@
-{% extends 'base/base.html' %}
-{% block content %}
+{% extends 'base/base.html' %} {% block content %}
 <h4 class="text-center">List Status</h4>
 
 <!-- 'username',
@@ -9,59 +8,76 @@
     'is_staff',
     'is_active' -->
 <style>
-    .table td, .table th{
-        padding: 0.25rem;
-    }
+  .table td,
+  .table th {
+    padding: 0.25rem;
+  }
 </style>
 
-<a href="{% url 'addLanguage' %}">Add Account</a>
+<a href="{% url 'addLanguage' %}">Add Language</a>
 <table class="table table-bordered">
-    <thead>
-        <tr>
-            <th scope="col">id</th>
-            <th scope="col">Language</th>
-            <th scope="col">Delete</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for s in llanguage %}
-        <tr>
-            <td>{{s.pk}}</td>
-            <td>{{s.Language}}</td>
-            <td><a href="{% url 'deleteLanguage' pk=s.pk %}" class="" id="{{s.pk}}" onclick="return confirm('Are you sure you want to delete?');">Delete</a></td>
-        </tr>
-        {% endfor %}
-
-    </tbody>
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Language</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in llanguage %}
+    <tr>
+      <td>{{s.pk}}</td>
+      <td>{{s.Language}}</td>
+      <td>
+        <a
+          href="{% url 'deleteLanguage' pk=s.pk %}"
+          class=""
+          id="{{s.pk}}"
+          onclick="return confirm('Are you sure you want to delete?');"
+          >Delete</a
+        >
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
 </table>
 
 <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Modal body text goes here.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button"  id="btn_delete" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn_delete" class="btn btn-primary">
+          Save changes
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+      </div>
     </div>
+  </div>
 </div>
 
 <script>
-    // $('#btn_delete').click(function() {
-    //     $.post()
-    // });
-    $('#btn_delete').click(function(){
+  // $('#btn_delete').click(function() {
+  //     $.post()
+  // });
+  $("#btn_delete").click(function () {
     return confirm("Are you sure you want to delete?");
-})
+  });
 </script>
 
 {% endblock content %}

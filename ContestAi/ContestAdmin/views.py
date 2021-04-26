@@ -10,11 +10,12 @@ def index(request):
     return render(request, 'index.html')
 
 def addStatus(request):
-    if request.POST:
-        staticF = StatusForm(request.POST, request.FILES)
-        if staticF.is_valid():
-            staticF.save()
     if request.user.is_superuser:
+        if request.POST:
+            staticF = StatusForm(request.POST, request.FILES)
+            if staticF.is_valid():
+                staticF.save()
+        
         staticF = StatusForm()
         context = {
             'formStatus': staticF
@@ -24,12 +25,13 @@ def addStatus(request):
         return redirect('login')
 
 def updateStatus(request, pk):
-    istatus = Status.objects.get(pk=pk)
-    if request.POST:
-        staticF = StatusForm(request.POST, request.FILES,instance=istatus)
-        if staticF.is_valid():
-            staticF.save()
     if request.user.is_superuser:
+        istatus = Status.objects.get(pk=pk)
+        if request.POST:
+            staticF = StatusForm(request.POST, request.FILES,instance=istatus)
+            if staticF.is_valid():
+                staticF.save()
+
         staticF = StatusForm(instance=istatus)
         context = {
             'formStatus': staticF
@@ -40,10 +42,11 @@ def updateStatus(request, pk):
         return redirect('login')
 
 def listStatus(request, pk):
-    lstatus = Status.objects.filter(IDcontest = pk)
-    for s in lstatus:
-        s.username =  User.objects.filter(id = s.IDUser)[0].username
     if request.user.is_superuser:
+        lstatus = Status.objects.filter(IDcontest = pk)
+        for s in lstatus:
+            s.username =  User.objects.filter(id = s.IDUser)[0].username
+    
         context = {
             'lstatus': lstatus,
         }
@@ -52,8 +55,9 @@ def listStatus(request, pk):
         return redirect('login')
 
 def detailStatus(request, pk):
-    istatus = Status.objects.get(pk=pk)
     if request.user.is_superuser:
+        istatus = Status.objects.get(pk=pk)
+
         context = {
             'istatus':istatus
         }
@@ -70,15 +74,17 @@ def deleteStatus(request, pk):
         return redirect('login')
     
 def addAccount(request):
-    if request.POST:
-        staticF = UserForm(request.POST, request.FILES)
-
-        if staticF.is_valid():
-            user = staticF.save()
-            user.set_password(user.password)
-            user.save()
-            print("User:",user.password)
     if request.user.is_superuser:
+        if request.POST:
+            staticF = UserForm(request.POST, request.FILES)
+
+            if staticF.is_valid():
+                user = staticF.save()
+                user.set_password(user.password)
+                user.save()
+                print("User:",user.password)
+                return redirect('/account/list-account')
+
         staticF = UserForm()
         context = {
             'formUser': staticF
@@ -88,12 +94,13 @@ def addAccount(request):
         return redirect('login')
 
 def updateAccount(request,pk):
-    isuser = User.objects.get(pk=pk)
-    if request.POST:
-        staticF = UserForm(request.POST, request.FILES,instance=isuser)
-        if staticF.is_valid():
-            staticF.save()
-    if request.user.is_superuser:        
+    if request.user.is_superuser:
+        isuser = User.objects.get(pk=pk)
+        if request.POST:
+            staticF = UserForm(request.POST, request.FILES,instance=isuser)
+            if staticF.is_valid():
+                staticF.save()
+
         staticF = UserForm(instance=isuser)
         context = {
             'formUser': staticF
@@ -104,8 +111,8 @@ def updateAccount(request,pk):
         return redirect('login')
 
 def listAccount(request):
-    luser = User.objects.all()
     if request.user.is_superuser:
+        luser = User.objects.all()
         context = {
             'luser': luser
         }
@@ -114,8 +121,8 @@ def listAccount(request):
         return redirect('login')
 
 def detailAccount(request,pk):
-    isuser = User.objects.get(pk=pk)
     if request.user.is_superuser:
+        isuser = User.objects.get(pk=pk)
         context = {
             'isuser':isuser
         }
@@ -124,8 +131,8 @@ def detailAccount(request,pk):
         return redirect('login')
 
 def deleteAccount(request, pk):
-    duser = User.objects.get(pk=pk)
     if request.user.is_superuser:
+        duser = User.objects.get(pk=pk)
         duser.delete()
         return listAccount(request)
     else:
@@ -133,23 +140,24 @@ def deleteAccount(request, pk):
 
 
 def listContest(request):
-    lcontest = Contest.objects.all()
-    for s in lcontest:
-        start = s.TimeStart
-        end = s.TimeEnd
-        now = datetime.now(pytz.timezone('Asia/Ho_Chi_Minh'))
-        s.time = str(now)
-        if str(now) < str(end) and str(now) > str(start):
-            s.status = True
-        else:
-            s.status = False
-        print(s.IDUser)
-        try:
-            name = User.objects.filter(id = s.IDUser)
-            s.username = name[0].username
-        except:
-            print("An exception occurred")
-    if request.user.is_superuser:    
+    if request.user.is_superuser:
+        lcontest = Contest.objects.all()
+        for s in lcontest:
+            start = s.TimeStart
+            end = s.TimeEnd
+            now = datetime.now(pytz.timezone('Asia/Ho_Chi_Minh'))
+            s.time = str(now)
+            if str(now) < str(end) and str(now) > str(start):
+                s.status = True
+            else:
+                s.status = False
+            #print(s.IDUser)
+            try:
+                name = User.objects.filter(id = s.IDUser)
+                s.username = name[0].username
+            except:
+                print("An exception occurred")
+        
         context = {
             'lcontest': lcontest
         }
@@ -158,11 +166,10 @@ def listContest(request):
         return redirect('login')
 
 def detailContest(request, pk):
-    
-    icontest = Contest.objects.get(pk=pk)
-    url = static('contest/a.pdf')
-    icontest.url = url
     if request.user.is_superuser:
+        icontest = Contest.objects.get(pk=pk)
+        url = static('contest/a.pdf')
+        icontest.url = url
         context = {
             'icontest':icontest
         }
@@ -171,23 +178,24 @@ def detailContest(request, pk):
         return redirect('login')
 
 def deleteContest(request, pk):
-    dcontest = Contest.objects.get(pk=pk)
     if request.user.is_superuser:
+        dcontest = Contest.objects.get(pk=pk)
         dcontest.delete()
         return listContest(request)
     else:
         return redirect('login')
 
 def joinContest(request, pk):
-    lstatus = RegisterContest.objects.filter(IDContest = pk)
-    for s in lstatus:
-        obj = Contest.objects.filter(id = s.IDContest)
-        s.title = obj[0].Title
-
-    for s in lstatus:
-        obj = User.objects.filter(id = s.IDUser)
-        s.username = obj[0].username
     if request.user.is_superuser:
+        lstatus = RegisterContest.objects.filter(IDContest = pk)
+        for s in lstatus:
+            obj = Contest.objects.filter(id = s.IDContest)
+            s.title = obj[0].Title
+
+        for s in lstatus:
+            obj = User.objects.filter(id = s.IDUser)
+            s.username = obj[0].username
+
         context = {
             'lstatus': lstatus
         }
@@ -196,9 +204,9 @@ def joinContest(request, pk):
         return redirect('login')
 
 def deletejoinContest(request, pk):
-    pk_contest = RegisterContest.objects.filter(pk = pk)[0].IDContest
-    duser = RegisterContest.objects.get(pk=pk)
     if request.user.is_superuser:
+        pk_contest = RegisterContest.objects.filter(pk = pk)[0].IDContest
+        duser = RegisterContest.objects.get(pk=pk)
         duser.delete()
         return joinContest(request, pk_contest)
     else:
@@ -206,8 +214,8 @@ def deletejoinContest(request, pk):
 
 
 def listLanguage(request):
-    llanguage = Language.objects.all()
     if request.user.is_superuser:
+        llanguage = Language.objects.all()
         context = {
             'llanguage': llanguage
         }
@@ -216,11 +224,12 @@ def listLanguage(request):
         return redirect('login')
 
 def addLanguage(request):
-    if request.POST:
-        staticF = LanguageForm(request.POST, request.FILES)
-        if staticF.is_valid():
-            staticF.save()
     if request.user.is_superuser:
+        if request.POST:
+            staticF = LanguageForm(request.POST, request.FILES)
+            if staticF.is_valid():
+                staticF.save()
+
         staticF = LanguageForm()
         context = {
             'formLanguage': staticF
@@ -230,8 +239,8 @@ def addLanguage(request):
         return redirect('login')
     
 def deleteLanguage(request, pk):
-    dlanguage = Language.objects.get(pk=pk)
     if request.user.is_superuser:
+        dlanguage = Language.objects.get(pk=pk)
         dlanguage.delete()
         return listLanguage(request)
     else:

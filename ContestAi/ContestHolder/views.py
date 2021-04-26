@@ -25,7 +25,6 @@ class HolderView(View):
             }
             return render(request, path.templateHolder , context)
         else:
-            #request.session['messAuth'] = 'Please Log In'
             return redirect('login')
 
 class ContestDetail(View):
@@ -44,7 +43,6 @@ class ContestDetail(View):
             }
             return render(request, path.templateDetail, context)
         else:
-            #request.session['messAuth'] = 'Please Log In'
             return redirect('login')
     def post(self, request,id):
         try:
@@ -113,7 +111,6 @@ class CreateContest(View):
             }
             return render(request, path.templateCreate, context)
         else:
-            #request.session['messAuth'] = 'Please Log In'
             return redirect('login')
     def post(self, request):
         try:
@@ -126,7 +123,7 @@ class CreateContest(View):
         timeout = request.POST.get('timeOut')
         try:
             obj = models.Contest()
-            obj.IDUser = request.user.id
+            obj.IDUser = request.request.user.id
             obj.Title = request.POST.get('title')
             obj.Description = request.POST.get('description')
             obj.TimeRegister = request.POST.get('dateRegister')+' '+request.POST.get('timeRegister')
@@ -174,6 +171,5 @@ class ContestStatus(View):
                 userName = request.user.username
             except:
                 userName = ''
-            context['name'] = userName
         
         return render(request,path.templateStatus,context)

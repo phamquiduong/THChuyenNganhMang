@@ -18,7 +18,10 @@ class Login(View):
         elif request.user.is_active:
             return redirect('/participant/')
         else:
-            return render(request, path.templateLogin)
+            contest = {
+                'mess': 'Moi ban dang nhap de vao trang web'
+            }
+            return render(request, path.templateLogin, contest)
     def post(self, request):
         userName = request.POST.get("userName").lower()
         regex = re.compile('[_!#$%^&*()<>?/|}{~:\s\'\"\[\]]')
@@ -42,22 +45,22 @@ class Login(View):
             else:
                 login(request,my_user)
                 if request.user.is_superuser == True:
-                    return redirect('../account/')
+                    return redirect('/account/')
                 elif request.user.is_staff == True:
-                    return redirect('../holder/')
+                    return redirect('/holder/')
                 elif request.user.is_active == True:
-                    return redirect('../participant/')
+                    return redirect('/participant/')
 
 
 class SignUp(View):
     
     def get(self, request):
         if request.user.is_superuser:
-            return redirect('../account')
+            return redirect('/account/')
         elif request.user.is_staff:
-            return redirect('../holder/')
+            return redirect('/holder/')
         elif request.user.is_active:
-            return redirect('../participant/')
+            return redirect('/participant/')
         else:
             return render(request, path.templateSignUp)
 
@@ -93,8 +96,8 @@ class SignUp(View):
             user.is_staff = False
             user.is_superuser = False
             user.save()
-            return redirect('../login')
+            return redirect('/login/')
 class LogOut(View):
     def post(self, request):
         logout(request)
-        return redirect('login')
+        return redirect('/login/')
