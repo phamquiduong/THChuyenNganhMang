@@ -66,6 +66,7 @@ class ParticipantView(View):
                 data = conn.execute(cmd)
                 for row in data:
                     id = row[0]
+                print(data,id)
 
                 cmd = "SELECT ContestAdmin_contest.id,ContestAdmin_contest.Title,ContestAdmin_contest.Description,ContestAdmin_contest.TimeRegister,ContestAdmin_contest.TimeStart,ContestAdmin_contest.TimeEnd,ContestAdmin_language.Language,ContestAdmin_status.Status FROM ContestAdmin_status JOIN ContestAdmin_contest ON ContestAdmin_status.IDcontest = ContestAdmin_contest.id JOIN ContestAdmin_language ON ContestAdmin_language.id = ContestAdmin_contest.IDLanguage WHERE ContestAdmin_status.IDUser = '{}' GROUP BY ContestAdmin_status.IDContest".format(id)
                 submited = conn.execute(cmd)
@@ -135,6 +136,8 @@ class ParticipantView(View):
                 'regisContests': regisContests,
                 'historyContests': historyContests,
             }
+
+            print(context)
             
             return render(request, path.templateParticipant , context)
         else:
