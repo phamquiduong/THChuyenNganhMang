@@ -3,7 +3,7 @@ from django.views import View
 from django import template
 from service import path,session
 from django.http import HttpResponse
-from .data import mockContest
+#from .data import mockContest
 import sqlite3
 from datetime import datetime
 
@@ -53,10 +53,9 @@ def error(request):
 
 class ParticipantView(View):
     def get(self, request):
-        if session.isAuthenticated(request):
-            userName = str()
+        if request.user.is_active:
             try:
-                userName = request.session.get('user')['name']
+                userName = request.user.username
             except:
                 userName = ''
 
@@ -155,12 +154,12 @@ class ParticipantView(View):
 class Register(View):
     def get(self, request, id):
         # print(id)
-        if session.isAuthenticated(request):
-            userName = str()
+        if request.user.is_active:
             try:
-                userName = request.session.get('user')['name']
+                userName = request.user.username
             except:
                 userName = ''
+                
             try:
                 conn = sqlite3.connect('./db.sqlite3')
 
@@ -225,10 +224,9 @@ class Register(View):
 class Starting(View):
     def get(self, request, id):
         print(id)
-        if session.isAuthenticated(request):
-            userName = str()
+        if request.user.is_active:
             try:
-                userName = request.session.get('user')['name']
+                userName = request.user.username
             except:
                 userName = ''
 
