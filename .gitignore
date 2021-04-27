@@ -11,4 +11,4 @@ ContestAi/static/contest/*/
 # backend/*/migrations/
 ContestAi/*/migrations/
 ContestAi/*/__pycache__/
-
+db.sqlite3
