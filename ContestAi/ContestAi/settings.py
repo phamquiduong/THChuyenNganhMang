@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
 
-    # 'devs',
+    'django_rq',
+    'devs',
     'Auth',
     'ContestAdmin',
     'ContestParticipant.apps.ContestparticipantConfig'
@@ -137,3 +138,14 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static')
 ]
+
+RQ_QUEUES = {
+    'default': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0, 
+        'DEFAULT_TIMEOUT': 10,
+        'DEFAULT_RESULT_TTL': 10,
+    },
+}
+
