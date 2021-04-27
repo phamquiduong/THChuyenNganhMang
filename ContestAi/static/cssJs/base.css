@@ -17,6 +17,22 @@ body {
   animation-fill-mode: both;
   animation-duration: 0.5s;
 }
+.footer {
+  background: rgb(138, 128, 128);
+  background: linear-gradient(
+    0deg,
+    rgba(224, 224, 224, 1) 20%,
+    rgba(138, 128, 128, 1) 100%
+  );
+}
+
+.footer ul {
+  border: 2px solid rgb(209, 205, 205);
+  border-radius: 8px;
+}
+
+.footer li {
+}
 
 @keyframes fadeIn {
   0% {
