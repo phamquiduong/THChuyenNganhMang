@@ -6,8 +6,40 @@ from django.http import HttpResponse
 #from .data import mockContest
 from datetime import datetime
 from ContestAdmin import models
+import django_rq
+import rq
 
+def run_tester(s,path):
+    import importlib
+    import sys
+    spec = importlib.util.spec_from_file_location('tester', path+'tester.py')
+    module = importlib.util.module_from_spec(spec)
+    sys.modules['tester'] = module
+    spec.loader.exec_module(module)
+    obj = models.Status.objects.get(id=s)
+    try:
+        obj.Status=module.check_python(str(s))
+    except rq.timeouts.JobTimeoutException:
+        obj.Status="TLE"
+    except:
+        obj.Status="Compile Error"
+    obj.save()
 
+def run_tester_cpp(s,path):
+    import importlib
+    import sys
+    spec = importlib.util.spec_from_file_location('tester', path+'tester.py')
+    module = importlib.util.module_from_spec(spec)
+    sys.modules['tester'] = module
+    spec.loader.exec_module(module)
+    obj = models.Status.objects.get(id=s)
+    try:
+        obj.Status=module.check_cpp(str(s))
+    except rq.timeouts.JobTimeoutException:
+        obj.Status="TLE"
+    except:
+        obj.Status="Compile Error"
+    obj.save()
 
 
 class ParticipantView(View):
@@ -103,7 +135,7 @@ class Register(View):
                 else:
                     status = 'PENDING'
                 
-                print(status)
+                # print(status)
 
             except Exception as e:
                 print(e)
@@ -123,7 +155,7 @@ class Register(View):
 
 class Starting(View):
     def get(self, request, id):
-        print(id)
+        # print(id)
         if request.user.is_active:
             try:
                 userName = request.user.username
@@ -161,12 +193,59 @@ class Starting(View):
                 'timeEnd': selectedContest.TimeEnd.strftime("%m/%d/%Y %H:%M:%S"),
                 'timeStart': selectedContest.TimeStart.strftime("%m/%d/%Y %H:%M:%S")
             }
-            print(context)
+            # print(context)
             return render(request, path.templateStart , context)
         else:
             request.session['messAuth'] = 'Please Log In'
             return redirect('login')
     def post(self, request,id):
+        # Check time Submit
+        selectedContest = models.Contest.objects.get(id=id)
+        time_end_string = selectedContest.TimeEnd.strftime("%Y-%m-%d %H:%M:%S")
+        time_now = datetime.now()
+        time_end = datetime.strptime(time_end_string,"%Y-%m-%d %H:%M:%S")
+        if time_now > time_end:
+            return redirect('/start/'+id)
+
+        #  Submit
+        f = request.FILES["file"]
+        name = str(f)
+        # print(name)
+        path = './static/contest/contest'+str(id)+'/'
+        if ".py" in name:
+            obj = models.Status()
+            obj.IDcontest = id
+            obj.IDUser = request.user.id
+            obj.Status = 'Pending'
+            obj.TimeSubmit = datetime.now()
+            obj.save()
+            obj.LinkSubmit = path+str(obj.id)+'.py'
+            obj.save()
+            with open(obj.LinkSubmit, 'wb+') as destination:
+                for chunk in f.chunks():
+                    destination.write(chunk)
+            run_tester(obj.id,path)
+            t = models.Contest.objects.get(id=id).TimeOut * 8
+            # print(t)
+            # queue = django_rq.get_queue('default',default_timeout=c)
+            # queue.enqueue(run_tester,'test',result_ttl=0)   
+        if ".cpp" in name:
+            obj = models.Status()
+            obj.IDcontest = id
+            obj.IDUser = request.user.id
+            obj.Status = 'Pending'
+            obj.TimeSubmit = datetime.now()
+            obj.save()
+            obj.LinkSubmit = path+str(obj.id)+'.cpp'
+            obj.save()
+            with open(obj.LinkSubmit, 'wb+') as destination:
+                for chunk in f.chunks():
+                    destination.write(chunk)
+            run_tester_cpp(obj.id,path)
+            t = models.Contest.objects.get(id=id).TimeOut * 8
+            # print(t)
+            # queue = django_rq.get_queue('default',default_timeout=c)
+            # queue.enqueue(run_tester_cpp,'test',result_ttl=0)  
         return redirect('/contest/status/'+id)
 
 class History(View):

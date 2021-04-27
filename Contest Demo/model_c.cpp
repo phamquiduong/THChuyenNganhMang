@@ -7,7 +7,8 @@ int main(){
         if (a==-1) break;
         cin>>b>>c>>d;
         int tg=(a+b+c+d);
-        cout<<tg%3<<endl;
+        cout<<tg%2<<endl;
+		cout<<10<<endl;
     }
     return 0;
 }
