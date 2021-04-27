@@ -64,7 +64,7 @@ class ParticipantView(View):
                     contestRegisted.append(allContest.filter(id=id)[0])
                 # print('contestRegisted',contestRegisted)
                 
-                allStatus = models.Status.objects.filter(IDUser=request.user.id)
+                allStatus = models.Status.objects.filter(IDUser=request.user.id).order_by('-id')
                 idContestSubmitted = allStatus.values_list('IDcontest',flat=True) # contest that user regis before
                 statusContestSubmitted = allStatus.values_list('Status',flat=True)
                 contestSubmitted = []
