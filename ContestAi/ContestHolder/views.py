@@ -123,7 +123,7 @@ class CreateContest(View):
         timeout = request.POST.get('timeOut')
         try:
             obj = models.Contest()
-            obj.IDUser = request.request.user.id
+            obj.IDUser = request.user.id
             obj.Title = request.POST.get('title')
             obj.Description = request.POST.get('description')
             obj.TimeRegister = request.POST.get('dateRegister')+' '+request.POST.get('timeRegister')

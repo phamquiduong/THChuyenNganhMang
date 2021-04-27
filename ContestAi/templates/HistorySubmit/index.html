@@ -1,0 +1,56 @@
+{% extends 'base.html' %} {% block script %} {% include './javaScript.js' %}
+<!--<div></div>-->
+{% endblock %} {% block css %} {% include './style.css' %} {% endblock %}
+<!--<div></div>-->
+{% block title %}Contest Status Page{% endblock%}
+<!--<div></div>-->
+{% load static %} {% block body %}
+<div class="container" style="min-height: 80vh">
+  <h1 class="text-center mt-5 mb-5 fade-in">Contest History Submit Pages</h1>
+  <!-- /card-container -->
+  <form method="POST" action="" id="create">
+    <div class="row">
+      <div class="col-lg-9 col-sm-12">
+        <div class="card mb-4 fade-in-left">
+          <div class="card-header">
+            <h5 class="card-title">{{ dataContests.Title }}</h5>
+            <h6 class="card-subtitle text-muted">Submitter: {{ name }}</h6>
+          </div>
+          <div class="card-body">
+            <table class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Time Submit</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Link</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-12 pb-4">
+        <div class="card card-sidebar fade-in-right">
+          <div class="card-body text-center">
+            <img
+              id="profile-img"
+              class="profile-img-card"
+              src="{% static 'images/cat.jpg' %}"
+            />
+            {% if name %}
+            <h6 class="card-subtitle text-muted mt-3">{{ name }}</h6>
+            <a href="{% url 'holder' %}" class="btn btn-info mt-3"
+              >Back To See All</a
+            >
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% csrf_token %}
+  </form>
+</div>
+
+{% comment %} Modal {% endcomment %} {% endblock %}

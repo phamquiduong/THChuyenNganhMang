@@ -70,12 +70,6 @@ class ParticipantView(View):
         return redirect('./')
 
 
-
-
-
-
-
-
 class Register(View):
     def get(self, request, id):
         if request.user.is_active:
@@ -127,20 +121,6 @@ class Register(View):
             return redirect('login')
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class Starting(View):
     def get(self, request, id):
         print(id)
@@ -188,3 +168,20 @@ class Starting(View):
             return redirect('login')
     def post(self, request,id):
         return redirect('/contest/status/'+id)
+
+class History(View):
+    def get(self, request, id):
+        if request.user.is_staff:
+            userName = str()
+            try:
+                userName = request.user.username
+            except:
+                userName = ''
+        selectedContest = models.Contest.objects.get(id=id)
+        context = {
+            'name': userName,
+            'dataContests': selectedContest,
+        }
+
+        
+        return render(request,path.templateHistorySubmit,context)
