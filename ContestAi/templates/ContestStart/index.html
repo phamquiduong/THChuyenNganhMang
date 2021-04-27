@@ -10,38 +10,49 @@
   <!-- /card-container -->
   <div class="row">
     <div class="col-lg-9 col-sm-12">
+      {# #} {% if startStatus == 'PENDING' %}
       <div class="card mb-4 fade-in-left">
         <div class="card-body status-body">
           <i class="bi bi-clock-history text-warning icon-status mr-5"></i>
           <h3>Not Time For Testing</h3>
         </div>
       </div>
+      {% endif %} {% if startStatus == 'EXPIRED' %}
+      <div class="card mb-4 fade-in-left">
+        <div class="card-body status-body">
+          <i
+            class="bi bi-exclamation-octagon-fill text-danger icon-status mr-5"
+          ></i>
+          <h3>No Longer Time For Testing</h3>
+        </div>
+      </div>
+      {% endif %} {% if startStatus == 'OK' %}
       <div class="card mb-4 fade-in-left">
         <div class="card-header">
-          <h5 class="card-title">{{ contest.title }}</h5>
+          <h5 class="card-title">{{ contest.Title }}</h5>
         </div>
         <div class="card-body">
           <div class="content-item">
             <h6 class="card-subtitle text-muted mb-2">Contest Description</h6>
-            {{ contest.description }}
+            {{ contest.Description }}
           </div>
           <div class="mt-4 content-item">
             <h6 class="card-subtitle text-muted">Contest Content</h6>
             <embed
-              src="{% static '..' %}{{ linkContest }}"
+              src="{% static '..' %}{{ contest.LinkContest }}"
               class="embed-content"
             />
             <h6 class="card-subtitle text-muted mb-2 mt-3">Time Out</h6>
-            <h5>{{ data.TimeOut }}(s)</h5>
+            <h5>{{ contest.TimeOut }}(s)</h5>
           </div>
           <div class="mt-4 content-item">
             <h6 class="card-subtitle text-muted">Data For Train</h6>
             <embed
-              src="{% static '..' %}{{ linkDataTrain }}"
+              src="{% static '..' %}{{ contest.LinkDataTrain }}"
               class="embed-data"
             />
             <a
-              href="{% static '..' %}{{ linkDataTrain }}"
+              href="{% static '..' %}{{ contest.LinkDataTrain }}"
               download="data_train.txt"
               ><button class="btn btn-info mt-2">
                 Download Data For Train
@@ -93,12 +104,8 @@
             </form>
           </div>
         </div>
-        {% comment %}
-        <div class="card-footer text-center">
-          <a href=""><button class="btn btn-success">Jump into it</button></a>
-        </div>
-        {% endcomment %}
       </div>
+      {% endif %} {# #}
     </div>
     <div class="col-lg-3 col-sm-12 pb-4">
       <div class="card card-sidebar fade-in-right">
@@ -117,7 +124,15 @@
           <div class="hourglass-container">
             <div class="hourglass" id="hourglass"></div>
           </div>
-          <h6 class="card-subtitle text-muted mb-2 mt-3">Time Remaining</h6>
+          {% if startStatus == 'PENDING' %}
+          <h6 class="card-subtitle text-muted mb-2 mt-3">
+            Time Remaining to Start
+          </h6>
+          {% else %}
+          <h6 class="card-subtitle text-muted mb-2 mt-3">
+            Time Remaining to End
+          </h6>
+          {% endif %}
           <div class="timer" id="timer"></div>
         </div>
       </div>

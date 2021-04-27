@@ -1,5 +1,9 @@
 window.onload = function () {
-  var countDownDate = new Date("{{ contest.timeEnd }}").getTime();
+  const status = "{{startStatus}}";
+  var countDownDate;
+  if (status === "PENDING")
+    countDownDate = new Date("{{ timeStart }}").getTime();
+  else countDownDate = new Date("{{ timeEnd }}").getTime();
 
   // Update the count down every 1 second
   var x = setInterval(function () {
