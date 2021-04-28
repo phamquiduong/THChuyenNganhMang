@@ -166,6 +166,32 @@ class CreateContest(View):
 #############################PUBLIC###################
 class ContestStatus(View):
     def get(self, request,id):
+        # Scoreboard
+        # status = models.Status.objects.filter(IDcontest = id).order_by('-Status','TimeSubmit')
+        # data = []
+        # error = []
+        # for x in status:
+        #     tg = {
+        #         'iduser' : x.id,
+        #         'name' : User.objects.get(id = x.IDUser).username,
+        #         'time' : str(x.TimeSubmit),
+        #         'status' : x.Status
+        #     }
+        #     if x.Status=='TLE' or x.Status=='Compile Error' or x.Status=='Pending':
+        #         error.append(tg)
+        #     else :
+        #         data.append(tg)
+        # data = data + error
+        # kt = []
+        # final = []
+        # for x in data:
+        #     if x.get('name') in kt:
+        #         continue
+        #     else:
+        #         kt.append(x.get('name'))
+        #         final.append(x)
+        # data = final
+
         status = models.Status.objects.filter(IDcontest = id).order_by('-id')
         data = []
         for x in status:
@@ -176,8 +202,8 @@ class ContestStatus(View):
                 'status' : x.Status
             }
             data.append(tg)
-        for x in data:
-            print(x)
+        # for x in data:
+        #     print(x)
         selectedContest = models.Contest.objects.filter(id = id)
         context = {
             'dataContests': selectedContest,
