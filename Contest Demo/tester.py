@@ -1,8 +1,6 @@
 from subprocess import PIPE
 import subprocess
 import sys, os
-# import pickle
-# import os
 
 def check_python(name):
     data = []
@@ -37,11 +35,6 @@ def check_python(name):
     for i in range(len(label)):
         if int(res[i])==int(label[i]):
             count+=1
-    # test = model.predict(data)
-    # count=0
-    # for i in range(len(test)):
-    #     if test[i] == label[i]:
-    #         count +=1
     return str(count/len(data)*100)+"%"
 
 def check_cpp(name):
@@ -79,16 +72,50 @@ def check_cpp(name):
     for i in range(len(label)):
         if int(res[i])==int(label[i]):
             count+=1
-    # test = model.predict(data)
-    # count=0
-    # for i in range(len(test)):
-    #     if test[i] == label[i]:
-    #         count +=1
+    return str(count/len(data)*100)+"%"
+
+def check_java(dir,name):
+    data = []
+    label = []
+    path = os.path.dirname(os.path.realpath(__file__))
+    for line in open(os.path.join(path, "data_train.txt"), 'r'):
+        words = line.strip().split()
+        label.append(words[0])
+        text = []
+        for i in range(1,len(words)):
+            text.append(words[i])
+        data.append(text)
+    for line in open(os.path.join(path, "data_test.txt"), 'r'):
+        words = line.strip().split()
+        label.append(words[0])
+        text = []
+        for i in range(1,len(words)):
+            text.append(words[i])
+        data.append(text)
+    count=0
+    s=""
+    for i in range(len(data)):
+        x=data[i]
+        s=s+x[0]+"\n"+x[1]+"\n"+x[2]+'\n'+x[3]+'\n'
+    s=s+"-1\n"
+    s=s.encode()
+    path = os.path.join(os.path.join(path, dir))
+    result_java = subprocess.run(
+        ['javac', os.path.join(os.path.join(path, name+'.java'))]
+    )
+    result_java = subprocess.run(
+        ['java', '-cp', path, name], stdout=PIPE, stderr=PIPE, input=s
+    )
+    res = result_java.stdout.decode().split("\n")
+    for i in range(len(label)):
+        if int(res[i])==int(label[i]):
+            count+=1
     return str(count/len(data)*100)+"%"
 
 # x=input()
 # print(check_python())
 # print(check_cpp('test'))
+print(check_java('java1','test'))
 
 
 
