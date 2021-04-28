@@ -8,6 +8,7 @@ from datetime import datetime
 from ContestAdmin import models
 import django_rq
 import rq
+import re
 
 def run_tester(s,path):
     import importlib
@@ -65,14 +66,20 @@ class ParticipantView(View):
                 # print('contestRegisted',contestRegisted)
                 
                 allStatus = models.Status.objects.filter(IDUser=request.user.id).order_by('-id')
-                idContestSubmitted = allStatus.values_list('IDcontest',flat=True) # contest that user regis before
+                idContestSubmitted = allStatus.values_list('IDcontest',flat=True)
                 statusContestSubmitted = allStatus.values_list('Status',flat=True)
                 contestSubmitted = []
                 index = 0
                 for id in list(idContestSubmitted):
                     selected = allContest.filter(id=id)[0]
                     selected.Result = statusContestSubmitted[index]
-                    contestSubmitted.append(selected)
+                    repeated = list(filter(lambda x: int(x.id) == int(id), contestSubmitted))
+                    if not repeated:
+                        contestSubmitted.append(selected)
+                    else:
+                        if not re.findall('[a-zA-Z]', selected.Result) and selected.Result > repeated[0].Result:
+                            jndex = contestSubmitted.index(repeated[0])
+                            contestSubmitted[jndex] = selected
                     index += 1
                 # print('contestSubmitted',contestSubmitted)
                 
@@ -248,14 +255,13 @@ class Starting(View):
             # queue.enqueue(run_tester_cpp,'test',result_ttl=0)  
         return redirect('/contest/status/'+id)
 
-class History(View):
+class Standing(View):
     def get(self, request, id):
-        if request.user.is_staff:
-            userName = str()
-            try:
-                userName = request.user.username
-            except:
-                userName = ''
+        userName = str()
+        try:
+            userName = request.user.username
+        except:
+            userName = ''
         selectedContest = models.Contest.objects.get(id=id)
         context = {
             'name': userName,
@@ -263,4 +269,4 @@ class History(View):
         }
 
         
-        return render(request,path.templateHistorySubmit,context)
+        return render(request,path.templateContestStanding,context)

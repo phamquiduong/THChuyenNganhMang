@@ -46,6 +46,16 @@
                 <a href="{% url 'register' id=data.id%}"
                   ><button class="btn btn-info float-right">Register</button></a
                 >
+                <a href="{% url 'status' id=data.id%}"
+                  ><button class="btn btn-primary float-right mr-3">
+                    See Status
+                  </button></a
+                >
+                <a href="{% url 'standing' id=data.id%}"
+                  ><button class="btn btn-success float-right mr-3">
+                    See Standing
+                  </button></a
+                >
               </div>
             </div>
             {% endfor %}
@@ -75,8 +85,18 @@
               </div>
               <div class="card-footer">
                 <a href="{% url 'start' id=data.id%}"
-                  ><button class="btn btn-success float-right">
+                  ><button class="btn btn-warning float-right">
                     Start Contest
+                  </button></a
+                >
+                <a href="{% url 'status' id=data.id%}"
+                  ><button class="btn btn-primary float-right mr-3">
+                    See Status
+                  </button></a
+                >
+                <a href="{% url 'standing' id=data.id%}"
+                  ><button class="btn btn-success float-right mr-3">
+                    See Standing
                   </button></a
                 >
               </div>
@@ -101,9 +121,21 @@
                 </div>
                 <div class="mt-4">
                   <h5 class="card-subtitle text-muted">
-                    Result: <span>{{ data.Result }}</span>
+                    Best Result: <span>{{ data.Result }}</span>
                   </h5>
                 </div>
+              </div>
+              <div class="card-footer">
+                <a href="{% url 'status' id=data.id%}"
+                  ><button class="btn btn-primary float-right">
+                    See Status
+                  </button></a
+                >
+                <a href="{% url 'standing' id=data.id%}"
+                  ><button class="btn btn-success float-right mr-3">
+                    See Standing
+                  </button></a
+                >
               </div>
             </div>
             {% endfor %}

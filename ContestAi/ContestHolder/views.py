@@ -159,6 +159,13 @@ class CreateContest(View):
 #############################PUBLIC###################
 class ContestStatus(View):
     def get(self, request,id):
+        userName = str()
+        try:
+            userName = request.user.username
+        except:
+            userName = ''
+        if not userName:
+            return redirect('login')
         status = models.Status.objects.filter(IDcontest = id).order_by('-id')
         data = []
         for x in status:
@@ -172,16 +179,11 @@ class ContestStatus(View):
         for x in data:
             print(x)
         selectedContest = models.Contest.objects.filter(id = id)
+
+        
         context = {
+            'name': userName,
             'dataContests': selectedContest,
             'dataStatus': data
         }
-
-        if request.user.is_staff:
-            userName = str()
-            try:
-                userName = request.user.username
-            except:
-                userName = ''
-        
         return render(request,path.templateStatus,context)

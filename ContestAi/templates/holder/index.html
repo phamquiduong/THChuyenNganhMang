@@ -35,11 +35,16 @@
         </div>
         <div class="card-footer">
           <a href="{% url 'detail' id=data.id %}"
-            ><button class="btn btn-success float-right">See Detail</button></a
+            ><button class="btn btn-warning float-right">See Detail</button></a
           >
           <a href="{% url 'status' id=data.id%}"
             ><button class="btn btn-info float-right mr-3">
               See Status
+            </button></a
+          >
+          <a href="{% url 'standing' id=data.id%}"
+            ><button class="btn btn-success float-right mr-3">
+              See Standing
             </button></a
           >
         </div>

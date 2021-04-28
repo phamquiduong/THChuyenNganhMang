@@ -25,6 +25,7 @@
                   <th scope="col">Name</th>
                   <th scope="col">Time Submit</th>
                   <th scope="col">Status</th>
+                  <th scope="col">See Content</th>
                 </tr>
               </thead>
               <tbody>
@@ -37,6 +38,11 @@
                     class="text-center {% if status.status == 'Compile Error' %}table-danger {% elif status.status == 'TLE' %} table-danger {% elif status.status == 'Pending' %} table-warning {% else %}table-success {% endif %} table_status_data"
                   >
                     {{ status.status }}
+                  </td>
+                  <td>
+                    <a href="link go here" target="_blank">
+                      <button class="btn btn-info">Open Here</button>
+                    </a>
                   </td>
                 </tr>
                 {% endfor %}
