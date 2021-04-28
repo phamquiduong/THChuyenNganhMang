@@ -14,7 +14,7 @@ class HolderView(View):
                 userName = request.user.username
             except:
                 userName = ''
-            obj = models.Contest.objects.filter(IDUser=request.user.id)
+            obj = models.Contest.objects.filter(IDUser=request.user.id).order_by('-id')
             # import datetime
             # now = datetime.datetime.now(obj[1].TimeStart.tzinfo)
             # if obj[1].TimeStart > now:
@@ -36,10 +36,17 @@ class ContestDetail(View):
             except:
                 userName = ''
             detailData = models.Contest.objects.filter(id=id)
+            data = []
+            obj = models.RegisterContest.objects.filter(IDContest=id).order_by('-id')
+            for x in obj:
+                tg = {
+                    'name' : User.objects.get(id=x.IDUser).username
+                }
+                data.append(tg)
             context = {
                 'name': userName,
                 'dataContests': detailData,
-                'listParticipants': mockUser
+                'listParticipants': data
             }
             return render(request, path.templateDetail, context)
         else:
@@ -159,13 +166,32 @@ class CreateContest(View):
 #############################PUBLIC###################
 class ContestStatus(View):
     def get(self, request,id):
-        userName = str()
-        try:
-            userName = request.user.username
-        except:
-            userName = ''
-        if not userName:
-            return redirect('login')
+        # Scoreboard
+        # status = models.Status.objects.filter(IDcontest = id).order_by('-Status','TimeSubmit')
+        # data = []
+        # error = []
+        # for x in status:
+        #     tg = {
+        #         'iduser' : x.id,
+        #         'name' : User.objects.get(id = x.IDUser).username,
+        #         'time' : str(x.TimeSubmit),
+        #         'status' : x.Status
+        #     }
+        #     if x.Status=='TLE' or x.Status=='Compile Error' or x.Status=='Pending':
+        #         error.append(tg)
+        #     else :
+        #         data.append(tg)
+        # data = data + error
+        # kt = []
+        # final = []
+        # for x in data:
+        #     if x.get('name') in kt:
+        #         continue
+        #     else:
+        #         kt.append(x.get('name'))
+        #         final.append(x)
+        # data = final
+
         status = models.Status.objects.filter(IDcontest = id).order_by('-id')
         data = []
         for x in status:
@@ -176,8 +202,8 @@ class ContestStatus(View):
                 'status' : x.Status
             }
             data.append(tg)
-        for x in data:
-            print(x)
+        # for x in data:
+        #     print(x)
         selectedContest = models.Contest.objects.filter(id = id)
 
         
