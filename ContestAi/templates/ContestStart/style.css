@@ -97,7 +97,7 @@
   }
   50% {
     transform: rotateZ(360deg);
-    clip-path: inset(0 59% 0 0);
+    clip-path: inset(0 70% 0 0);
   }
   100% {
     transform: rotateZ(720deg);

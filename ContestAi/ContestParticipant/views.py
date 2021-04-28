@@ -123,7 +123,6 @@ class Register(View):
 
 class Starting(View):
     def get(self, request, id):
-        print(id)
         if request.user.is_active:
             try:
                 userName = request.user.username
@@ -161,7 +160,6 @@ class Starting(View):
                 'timeEnd': selectedContest.TimeEnd.strftime("%m/%d/%Y %H:%M:%S"),
                 'timeStart': selectedContest.TimeStart.strftime("%m/%d/%Y %H:%M:%S")
             }
-            print(context)
             return render(request, path.templateStart , context)
         else:
             request.session['messAuth'] = 'Please Log In'
