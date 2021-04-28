@@ -14,7 +14,7 @@ class HolderView(View):
                 userName = request.user.username
             except:
                 userName = ''
-            obj = models.Contest.objects.filter(IDUser=request.user.id)
+            obj = models.Contest.objects.filter(IDUser=request.user.id).order_by('-id')
             # import datetime
             # now = datetime.datetime.now(obj[1].TimeStart.tzinfo)
             # if obj[1].TimeStart > now:
@@ -36,10 +36,17 @@ class ContestDetail(View):
             except:
                 userName = ''
             detailData = models.Contest.objects.filter(id=id)
+            data = []
+            obj = models.RegisterContest.objects.filter(IDContest=id).order_by('-id')
+            for x in obj:
+                tg = {
+                    'name' : User.objects.get(id=x.IDUser).username
+                }
+                data.append(tg)
             context = {
                 'name': userName,
                 'dataContests': detailData,
-                'listParticipants': mockUser
+                'listParticipants': data
             }
             return render(request, path.templateDetail, context)
         else:

@@ -54,7 +54,7 @@ class ParticipantView(View):
             try:
 
                 id = userId
-                allContest = models.Contest.objects.all()
+                allContest = models.Contest.objects.all().order_by('-id')
                 # print(allContest)
 
                 idContestRegis = models.RegisterContest.objects.filter(IDUser=request.user.id).values_list('IDContest',flat=True) # contest that user regis before
