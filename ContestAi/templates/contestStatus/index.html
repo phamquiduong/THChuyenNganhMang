@@ -14,8 +14,8 @@
         {% for data in dataContests %}
         <div class="card mb-4 fade-in-left">
           <div class="card-header">
-            <h5 class="card-title">{{ data.title }}</h5>
-            <h6 class="card-subtitle text-muted">Holder: {{ name }}</h6>
+            <h5 class="card-title">{{ data.Title }}</h5>
+            <!-- <h6 class="card-subtitle text-muted">Holder: {{ name }}</h6> -->
           </div>
           <div class="card-body">
             <table class="table table-striped table-bordered">
@@ -30,11 +30,11 @@
               <tbody>
                 {% for status in dataStatus %}
                 <tr>
-                  <th scope="row">{{ forloop.counter }}</th>
-                  <td>{{ status.namePaticipant }}</td>
-                  <td>{{ status.timeSubmit }}</td>
+                  <th scope="row">{{ status.iduser }}</th>
+                  <td>{{ status.name }}</td>
+                  <td>{{ status.time }}</td>
                   <td
-                    class="text-center {% if status.status == 'Error' %}table-danger {% else %} table-success{% endif %} table_status_data"
+                    class="text-center {% if status.status == 'Compile Error' %}table-danger {% elif status.status == 'TLE' %} table-danger {% elif status.status == 'Pending' %} table-warning {% else %}table-success {% endif %} table_status_data"
                   >
                     {{ status.status }}
                   </td>

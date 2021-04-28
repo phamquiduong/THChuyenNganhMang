@@ -3,7 +3,8 @@
 AI Contest
 
 # Hướng dẫn cài đặt
-# Đọc kĩ dòng cuối hướng dẫn chạy server trên mọi IP
+# Đọc kĩ hướng dẫn chạy server trên mọi IP
+# Đọc kĩ dòng cuối hướng dẫn caif Redis server
 
 <h3>Cài đặt virtualenv trên máy</h3>
 <h4>Sau khi cài đặt chỉ cần dùng 'pip freeze > requirements.txt' để ghi những thư viện đã cài đặt trong Venv vào file txt. Khi cần install chạy 'pip install -r requirements.txt' để cài đặt những packages cho dự án</h4>
@@ -18,4 +19,7 @@ Cách cài trên Window, Ubuntu tự kiếm nha:
 <li>Ghi ra các file mới đã cài: 'pip freeze > requirements.txt'</li>
 <li>Tắt môi trường: deactivate</li>
 <li>Run server: ' python ContestAi/manage.py runserver 0:80' </li>
+Redis Server for Ubuntu (sorry Window user :v)
+<li>apt-get install redis</li>
+<li>Run Worker in another Terminal: 'python manager.py rqworker'</li>
 </ul>

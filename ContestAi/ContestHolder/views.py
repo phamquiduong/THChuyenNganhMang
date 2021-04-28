@@ -159,10 +159,22 @@ class CreateContest(View):
 #############################PUBLIC###################
 class ContestStatus(View):
     def get(self, request,id):
-        selectedContest = list(filter(lambda x: id == x['idContest'], mockData))
+        status = models.Status.objects.filter(IDcontest = id).order_by('-id')
+        data = []
+        for x in status:
+            tg = {
+                'iduser' : x.id,
+                'name' : User.objects.get(id = x.IDUser).username,
+                'time' : str(x.TimeSubmit),
+                'status' : x.Status
+            }
+            data.append(tg)
+        for x in data:
+            print(x)
+        selectedContest = models.Contest.objects.filter(id = id)
         context = {
             'dataContests': selectedContest,
-            'dataStatus': mockStatus
+            'dataStatus': data
         }
 
         if request.user.is_staff:
