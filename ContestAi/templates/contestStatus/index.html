@@ -44,9 +44,7 @@
                   </td>
                   {% if request.user.is_staff %}
                   <td>
-                    <a href="{% static '..' %}{{ status.link }}" target="_blank">
-                      <button class="btn btn-info">Open Here</button>
-                    </a>
+                      <button class="btn btn-info" data-toggle="modal" data-target="#exampleModal" data-whatever="{{ status }}">Open Here</button>
                   </td>
                   {% endif %}
                 </tr>
@@ -67,7 +65,7 @@
             />
             {% if name %}
             <h6 class="card-subtitle text-muted mt-3">{{ name }}</h6>
-            <a href="{% url 'holder' %}" class="btn btn-info mt-3"
+            <a href="{% url 'participant' %}" class="btn btn-info mt-3"
               >Back To See All</a
             >
             {% endif %}
@@ -79,4 +77,54 @@
   </form>
 </div>
 
-{% comment %} Modal {% endcomment %} {% endblock %}
+{% comment %} Modal {% endcomment %} 
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Content Detail</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Name:</label>
+            <input type="text" class="form-control" id="recipient-name" disabled>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Time Submitted:</label>
+            <input type="text" class="form-control" id="recipient-time" disabled>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Status:</label>
+            <input type="text" class="form-control" id="recipient-status" disabled>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Language:</label>
+            <input type="text" class="form-control" id="recipient-language" disabled>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Content:</label>
+            <embed
+              src=""
+              class="embed-data"
+              id="recipient-embed"
+            />
+            <a
+              href=""
+              id="recipient-download"
+              download=""
+              ><button class="btn btn-info mt-2">
+                Download
+              </button></a
+            >
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

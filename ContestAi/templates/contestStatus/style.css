@@ -37,3 +37,8 @@
 .table_status_data {
   font-weight: 500;
 }
+
+.embed-data {
+  width: 100%;
+  min-height: 500px;
+}

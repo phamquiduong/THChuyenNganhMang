@@ -195,4 +195,5 @@ class ContestStatus(View):
             'dataContests': selectedContest,
             'dataStatus': data
         }
+        print(context)
         return render(request,path.templateStatus,context)
