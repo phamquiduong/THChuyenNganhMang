@@ -115,7 +115,7 @@ def check_java(dir,name):
 # x=input()
 # print(check_python())
 # print(check_cpp('test'))
-print(check_java('java1','test'))
+# print(check_java('java1','test'))
 
 
 

@@ -77,9 +77,9 @@
                   style="height: 44px"
                   required
                 >
-                  <option value="Python">Python</option>
-                  <!-- <option value="Java">Java</option> -->
-                  <option value="C++">C++</option>
+                {% for x in language %}
+                  <option value="{{x.Language}}">{{x.Language}}</option>
+                {% endfor %}
                 </select>
               </div>
               <div class="input-group mb-3">
@@ -94,7 +94,7 @@
                   class="form-control"
                   id="result"
                   name="file"
-                  accept=".py, .cpp"
+                  accept=".py, .cpp, .java"
                   aria-describedby="inputGroupFileAddon01"
                   required
                 />

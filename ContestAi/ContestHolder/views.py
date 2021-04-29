@@ -169,11 +169,20 @@ class ContestStatus(View):
         status = models.Status.objects.filter(IDcontest = id).order_by('-id')
         data = []
         for x in status:
+            language = "hello"
+            if ".py" in x.LinkSubmit:
+                language = 'Python'
+            elif ".cpp" in x.LinkSubmit:
+                language = 'C++'
+            elif ".java" in x.LinkSubmit:
+                language = 'Java'
             tg = {
                 'iduser' : x.id,
                 'name' : User.objects.get(id = x.IDUser).username,
                 'time' : str(x.TimeSubmit),
-                'status' : x.Status
+                'language' : language,
+                'status' : x.Status,
+                'link' : x.LinkSubmit
             }
             data.append(tg)
         # for x in data:

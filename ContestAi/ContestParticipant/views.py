@@ -8,6 +8,7 @@ from datetime import datetime
 from ContestAdmin import models
 from django.contrib.auth.models import User
 import django_rq
+import os
 import rq
 import re
 
@@ -43,6 +44,21 @@ def run_tester_cpp(s,path):
         obj.Status="Compile Error"
     obj.save()
 
+def run_tester_java(s,path):
+    import importlib
+    import sys
+    spec = importlib.util.spec_from_file_location('tester', path+'tester.py')
+    module = importlib.util.module_from_spec(spec)
+    sys.modules['tester'] = module
+    spec.loader.exec_module(module)
+    obj = models.Status.objects.get(id=s)
+    try:
+        obj.Status=module.check_java('java'+str(s),'model')
+    except rq.timeouts.JobTimeoutException:
+        obj.Status="TLE"
+    except:
+        obj.Status="Compile Error"
+    obj.save()
 
 class ParticipantView(View):
     def get(self, request):
@@ -59,7 +75,7 @@ class ParticipantView(View):
                 allContest = models.Contest.objects.all().order_by('-id')
                 # print(allContest)
 
-                idContestRegis = models.RegisterContest.objects.filter(IDUser=request.user.id).values_list('IDContest',flat=True) # contest that user regis before
+                idContestRegis = models.RegisterContest.objects.filter(IDUser=request.user.id).values_list('IDContest',flat=True).order_by('-id') # contest that user regis before
                 # print(list(idContestRegis))
                 contestRegisted = []
                 for id in list(idContestRegis):
@@ -199,7 +215,8 @@ class Starting(View):
                 'startStatus': status,
                 'contest': selectedContest, # selected by id
                 'timeEnd': selectedContest.TimeEnd.strftime("%m/%d/%Y %H:%M:%S"),
-                'timeStart': selectedContest.TimeStart.strftime("%m/%d/%Y %H:%M:%S")
+                'timeStart': selectedContest.TimeStart.strftime("%m/%d/%Y %H:%M:%S"),
+                'language': models.Language.objects.all()
             }
             # print(context)
             return render(request, path.templateStart , context)
@@ -250,6 +267,26 @@ class Starting(View):
                 for chunk in f.chunks():
                     destination.write(chunk)
             run_tester_cpp(obj.id,path)
+            t = models.Contest.objects.get(id=id).TimeOut * 8
+            # print(t)
+            # queue = django_rq.get_queue('default',default_timeout=c)
+            # queue.enqueue(run_tester_cpp,'test',result_ttl=0)  
+        if ".java" in name:
+            obj = models.Status()
+            obj.IDcontest = id
+            obj.IDUser = request.user.id
+            obj.Status = 'Pending'
+            obj.TimeSubmit = datetime.now()
+            obj.save()
+            path_java = path+'java'+str(obj.id)
+            if not os.path.exists(path_java):
+                os.makedirs(path_java)
+            obj.LinkSubmit = path_java+'/model.java'
+            obj.save()
+            with open(obj.LinkSubmit, 'wb+') as destination:
+                for chunk in f.chunks():
+                    destination.write(chunk)
+            run_tester_java(obj.id,path)
             t = models.Contest.objects.get(id=id).TimeOut * 8
             # print(t)
             # queue = django_rq.get_queue('default',default_timeout=c)

@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class test {
+public class model {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         while (true) {
@@ -10,7 +10,7 @@ public class test {
             b = sc.nextDouble();
             c = sc.nextDouble();
             d = sc.nextDouble();
-            System.out.println((int)(a+b+c+d)%2);
+            System.out.println((int)(a+b+c+d)%3+1);
         }
         sc.close();
     }
