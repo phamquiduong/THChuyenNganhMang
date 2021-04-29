@@ -6,6 +6,7 @@ from django.http import HttpResponse
 #from .data import mockContest
 from datetime import datetime
 from ContestAdmin import models
+from django.contrib.auth.models import User
 import django_rq
 import rq
 import re
@@ -262,11 +263,35 @@ class Standing(View):
             userName = request.user.username
         except:
             userName = ''
-        selectedContest = models.Contest.objects.get(id=id)
+        # Scoreboard
+        status = models.Status.objects.filter(IDcontest = id).order_by('-Status','TimeSubmit')
+        timestart = models.Contest.objects.get(id=id).TimeStart
+        data = []
+        error = []
+        for x in status:
+            time = x.TimeSubmit-timestart
+            tg = {
+                'iduser' : x.id,
+                'name' : User.objects.get(id = x.IDUser).username,
+                'time' : x.TimeSubmit,
+                'pen' : round(time.seconds/60),
+                'status' : x.Status
+            }
+            if x.Status=='TLE' or x.Status=='Compile Error' or x.Status=='Pending':
+                error.append(tg)
+            else :
+                data.append(tg)
+        data = data + error
+        kt = []
+        final = []
+        for x in data:
+            if x.get('name') in kt:
+                continue
+            else:
+                kt.append(x.get('name'))
+                final.append(x)
         context = {
             'name': userName,
-            'dataContests': selectedContest,
+            'dataContests': final,
         }
-
-        
         return render(request,path.templateContestStanding,context)

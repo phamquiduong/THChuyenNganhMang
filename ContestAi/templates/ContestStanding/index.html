@@ -6,7 +6,7 @@
 <!--<div></div>-->
 {% load static %} {% block body %}
 <div class="container" style="min-height: 80vh">
-  <h1 class="text-center mt-5 mb-5 fade-in">Contest History Submit Pages</h1>
+  <h1 class="text-center mt-5 mb-5 fade-in">Contest Standings</h1>
   <!-- /card-container -->
   <form method="POST" action="" id="create">
     <div class="row">
@@ -20,14 +20,28 @@
             <table class="table table-striped table-bordered">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
+                  <th scope="col">Rank</th>
                   <th scope="col">Name</th>
                   <th scope="col">Time Submit</th>
+                  <th scope="col">Penalty</th>
                   <th scope="col">Status</th>
-                  <th scope="col">Link</th>
                 </tr>
               </thead>
-              <tbody></tbody>
+              <tbody>
+                {% for status in dataContests %}
+                <tr>
+                  <th scope="row">{{ forloop.counter }}</th>
+                  <td>{{ status.name }}</td>
+                  <td>{{ status.time }}</td>
+                  <td>{{ status.pen }}</td>
+                  <td
+                    class="text-center {% if status.status == 'Compile Error' %}table-danger {% elif status.status == 'TLE' %} table-danger {% elif status.status == 'Pending' %} table-warning {% else %}table-success {% endif %} table_status_data"
+                  >
+                    {{ status.status }}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
             </table>
           </div>
         </div>
