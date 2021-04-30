@@ -169,31 +169,37 @@ class ContestStatus(View):
         status = models.Status.objects.filter(IDcontest = id).order_by('-id')
         data = []
         for x in status:
-            language = "hello"
+            language = "Error"
             if ".py" in x.LinkSubmit:
                 language = 'Python'
             elif ".cpp" in x.LinkSubmit:
                 language = 'C++'
             elif ".java" in x.LinkSubmit:
                 language = 'Java'
+            code = ''
+            try:
+                with open(x.LinkSubmit, 'r+') as destination:
+                    for line in destination:
+                        code = code + line
+            except:
+                code+='File not found'
             tg = {
                 'iduser' : x.id,
                 'name' : User.objects.get(id = x.IDUser).username,
                 'time' : str(x.TimeSubmit),
                 'language' : language,
                 'status' : x.Status,
-                'link' : x.LinkSubmit
+                'link' : x.LinkSubmit,
+                'code' :code
             }
             data.append(tg)
         # for x in data:
         #     print(x)
         selectedContest = models.Contest.objects.filter(id = id)
-
-        
         context = {
             'name': request.user.username,
             'dataContests': selectedContest,
             'dataStatus': data
         }
-        print(context)
+        # print(context)
         return render(request,path.templateStatus,context)

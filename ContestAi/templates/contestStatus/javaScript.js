@@ -5,7 +5,8 @@ $(document).ready(function () {
   };
   $("#exampleModal").on("show.bs.modal", function (event) {
     var button = $(event.relatedTarget); // Button that triggered the modal
-    var recipient = button.data("whatever").replace(/\'/g, '"');
+    var recipient = button.data("whatever").replace(/\"/g, '$');
+    recipient = recipient.replace(/\'/g,'"');
 
     const value = JSON.parse(recipient);
     console.log(value);
@@ -15,6 +16,7 @@ $(document).ready(function () {
     modal.find(".modal-body #recipient-time").val(value.time);
     modal.find(".modal-body #recipient-status").val(value.status);
     modal.find(".modal-body #recipient-language").val(value.language);
+    modal.find(".modal-body #recipient-code").val(value.code.replace(/\$/g,'"'));
     modal
       .find(".modal-body #recipient-embed")
       .attr("src", getLinkFile(value.link));
