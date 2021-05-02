@@ -195,6 +195,7 @@ class Starting(View):
                 time_start_string = selectedContest.TimeStart.strftime("%Y-%m-%d %H:%M:%S")
                 time_end_string = selectedContest.TimeEnd.strftime("%Y-%m-%d %H:%M:%S")
                 time_now = datetime.now()
+                print(time_now)
 
                 time_start = datetime.strptime(time_start_string,"%Y-%m-%d %H:%M:%S")
                 time_end = datetime.strptime(time_end_string,"%Y-%m-%d %H:%M:%S")
@@ -249,11 +250,11 @@ class Starting(View):
             with open(obj.LinkSubmit, 'wb+') as destination:
                 for chunk in f.chunks():
                     destination.write(chunk)
-            run_tester(obj.id,path)
+            # run_tester(obj.id,path)
             t = models.Contest.objects.get(id=id).TimeOut * 8
             # print(t)
-            # queue = django_rq.get_queue('default',default_timeout=c)
-            # queue.enqueue(run_tester,'test',result_ttl=0)   
+            queue = django_rq.get_queue('default',default_timeout=t)
+            queue.enqueue(run_tester,obj.id,path,result_ttl=0)   
         if ".cpp" in name:
             obj = models.Status()
             obj.IDcontest = id
@@ -266,11 +267,11 @@ class Starting(View):
             with open(obj.LinkSubmit, 'wb+') as destination:
                 for chunk in f.chunks():
                     destination.write(chunk)
-            run_tester_cpp(obj.id,path)
+            # run_tester_cpp(obj.id,path)
             t = models.Contest.objects.get(id=id).TimeOut * 8
             # print(t)
-            # queue = django_rq.get_queue('default',default_timeout=c)
-            # queue.enqueue(run_tester_cpp,'test',result_ttl=0)  
+            queue = django_rq.get_queue('default',default_timeout=t)
+            queue.enqueue(run_tester_cpp,obj.id,path,result_ttl=0)  
         if ".java" in name:
             obj = models.Status()
             obj.IDcontest = id
@@ -286,11 +287,11 @@ class Starting(View):
             with open(obj.LinkSubmit, 'wb+') as destination:
                 for chunk in f.chunks():
                     destination.write(chunk)
-            run_tester_java(obj.id,path)
+            # run_tester_java(obj.id,path)
             t = models.Contest.objects.get(id=id).TimeOut * 8
             # print(t)
-            # queue = django_rq.get_queue('default',default_timeout=c)
-            # queue.enqueue(run_tester_cpp,'test',result_ttl=0)  
+            queue = django_rq.get_queue('default',default_timeout=t)
+            queue.enqueue(run_tester_java,obj.id,path,result_ttl=0)  
         return redirect('/contest/status/'+id)
 
 class Standing(View):
